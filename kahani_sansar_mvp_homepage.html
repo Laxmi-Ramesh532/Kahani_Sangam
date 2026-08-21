@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>कहानी संसार — साहित्य, भाषा और सीख</title>
+<style>
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:"Noto Sans Devanagari","Nirmala UI",Arial,sans-serif;
+    color:#2b211b;
+    background:#fbf7ef;
+    line-height:1.6;
+  }
+  a{text-decoration:none;color:inherit}
+  .container{width:min(1120px,92%);margin:auto}
+  header{
+    background:#fffaf2;
+    border-bottom:1px solid #eadfce;
+    position:sticky;top:0;z-index:10;
+  }
+  .nav{
+    min-height:76px;display:flex;align-items:center;gap:28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;margin-right:auto}
+  .logo{
+    width:42px;height:42px;border:2px solid #754016;border-radius:8px;
+    display:grid;place-items:center;font-size:24px;background:#f6ead7;
+  }
+  .brand h1{font-size:22px;margin:0;color:#5d2f0f}
+  .brand small{display:block;font-size:11px;color:#75675b}
+  nav{display:flex;gap:22px;font-size:15px}
+  nav a:hover{color:#7b4017}
+  .search{
+    border:1px solid #d9c8b2;border-radius:24px;padding:9px 15px;
+    background:white;min-width:170px;color:#8b7d70;
+  }
+  .btn{
+    display:inline-block;border-radius:9px;padding:11px 20px;
+    border:1px solid #7a3f13;font-weight:700;cursor:pointer;
+  }
+  .btn.primary{background:#71380e;color:white}
+  .btn.secondary{background:#fffaf2;color:#71380e}
+  .hero{
+    padding:70px 0 55px;
+    display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;
+  }
+  .hero h2{font-size:48px;line-height:1.2;margin:0 0 20px;color:#241b16}
+  .hero h2 span{color:#753b12}
+  .hero p{font-size:19px;max-width:590px;color:#51463d}
+  .tagline{
+    display:inline-block;margin:12px 0 25px;padding:10px 16px;
+    background:#f4e8d2;border:1px solid #ead7b9;border-radius:10px;
+    color:#5f3518;font-weight:700;
+  }
+  .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+  .book-art{
+    min-height:330px;border-radius:18px;border:1px solid #dfcfba;
+    background:#f7eedf;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 10px 25px rgba(91,57,25,.08);
+    font-size:130px;
+  }
+  .section{padding:55px 0}
+  .section h3{text-align:center;font-size:32px;margin:0 0 12px}
+  .section-intro{text-align:center;max-width:700px;margin:0 auto 30px;color:#64574d}
+  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .card{
+    background:#fffdf8;border:1px solid #e6d8c6;border-radius:14px;
+    padding:24px;min-height:170px;
+  }
+  .card .icon{font-size:30px;margin-bottom:8px}
+  .card h4{margin:0 0 8px;font-size:19px}
+  .card p{margin:0;color:#665a51;font-size:14px}
+  .flow{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:15px;align-items:stretch;
+  }
+  .flow-item{
+    background:#fffdf8;border:1px solid #e4d6c3;border-radius:14px;
+    padding:22px;text-align:center;
+  }
+  .flow-item strong{display:block;font-size:18px;margin-bottom:7px}
+  .cta{
+    margin:20px 0 60px;padding:32px;border:1px solid #e1cfb4;
+    background:#f4e8d2;border-radius:16px;
+    display:flex;align-items:center;justify-content:space-between;gap:20px;
+  }
+  .cta h3{text-align:left;margin:0 0 6px;font-size:25px}
+  .cta p{margin:0;color:#5d5148}
+  footer{
+    border-top:1px solid #e4d8c8;padding:28px 0;color:#75685d;
+    background:#fffaf2;text-align:center;font-size:13px;
+  }
+  @media(max-width:900px){
+    nav{display:none}.search{display:none}
+    .hero{grid-template-columns:1fr;padding-top:45px}
+    .hero h2{font-size:38px}
+    .cards{grid-template-columns:repeat(2,1fr)}
+    .flow{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:560px){
+    .brand h1{font-size:19px}
+    .brand small{font-size:9px}
+    .hero h2{font-size:32px}
+    .hero p{font-size:16px}
+    .book-art{min-height:220px;font-size:90px}
+    .cards,.flow{grid-template-columns:1fr}
+    .cta{flex-direction:column;align-items:flex-start}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a class="brand" href="#">
+      <div class="logo">📖</div>
+      <div>
+        <h1>कहानी संसार</h1>
+        <small>हर भाषा में साहित्य, हर दिल के लिए</small>
+      </div>
+    </a>
+    <nav>
+      <a href="#home">होम</a>
+      <a href="#stories">कहानियाँ</a>
+      <a href="#writers">लेखक बनें</a>
+      <a href="#translation">अनुवाद</a>
+      <a href="#learn">सीखें</a>
+    </nav>
+    <div class="search">कहानी खोजें…</div>
+    <a class="btn secondary" href="#join">लॉगिन</a>
+  </div>
+</header>
+
+<main id="home">
+  <section class="container hero">
+    <div>
+      <h2>हर भाषा में <span>साहित्य</span><br>और ज्ञान तक पहुँच</h2>
+      <p>
+        सुंदर कहानियाँ पढ़ें, अपनी पसंद की भाषा में साहित्य तक पहुँचें,
+        नए लेखकों को बेहतर लिखने का अवसर दें और भारतीय भाषाओं को एक-दूसरे से जोड़ें।
+      </p>
+      <div class="tagline">Writer writes → Translator connects → Reader learns → Language grows.</div>
+      <div class="hero-actions">
+        <a class="btn primary" href="#stories">📖 कहानियाँ पढ़ें</a>
+        <a class="btn secondary" href="#writers">✍️ लेखक बनें</a>
+      </div>
+    </div>
+    <div class="book-art" aria-label="खुली किताब">📖</div>
+  </section>
+
+  <section class="container section" id="stories">
+    <h3>यहाँ क्या मिलेगा?</h3>
+    <p class="section-intro">
+      एक ऐसा मंच जहाँ कहानी केवल पढ़ी नहीं जाती—उसके साथ भाषा, विचार और लेखन भी आगे बढ़ते हैं।
+    </p>
+    <div class="cards">
+      <article class="card">
+        <div class="icon">📚</div>
+        <h4>सुंदर पढ़ने का अनुभव</h4>
+        <p>शांत background, स्पष्ट अक्षर और book-like reading page—ताकि पढ़ना सहज और आनंददायक हो।</p>
+      </article>
+      <article class="card" id="translation">
+        <div class="icon">🌐</div>
+        <h4>कई भाषाओं में पढ़ें</h4>
+        <p>आगे चलकर अपनी पसंद की भारतीय भाषा में कहानी और साहित्य पढ़ने का अवसर।</p>
+      </article>
+      <article class="card" id="writers">
+        <div class="icon">✍️</div>
+        <h4>नए लेखकों के लिए मंच</h4>
+        <p>लेखक अपनी मौलिक रचना प्रकाशित करें और भाषा-संरचना के सुझावों से बेहतर लिखना सीखें।</p>
+      </article>
+      <article class="card" id="learn">
+        <div class="icon">🌱</div>
+        <h4>पढ़ते हुए सीखें</h4>
+        <p>नई शब्दावली, विचार और भाषा से परिचित हों—हर कहानी से कुछ नया लेकर निकलें।</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="container section">
+    <h3>हम कैसे काम करते हैं?</h3>
+    <p class="section-intro">एक कहानी की यात्रा चार कदमों में।</p>
+    <div class="flow">
+      <div class="flow-item"><strong>✍️ Writer writes</strong>लेखक अपनी मौलिक रचना साझा करता है।</div>
+      <div class="flow-item"><strong>🌐 Translator connects</strong>अनुवादक कहानी को दूसरी भाषा के पाठकों तक पहुँचाता है।</div>
+      <div class="flow-item"><strong>📖 Reader learns</strong>पाठक कहानी, शब्द और विचारों से सीखता है।</div>
+      <div class="flow-item"><strong>🌱 Language grows</strong>जितना साहित्य जुड़ेगा, भाषाएँ उतनी समृद्ध होंगी।</div>
+    </div>
+  </section>
+
+  <section class="container cta" id="join">
+    <div>
+      <h3>कहानियों और भाषाओं की इस यात्रा से जुड़ें</h3>
+      <p>यह शुरुआती संस्करण है। हमारा लक्ष्य पहले एक मजबूत और सुंदर reading experience बनाना है।</p>
+    </div>
+    <a class="btn primary" href="#">जल्द जुड़ें →</a>
+  </section>
+</main>
+
+<footer>
+  कहानी संसार • एक प्रारंभिक MVP prototype • Writer writes → Translator connects → Reader learns → Language grows.
+</footer>
+
+</body>
+</html>
