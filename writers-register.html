@@ -116,21 +116,21 @@
             <textarea placeholder="अपने लेखन, रूचियों और अपने बारे में थोड़ा लिखें" required></textarea>
 
             <button type="submit">Writer Account बनाएँ</button>
-            <p> id="confirmation" style"display:none; text-align:center; margin-top:
-                आपका writer account सफलता पूर्वक बनाया गया है।🌸
-            </p>     
+             <p id="confirmation" style="display:none; text-align:center; margin-top:20px;">
+                 आपका Writer Account सफलतापूर्वक बनाया गया है। 🌸
+             </p> 
         </form>
 
         <div class="back">
             <a href="index.html">← Home Page पर वापस जाएँ</a>
-        </div>
-    </div>
-    <script>
-        document.getElementById("writerForm").addEventListener("submit",function(event){
+            </div>
+        <div>
+        <script>
+        document.getElementById("writerForm").onsubmit = function(event) {
             event.preventDefault();
-            document.getElementById("confirmation").style.display="block";
+            document.getElementById("confirmation").style.display = "block";
         };
-    </script>
+        </script>
 
 </body>
 </html>
