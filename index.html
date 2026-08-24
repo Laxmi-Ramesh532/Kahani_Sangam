@@ -215,12 +215,23 @@ async function loadStories() {
   const { data, error } = await supabase
     .from("Story")
     .select("*");
+
   if (error) {
     console.log(error);
     return;
-  }
-  console.log(data);
-}
+ }
+ const list = document.getElementById("story-list");
+
+  data.forEach(story => {
+    list.innerHTML += `
+      <div class="card">
+        <h4>${story.title}</h4>
+        <p>${story.content}</p>
+        <small>लेखक: ${story.author_name}</small>
+      </div>
+    `;
+  });
+ }
 loadStories();
 </script>
 </body>
