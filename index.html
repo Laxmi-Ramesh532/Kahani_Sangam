@@ -202,6 +202,25 @@
 <footer>
   कहानी संसार • एक प्रारंभिक MVP prototype • Writer writes → Translator connects → Reader learns → Language grows.
 </footer>
+<script>
+const SUPABASE_URL = "https://wnvkryudbeafebaluwgq.supabase.co";
+const SUPABASE_KEY = "अपनी publishable key यहाँ डालो";
 
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+async function loadStories() {
+  const { data, error } = await supabase
+    .from("Story")
+    .select("*");
+  if (error) {
+    console.log(error);
+    return;
+  }
+  console.log(data);
+}
+loadStories();
+</script>
 </body>
 </html>
