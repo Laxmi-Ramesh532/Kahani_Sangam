@@ -217,7 +217,7 @@ async function loadStories() {
     .select("*");
 
   if (error) {
-    console.log(error);
+    alert(error.message);
     return;
  }
  const list = document.getElementById("story-list");
