@@ -213,7 +213,7 @@ const supabase = window.supabase.createClient(
 );
 async function loadStories() {
   const { data, error } = await supabase
-    .from("Story")
+    .from("story")
     .select("*");
 
   if (error) {
