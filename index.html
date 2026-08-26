@@ -214,7 +214,6 @@ const supabase = window.supabase.createClient(
   SUPABASE_KEY
 );
  alert("Supabase connect ho gaya");
- </script>
 async function loadStories() {
   const { data, error } = await supabase
     .from("story")
