@@ -238,7 +238,6 @@ const supabase = window.supabase.createClient(
  alert("Supabase connect ho gaya");
 async function loadStories() {
  alert("table se data mangane ja rahe hai");
- </script>
   const { data, error } = await supabase
     .from("story")
     .select("*");
@@ -261,7 +260,7 @@ alert(data.length);
  }
 alert("loadStories start");
 loadStories();
-
+ </script>
  
 </body>
 </html>
