@@ -213,14 +213,9 @@ const SUPABASE_KEY ="sb_publishable_q1J83vS9b3Ngw-Py_QLuzg_ub6pdy3D";
   SUPABASE_KEY
 );
   alert("Supabase connect ho gaya");
- </script>
- <script>
   async function loadStories() {
-   alert("tabale se data mangane ja rahe hai");
-   </script>
- <script>
-  const { data, error } = await supabase
-    .from("story")
+   const { data, error } = await supabase
+    .from("story");
     .select("*");
 
   if (error) {
