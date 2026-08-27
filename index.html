@@ -227,14 +227,11 @@ alert("Supabase connect ho gaya");
   const { data, error } = await supabase
     .from("Story")
     .select("*");
-
-  if (error) {
-    alert(error.message);
-    return;
+   
+  alert("query complete");
   }
 
- console.log(data,error);
- alert("fetch complete");
+ console.log(result);
   }
 
 loadStories();
