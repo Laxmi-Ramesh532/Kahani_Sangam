@@ -223,7 +223,10 @@ alert("Supabase connect ho gaya");
  <script>
   async function loadStories() {
   alert("table se data mangane ja raha hai");
-
+  }
+  loadStories();
+   </script>
+ <script>
   const { data, error } = await supabase
     .from("Story")
     .select("*");
