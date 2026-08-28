@@ -233,65 +233,7 @@ alert("Supabase connect ho gaya");
   alert("Error: "+ error.message);
   }
  }
-
 loadStories();
-
 alert("3");
-
-</script>
-  <script>
-   const { data, error } = await supabase
-    .from("story")
-    .select("*");
-
-  if (error) {
-    alert(error.message);
-    return;
-  }
-
-  alert(data.length);
-}
-
-loadStories();
- </script>
- 
- <script>
-  alert("URL aa raha hai " + SUPABASE_URL);
-const supabase = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
- alert("Supabase connect ho gaya");
- alert(typeof supabase);
- async function loadStories(): {
- alert("table se data mangane ja rahe hai");
-  
- </script>
-
- <script>
-  const { data, error } = await supabase
-    .from("story")
-    .select("*");
-
-  if (error) {
-    alert(error.message);
-    return;
- }
- const list = document.getElementById("story-list");
-alert(data.length);
-  data.forEach(story => {
-    list.innerHTML += `
-      <div class="card">
-        <h4>${story.title}</h4>
-        <p>${story.content}</p>
-        <small>लेखक: ${story.author_name}</small>
-      </div>
-    `;
-  });
- }
-alert("loadStories start");
-loadStories();
-</script>
- 
 </body>
 </html>
