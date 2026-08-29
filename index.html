@@ -226,6 +226,15 @@ const SUPABASE_KEY ="sb_publishable_q1J83vS9b3Ngw-Py_QLuzg_ub6pdy3D";
   } else {
     alert("Data aa gaya: " + data.length);
    console.log(data);
+   data.forEach(story => {
+    document.getElementById("story-list").innerHTML += `
+      <article class="card">
+        <h4>${story.title}</h4>
+        <p>${story.content}</p>
+        <p>✍️ लेखक: ${story.author_name}</p>
+      </article>
+    `;
+  });
   }
 }
 
