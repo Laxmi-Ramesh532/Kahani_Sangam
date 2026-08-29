@@ -214,26 +214,12 @@ const SUPABASE_KEY ="sb_publishable_q1J83vS9b3Ngw-Py_QLuzg_ub6pdy3D";
   SUPABASE_URL,
   SUPABASE_KEY
  );
-
-alert("Supabase connect ho gaya");
-  } catch(error) {
-  alert("Error: " + error.message);
-  }
-  async function loadStories() {
-   alert("table se data mangane ja raha hai");
-   try{
-   const { data, error } = await supabase
+  const { data, error } = await supabase
     .from("Story")
-    .select("*");
-   
-  alert("query complete");
-
-  console.log(data, error);
-  }catch(error){
-  alert("Error: "+ error.message);
-  }
-}
+    .select("*")
+ }   
 loadStories();
 alert("3");
+</script>
 </body>
 </html>
