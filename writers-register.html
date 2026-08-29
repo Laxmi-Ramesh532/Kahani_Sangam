@@ -1,138 +1,303 @@
+
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kahani Sansar - Writer Registration</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f7f1e8;
-            color: #333;
-        }
+<title>लेखक बनें • कहानी संसार</title>
 
-        .header {
-            text-align: center;
-            padding: 25px 15px;
-            background: #fffaf3;
-        }
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-        .header h1 {
-            margin: 0;
-            font-size: 30px;
-        }
+<style>
+*{
+  box-sizing:border-box;
+}
 
-        .header p {
-            margin-top: 8px;
-        }
+body{
+  margin:0;
+  background:#ead8bd;
+  color:#4b301c;
+  font-family:Georgia,"Noto Serif Devanagari",serif;
+}
 
-        .box {
-            max-width: 500px;
-            margin: 35px auto;
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
+header{
+  background:#302219;
+  color:#f8ead2;
+  padding:16px 25px;
+}
 
-        .box h2 {
-            text-align: center;
-            margin-bottom: 25px;
-        }
+.header-inner{
+  max-width:1000px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
 
-        label {
-            display: block;
-            margin-top: 15px;
-            margin-bottom: 6px;
-            font-weight: bold;
-        }
+.logo{
+  font-size:22px;
+  font-weight:bold;
+}
 
-        input, textarea {
-            width: 100%;
-            padding: 12px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 15px;
-        }
+.back{
+  color:#f8ead2;
+  text-decoration:none;
+  border:1px solid #c99b57;
+  padding:8px 15px;
+  border-radius:20px;
+}
 
-        textarea {
-            height: 100px;
-            resize: vertical;
-        }
+.container{
+  max-width:850px;
+  margin:40px auto;
+  padding:0 18px;
+}
 
-        button {
-            width: 100%;
-            margin-top: 25px;
-            padding: 13px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            background: #8b5e3c;
-            color:white;
-            font-weight: bold;
-        }
-        button:hover {
-            background: #6f472d;
-        }   
-        .back {
-            text-align: center;
-            margin-top: 20px;m
-        }
+.form-box{
+  background:#f9efdf;
+  padding:45px;
+  border-radius:18px;
+  box-shadow:0 8px 25px rgba(0,0,0,.18);
+  border:1px solid #d4b487;
+}
 
-        .back a {
-            text-decoration: none;
-        }
-    </style>
+.decor{
+  text-align:center;
+  font-size:30px;
+  margin-bottom:10px;
+}
+
+h1{
+  text-align:center;
+  font-size:38px;
+  margin:10px 0;
+}
+
+.intro{
+  text-align:center;
+  font-size:17px;
+  line-height:1.8;
+  margin-bottom:35px;
+}
+
+label{
+  display:block;
+  font-weight:bold;
+  margin:18px 0 7px;
+}
+
+input,
+textarea,
+select{
+  width:100%;
+  padding:13px;
+  border:1px solid #cdb083;
+  border-radius:9px;
+  background:#fffaf1;
+  color:#3f2b1d;
+  font-size:16px;
+  font-family:inherit;
+}
+
+textarea{
+  min-height:300px;
+  resize:vertical;
+  line-height:1.9;
+}
+
+button{
+  display:block;
+  margin:30px auto 5px;
+  padding:13px 30px;
+  border:0;
+  border-radius:25px;
+  background:#4b301c;
+  color:white;
+  font-size:17px;
+  cursor:pointer;
+}
+
+button:disabled{
+  opacity:.6;
+}
+
+#message{
+  text-align:center;
+  margin-top:20px;
+  font-weight:bold;
+}
+
+.note{
+  margin-top:25px;
+  padding:15px;
+  background:#f0dfc5;
+  border-radius:10px;
+  line-height:1.7;
+  font-size:14px;
+}
+
+@media(max-width:600px){
+  .form-box{
+    padding:25px 18px;
+  }
+
+  h1{
+    font-size:30px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-    <div class="header">
-        <h1>Kahani Sansar</h1>
-        <p>कहानियों की दुनिया में आपका स्वागत है</p>
+<header>
+  <div class="header-inner">
+    <div class="logo">📖 कहानी संसार</div>
+    <a class="back" href="index.html">← वापस</a>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="form-box">
+
+    <div class="decor">🌸 🦋 🌸</div>
+
+    <h1>✍️ अपनी कहानी लिखें</h1>
+
+    <p class="intro">
+      आपकी कहानी किसी पाठक की कल्पना को छू सकती है।
+      अपनी मौलिक रचना यहाँ साझा करें और कहानी संसार का हिस्सा बनें।
+    </p>
+
+    <label for="author">लेखक का नाम</label>
+    <input
+      id="author"
+      type="text"
+      placeholder="अपना नाम लिखें"
+    >
+
+    <label for="title">कहानी का नाम</label>
+    <input
+      id="title"
+      type="text"
+      placeholder="अपनी कहानी का शीर्षक लिखें"
+    >
+
+    <label for="language">मूल भाषा</label>
+    <select id="language">
+      <option value="हिंदी">हिंदी</option>
+      <option value="अवधी">अवधी</option>
+      <option value="भोजपुरी">भोजपुरी</option>
+      <option value="उर्दू">उर्दू</option>
+      <option value="अन्य">अन्य</option>
+    </select>
+
+    <label for="content">अपनी कहानी</label>
+    <textarea
+      id="content"
+      placeholder="यहाँ अपनी पूरी कहानी लिखें..."
+    ></textarea>
+
+    <button id="submitBtn" onclick="submitStory()">
+      📖 कहानी प्रकाशित करें
+    </button>
+
+    <div id="message"></div>
+
+    <div class="note">
+      🌱 <strong>एक छोटी-सी बात:</strong>
+      कृपया अपनी मौलिक रचना साझा करें या ऐसी रचना जिसके प्रकाशन की
+      अनुमति आपके पास हो।
     </div>
 
-    <div class="box">
-        <h2> लेखक बनें ✍️</h2>
+  </section>
 
-        <form id="writerForm">
-            <label>आपका नाम</label>
-            <input type="text" name="fullName" placeholder="अपना नाम लिखें" required>
+</main>
 
-            <label>लेखक का नाम</label>
-            <input type="text" name="penName" placeholder="जिस नाम से आप लिखना चाहते हैं" required>
+<script>
 
-            <label>ईमेल</label>
-            <input type="email" name="email" placeholder="अपना email लिखें" required>
+const SUPABASE_URL =
+"https://wnvkryudbeafebaluwgq.supabase.co";
 
-            <label>पासवर्ड</label>
-            <input type="password" name="password" placeholder="Password बनाएँ" required>
+const SUPABASE_KEY =
+"sb_publishable_q1J83vS9b3Ngw-Py_QLuzg_ub6pdy3D";
 
-            <label>अपने बारे में</label>
-            <textarea name="bio" placeholder="अपने लेखन, रूचियों और अपने बारे में थोड़ा लिखें" required></textarea>
+const supabaseClient =
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 
-            <button type="submit">Writer Account बनाएँ</button>
-             <p id="confirmation" style="display:none; text-align:center; margin-top:20px;">
-                 आपका Writer Account सफलतापूर्वक बनाया गया है। 🌸
-             </p> 
-        </form>
+async function submitStory(){
 
-        <div class="back">
-            <a href="index.html">← Home Page पर वापस जाएँ</a>
-            </div>
-        <div>
-        <script>
-        document.getElementById("writerForm").onsubmit = function(event) {
-            event.preventDefault();
-            document.getElementById("confirmation").style.display = "block";
-        };
-            const SUPABASE_URL="https://wnvkryudbeafebaluwgq.supabase.co";
-            const SUPABASE_KEY="sb_publishable_q1J83vS9b3Ngw-Py_QLuzg_ub6pdy3D";
-        </script>
+  const author =
+    document.getElementById("author").value.trim();
+
+  const title =
+    document.getElementById("title").value.trim();
+
+  const language =
+    document.getElementById("language").value;
+
+  const content =
+    document.getElementById("content").value.trim();
+
+  const message =
+    document.getElementById("message");
+
+  const button =
+    document.getElementById("submitBtn");
+
+  if(!author || !title || !content){
+
+    message.textContent =
+      "कृपया लेखक का नाम, कहानी का नाम और कहानी लिखें।";
+
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = "⏳ कहानी सेव हो रही है...";
+
+  const { data, error } =
+    await supabaseClient
+      .from("Story")
+      .insert([
+        {
+          title: title,
+          content: content,
+          author_name: author
+        }
+      ])
+      .select();
+
+  if(error){
+
+    console.log(error);
+
+    message.textContent =
+      "कहानी सेव नहीं हो सकी। कृपया दोबारा कोशिश करें।";
+
+    button.disabled = false;
+    button.textContent = "📖 कहानी प्रकाशित करें";
+
+    return;
+  }
+
+  message.textContent =
+    "🎉 आपकी कहानी सफलतापूर्वक प्रकाशित हो गई!";
+
+  document.getElementById("author").value = "";
+  document.getElementById("title").value = "";
+  document.getElementById("content").value = "";
+
+  button.disabled = false;
+  button.textContent = "📖 कहानी प्रकाशित करें";
+}
+
+</script>
 
 </body>
 </html>
