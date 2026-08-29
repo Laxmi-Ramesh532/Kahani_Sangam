@@ -208,15 +208,19 @@
   कहानी संसार • एक प्रारंभिक MVP prototype • Writer writes → Translator connects → Reader learns → Language grows.
 </footer>
  <script>
-  alert("HELLO");
-const SUPABASE_URL="https://wnvkryudbeafebaluwgq.supabase.co";
-const SUPABASE_KEY ="sb_publishable_q1J83vS9b3Ngw-Py_QLuzg_ub6pdy3D";
- alert("script start 2"); 
- supabase = window.supabase.createClient(
-   SUPABASE_URL,
-   SUPABASE_KEY
- );
- alert("Supabase connect ho gaya");
+alert("HELLO");
+
+const SUPABASE_URL = "https://wnvkryudbeafebaluwgq.supabase.co";
+const SUPABASE_KEY = "sb_publishable_q1J83vS9b3Ngw-Py_QLuzg_ub6pdy3D";
+
+alert("script start 2");
+
+supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+alert("Supabase connect ho gaya");
   async function loadStories() {
 
   alert("table se data mangane ja rahe hai");
@@ -228,23 +232,28 @@ const SUPABASE_KEY ="sb_publishable_q1J83vS9b3Ngw-Py_QLuzg_ub6pdy3D";
   if (error) {
     alert("Error: " + error.message);
   } else {
+
     alert("Data aa gaya: " + data.length);
    console.log(data);
-   data.forEach(story => {
-  document.getElementById("story-list").innerHTML += `
-    <article class="card">
-      <h4>${story.title}</h4>
 
-      <p>${story.content.substring(0, 120)}...</p>
+    data.forEach(story => {
 
-      <p>✍️ लेखक: ${story.author_name}</p>
+      document.getElementById("story-list").innerHTML += `
+        <article class="card">
 
-      <a class="btn primary" href="read.html?id=${story.id}">
-        📖 कहानी पढ़ें
-      </a>
-   </article>
-  `;
-});
+          <h4>${story.title}</h4>
+
+          <p>${story.content.substring(0, 120)}...</p>
+
+          <p>✍️ लेखक: ${story.author_name}</p>
+
+          <a class="btn primary" href="read.html?id=${story.id}">
+          📖 कहानी पढ़ें
+          </a>
+        </article>
+     ';
+    });
+  }
 }
 loadStories();
 </script>
