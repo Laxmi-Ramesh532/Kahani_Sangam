@@ -227,17 +227,21 @@ const SUPABASE_KEY ="sb_publishable_q1J83vS9b3Ngw-Py_QLuzg_ub6pdy3D";
     alert("Data aa gaya: " + data.length);
    console.log(data);
    data.forEach(story => {
-    document.getElementById("story-list").innerHTML += `
-      <article class="card">
-        <h4>${story.title}</h4>
-        <p>${story.content}</p>
-        <p>✍️ लेखक: ${story.author_name}</p>
-      </article>
-    `;
-  });
-  }
-}
+  document.getElementById("story-list").innerHTML += `
+    <article class="card">
+      <h4>${story.title}</h4>
 
+      <p>${story.content.substring(0, 120)}...</p>
+
+      <p>✍️ लेखक: ${story.author_name}</p>
+
+      <a class="btn primary" href="read.html?id=${story.id}">
+        📖 कहानी पढ़ें
+      </a>
+   </article>
+  `;
+});
+}
 loadStories();
 </script>
 </body>
