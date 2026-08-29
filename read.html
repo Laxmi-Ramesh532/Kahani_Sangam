@@ -145,6 +145,7 @@ async function loadStory() {
     .single();
 
   if (error) {
+    alert("ERROR: " + error.message);
     document.getElementById("story-content").textContent =
       "कहानी लोड नहीं हो सकी।";
     console.log(error);
