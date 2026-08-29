@@ -213,11 +213,7 @@ let supabase;
    SUPABASE_URL,
    SUPABASE_KEY
  );
- const { data, error } = await supabase
-    .from("Story")
-    .select("*");
-loadStories();
-alert("3");
+ alert("Supabase connect ho gaya");
 </script>
 </body>
 </html>
