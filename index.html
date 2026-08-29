@@ -236,11 +236,10 @@ alert("Supabase connect ho gaya");
 
     alert("Data aa gaya: " + data.length);
    console.log(data);
+   data.forEach(story => {
+  document.getElementById("story-list").innerHTML += `
 
-    data.forEach(story => {
-
-      document.getElementById("story-list").innerHTML += `
-        <article class="card">
+    <article class="card">
 
           <h4>${story.title}</h4>
 
@@ -252,7 +251,7 @@ alert("Supabase connect ho gaya");
           📖 कहानी पढ़ें
           </a>
         </article>
-     ';
+     `;
     });
   }
 }
