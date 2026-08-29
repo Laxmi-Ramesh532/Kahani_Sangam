@@ -208,16 +208,14 @@
 const SUPABASE_URL="https://wnvkryudbeafebaluwgq.supabase.co";
 const SUPABASE_KEY ="sb_publishable_q1J83vS9b3Ngw-Py_QLuzg_ub6pdy3D";
  alert("script start 2");
-  try {
-  alert("BEECH WALA CHAL RAHA HAI");
-  const supabase = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
+let supabase; 
+ supabase = window.supabase.createClient(
+   SUPABASE_URL,
+   SUPABASE_KEY
  );
-  const { data, error } = await supabase
+ const { data, error } = await supabase
     .from("Story")
-    .select("*")
- }   
+    .select("*");
 loadStories();
 alert("3");
 </script>
