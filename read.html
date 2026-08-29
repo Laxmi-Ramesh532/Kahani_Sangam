@@ -118,6 +118,44 @@ footer {
 <footer>
   कहानी संसार • साहित्य, भाषा और सीख
 </footer>
+  <script>
+const SUPABASE_URL = "https://wnvkryudbeafebaluwgq.supabase.co";
+const SUPABASE_KEY = "अपनी वही Supabase key यहाँ डालो";
 
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+async function loadStory() {
+
+  const params = new URLSearchParams(window.location.search);
+  const storyId = params.get("id");
+
+  if (!storyId) {
+    document.getElementById("story-content").textContent =
+      "कहानी नहीं मिली।";
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from("Story")
+    .select("*")
+    .eq("id", storyId)
+    .single();
+
+  if (error) {
+    document.getElementById("story-content").textContent =
+      "कहानी लोड नहीं हो सकी।";
+    console.log(error);
+    return;
+  }
+    document.getElementById("story-title").textContent = data.title;
+  document.getElementById("story-author").textContent = data.author_name;
+  document.getElementById("story-content").textContent = data.content;
+}
+
+loadStory();
+</script>
 </body>
 </html>
