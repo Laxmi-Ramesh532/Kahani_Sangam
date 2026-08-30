@@ -281,7 +281,7 @@ async function submitFeedback() {
   if (error) {
 
     console.error(error);
-
+    alert(error.message);
     message.textContent =
       "Feedback भेजा नहीं जा सका। कृपया दोबारा कोशिश करें।";
 
