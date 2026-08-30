@@ -262,9 +262,9 @@ async function submitFeedback() {
 
     return;
   }
-
-
-  const { data, error } =
+  
+  alert("Supabase में feedback भेजने जा रहे हैं");
+ const { data, error } =
     await supabaseClient
       .from("Feedback")
       .insert([
