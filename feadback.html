@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Feedback | कहानी संसार</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Georgia, "Noto Serif Devanagari", serif;
+      background: #f8f1e7;
+      color: #4a3428;
+    }
+
+    .page {
+      max-width: 650px;
+      margin: auto;
+      padding: 25px 18px;
+    }
+
+    .box {
+      background: #fffaf3;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .intro {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin-top: 25px;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+
+    select,
+    textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 12px;
+      margin-top: 8px;
+      border: 1px solid #d8c5b5;
+      border-radius: 10px;
+      font-size: 16px;
+      background: white;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .rating {
+      display: flex;
+      gap: 10px;
+      font-size: 28px;
+      margin-top: 8px;
+    }
+
+    .rating span {
+      cursor: pointer;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 25px;
+      border: none;
+      border-radius: 12px;
+      background: #7b4b35;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    #message {
+      text-align: center;
+      margin-top: 18px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="page">
+
+  <div class="box">
+
+    <h1>💬 अपना Feedback दें</h1>
+
+    <p class="intro">
+      आपकी राय <b>कहानी संसार</b> को बेहतर बनाने में हमारी मदद करेगी। ❤️
+    </p>
+
+    <h2>🌍 1. आप हिंदी के अलावा किस भाषा में कहानियाँ पढ़ना चाहते हैं?</h2>
+
+    <select id="read_language">
+      <option value="">भाषा चुनें</option>
+      <option>English</option>
+      <option>বাংলা</option>
+      <option>मराठी</option>
+      <option>ગુજરાતી</option>
+      <option>தமிழ்</option>
+      <option>తెలుగు</option>
+      <option>ಕನ್ನಡ</option>
+      <option>മലയാളം</option>
+      <option>ਪੰਜਾਬੀ</option>
+      <option>अन्य</option>
+    </select>
+
+
+    <h2>✍️ 2. आप किस भाषा में कहानी लिखना चाहते हैं?</h2>
+
+    <select id="write_language">
+      <option value="">भाषा चुनें</option>
+      <option>हिंदी</option>
+      <option>English</option>
+      <option>বাংলা</option>
+      <option>मराठी</option>
+      <option>ગુજરાતી</option>
+      <option>தமிழ்</option>
+      <option>తెలుగు</option>
+      <option>ಕನ್ನಡ</option>
+      <option>മലയാളം</option>
+      <option>ਪੰਜਾਬੀ</option>
+      <option>अन्य</option>
+    </select>
+
+
+    <h2>📖 3. आपने कहानी संसार पर क्या किया?</h2>
+
+    <label>
+      <input type="radio" name="role" value="लेखक">
+      ✍️ कहानी लिखी
+    </label>
+
+    <label>
+      <input type="radio" name="role" value="पाठक">
+      📖 कहानी पढ़ी
+    </label>
+
+    <label>
+      <input type="radio" name="role" value="अनुवादक">
+      🌐 अनुवाद किया
+    </label>
+
+    <label>
+      <input type="radio" name="role" value="सिर्फ देखा">
+      👀 सिर्फ website देखी
+    </label>
+
+
+    <h2>⭐ 4. आपका कुल अनुभव</h2>
+
+    <div class="rating">
+      <span onclick="setRating(1)">☆</span>
+      <span onclick="setRating(2)">☆</span>
+      <span onclick="setRating(3)">☆</span>
+      <span onclick="setRating(4)">☆</span>
+      <span onclick="setRating(5)">☆</span>
+    </div>
+
+
+    <h2>💡 5. आपका Feedback / सुझाव</h2>
+
+    <textarea
+      id="feedback"
+      placeholder="आपको क्या अच्छा लगा? क्या सुधार होना चाहिए?"
+    ></textarea>
+
+
+    <button onclick="submitFeedback()">
+      💌 Feedback भेजें
+    </button>
+
+    <div id="message"></div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+const SUPABASE_URL =
+"https://wnvkryudbeafebaluwgq.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_q1J83vS9b3Ngw-Py_QLuzg_ub6pdy3D";
+
+const supabaseClient =
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+
+let selectedRating = 0;
+
+
+function setRating(number) {
+
+  selectedRating = number;
+
+  const stars =
+    document.querySelectorAll(".rating span");
+
+  stars.forEach((star, index) => {
+
+    star.textContent =
+      index < number ? "★" : "☆";
+
+  });
+
+}
+
+
+async function submitFeedback() {
+
+  const readLanguage =
+    document.getElementById("read_language").value;
+
+  const writeLanguage =
+    document.getElementById("write_language").value;
+
+  const role =
+    document.querySelector('input[name="role"]:checked');
+
+  const feedback =
+    document.getElementById("feedback").value;
+
+  const message =
+    document.getElementById("message");
+
+
+  if (!readLanguage ||
+      !writeLanguage ||
+      !role ||
+      selectedRating === 0 ||
+      !feedback.trim()) {
+
+    message.textContent =
+      "कृपया सभी जानकारी भरें।";
+
+    return;
+  }
+
+
+  const { data, error } =
+    await supabaseClient
+      .from("Feedback")
+      .insert([
+        {
+          read_language: readLanguage,
+          write_language: writeLanguage,
+          role: role.value,
+          rating: selectedRating,
+          feedback: feedback
+        }
+      ]);
+
+
+  if (error) {
+
+    console.error(error);
+
+    message.textContent =
+      "Feedback भेजा नहीं जा सका। कृपया दोबारा कोशिश करें।";
+
+    return;
+  }
+
+
+  message.textContent =
+    "🎉 आपका Feedback सफलतापूर्वक भेज दिया गया। धन्यवाद! ❤️";
+
+
+  document.getElementById("read_language").value = "";
+  document.getElementById("write_language").value = "";
+  document.querySelectorAll('input[name="role"]')
+    .forEach(radio => radio.checked = false);
+
+  selectedRating = 0;
+
+  document.querySelectorAll(".rating span")
+    .forEach(star => star.textContent = "☆");
+
+  document.getElementById("feedback").value = "";
+
+}
+
+</script>
+
+</body>
+</html>
