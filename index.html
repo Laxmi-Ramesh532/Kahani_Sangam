@@ -221,7 +221,7 @@ supabase = window.supabase.createClient(
   SUPABASE_KEY
 );
 
-  alert("AB YAHAN TAK");
+ 
   async function loadStories() {
 
 
@@ -230,10 +230,10 @@ supabase = window.supabase.createClient(
     .select("*");
 
   if (error) {
-    alert("Error: " + error.message);
+    
   } else {
 
-    alert("Data aa gaya: " + data.length);
+    
    console.log(data);
    data.forEach(story => {
   document.getElementById("story-list").innerHTML += `
