@@ -193,6 +193,14 @@ button:disabled{
       <option value="उर्दू">उर्दू</option>
       <option value="अन्य">अन्य</option>
     </select>
+    
+    <label for="age_category">कहानी किस उम्र के पाठकों के लिए है?</label>
+    <select id="age_category">
+      <option value="">उम्र चुनें</option>
+      <option value="15 तक">15 वर्ष तक</option>
+      <option value="16+">16 वर्ष और अधिक</option>
+      
+  </select>
 
     <label for="content">अपनी कहानी</label>
     <textarea
@@ -240,6 +248,8 @@ async function submitStory(){
 
   const language =
     document.getElementById("language").value;
+  const ageCategory =
+  document.getElementById("age_category").value;
 
   const content =
     document.getElementById("content").value.trim();
@@ -249,13 +259,12 @@ async function submitStory(){
 
   const button =
     document.getElementById("submitBtn");
+  if(!author || !title || !content || !ageCategory){
 
-  if(!author || !title || !content){
+  message.textContent =
+    "कृपया लेखक का नाम, कहानी का नाम, कहानी और उम्र की श्रेणी चुनें।";
 
-    message.textContent =
-      "कृपया लेखक का नाम, कहानी का नाम और कहानी लिखें।";
-
-    return;
+  return;
   }
 
   button.disabled = true;
@@ -269,6 +278,7 @@ async function submitStory(){
           title: title,
           content: content,
           author_name: author
+          age_category: ageCategory
         }
       ])
       .select();
