@@ -68,6 +68,34 @@ body{
   border:1px solid #d8b989;
   pointer-events:none;
 }
+  .kids-page{
+  background:#fffaf0;
+  border:2px solid #d9b36c;
+}
+
+.kids-page::before{
+  content:"🌸  🦋  🌼  🦋  🌸";
+  position:absolute;
+  top:12px;
+  left:20px;
+  right:20px;
+  text-align:center;
+  font-size:22px;
+  letter-spacing:8px;
+  pointer-events:none;
+}
+
+.kids-page::after{
+  content:"🌸  🦋  🌼  🦋  🌸";
+  position:absolute;
+  bottom:12px;
+  left:20px;
+  right:20px;
+  text-align:center;
+  font-size:22px;
+  letter-spacing:8px;
+  pointer-events:none;
+}
 
 .flower{
   position:absolute;
@@ -478,16 +506,17 @@ const words = data.content.split(/\s+/);
 let pageText = "";
 let pageNumber = 3;
   
-  const wordsPerPage = data.age_category === "15 तक" ? 120 : 450;
+  const wordsPerPage = data.age_category === "15 तक" ? 120 : 400;
+  const isKidsStory = data.age_category === "15 तक";
 
 words.forEach((word, index) => {
 
   pageText += word + " ";
   
   if ((index + 1) % wordsPerPage === 0 || index === words.length - 1) {
-
+    
     const page = document.createElement("section");
-    page.className = "page";
+page.className = isKidsStory ? "page kids-page" : "page";
 
     page.innerHTML = `
       <div class="page-inner">
