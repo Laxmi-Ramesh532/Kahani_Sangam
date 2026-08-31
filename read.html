@@ -477,12 +477,14 @@ async function loadStory(){
 const words = data.content.split(/\s+/);
 let pageText = "";
 let pageNumber = 3;
+  
+  const wordsPerPage = data.age_category === "15 तक" ? 120 : 180;
 
 words.forEach((word, index) => {
 
   pageText += word + " ";
-
-  if ((index + 1) % 120 === 0 || index === words.length - 1) {
+  
+  if ((index + 1) % wordsPerPage === 0 || index === words.length - 1) {
 
     const page = document.createElement("section");
     page.className = "page";
