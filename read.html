@@ -410,8 +410,9 @@ h1{
       </div>
 
       <div class="divider">🌿 ✦ 🌿</div>
+      
+      <div id="story-pages"></div>
 
-      <div class="story" id="story-content"></div>
 
     </div>
 
@@ -497,11 +498,30 @@ async function loadStory(){
 
   document.getElementById("story-author-2").textContent =
     data.author_name;
+  const storyPages = document.getElementById("story-pages");
 
-  document.getElementById("story-content").textContent =
-    data.content;
+const words = data.content.split(/\s+/);
+let pageText = "";
 
-  document.getElementById("loading").style.display="none";
+words.forEach((word, index) => {
+
+  pageText += word + " ";
+
+  if ((index + 1) % 120 === 0 || index === words.length - 1) {
+
+    const page = document.createElement("div");
+    page.className = "story-page";
+
+    page.textContent = pageText.trim();
+
+    storyPages.appendChild(page);
+   
+    pageText="";
+  }
+  
+});
+
+   document.getElementById("loading").style.display="none";
 
   document.getElementById("book").style.display="block";
 
