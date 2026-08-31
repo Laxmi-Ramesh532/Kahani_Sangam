@@ -159,7 +159,13 @@
 <p class="section-intro">
   अपनी पसंद की कहानी चुनें और पढ़ने की एक सुंदर यात्रा शुरू करें।
 </p>
-   <div id="story-list"></div>
+   
+   <h4>📚 15 वर्ष तक की कहानियाँ</h4>
+<div id="stories-15"></div>
+
+<h4>📖 16 वर्ष और अधिक की कहानियाँ</h4>
+<div id="stories-16"></div>
+   
     <div class="cards">
       <article class="card">
         <div class="icon">📚</div>
@@ -237,22 +243,34 @@ supabase = window.supabase.createClient(
     
    console.log(data);
    data.forEach(story => {
-  document.getElementById("story-list").innerHTML += `
+
+  let storyHTML = `
 
     <article class="card">
 
-          <h4>${story.title}</h4>
+      <h4>${story.title}</h4>
 
-          <p>${story.content.substring(0, 120)}...</p>
+      <p>${story.content.substring(0, 120)}...</p>
 
-          <p>✍️ लेखक: ${story.author_name}</p>
+      <p>✍️ लेखक: ${story.author_name}</p>
 
-          <a class="btn primary" href="read.html?id=${story.id}">
-          📖 कहानी पढ़ें
-          </a>
-        </article>
-     `;
-    });
+      <a class="btn primary" href="read.html?id=${story.id}">
+        📖 कहानी पढ़ें
+      </a>
+
+    </article>
+
+  `;
+
+  if (story.age_category === "15 तक") {
+    document.getElementById("stories-15").innerHTML += storyHTML;
+  }
+
+  if (story.age_category === "16+") {
+    document.getElementById("stories-16").innerHTML += storyHTML;
+  }
+
+});
   }
 }
 loadStories();
