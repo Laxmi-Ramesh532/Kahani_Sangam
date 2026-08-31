@@ -392,32 +392,10 @@ h1{
     <div class="page-number">02</div>
   </section>
 
+ <!-- STORY PAGES -->
 
-  <!-- PAGE 3 -->
-  <section class="page">
+    <div id="story-pages"></div> 
 
-    <div class="flower f2">🌸</div>
-    <div class="flower f4">🌼</div>
-
-    <div class="page-inner">
-
-      <div class="divider">❦ ───────── ❦</div>
-
-      <div class="story-title" id="story-title-2"></div>
-
-      <div class="story-author">
-        ✍️ <span id="story-author-2"></span>
-      </div>
-
-      <div class="divider">🌿 ✦ 🌿</div>
-      
-      <div id="story-pages"></div>
-
-
-    </div>
-
-    <div class="page-number">03</div>
-  </section>
 
 </main>
 
@@ -502,6 +480,7 @@ async function loadStory(){
 
 const words = data.content.split(/\s+/);
 let pageText = "";
+let pageNumber = 3;
 
 words.forEach((word, index) => {
 
@@ -509,16 +488,29 @@ words.forEach((word, index) => {
 
   if ((index + 1) % 120 === 0 || index === words.length - 1) {
 
-    const page = document.createElement("div");
-    page.className = "story-page";
+    const page = document.createElement("section");
+    page.className = "page";
 
-    page.textContent = pageText.trim();
+    page.innerHTML = `
+      <div class="page-inner">
+
+        <div class="divider">❦ ───────── ❦</div>
+
+        <div class="story">
+          ${pageText.trim()}
+        </div>
+
+      </div>
+
+      <div class="page-number">${pageNumber}</div>
+    `;
 
     storyPages.appendChild(page);
-   
-    pageText="";
+
+    pageText = "";
+    pageNumber++;
   }
-  
+
 });
 
    document.getElementById("loading").style.display="none";
