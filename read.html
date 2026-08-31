@@ -468,14 +468,9 @@ async function loadStory(){
   document.getElementById("story-title").textContent =
     data.title;
 
-  document.getElementById("story-title-2").textContent =
-    data.title;
-
   document.getElementById("story-author").textContent =
-    data.author_name;
-
-  document.getElementById("story-author-2").textContent =
-    data.author_name;
+  data.author_name;
+  
   const storyPages = document.getElementById("story-pages");
 
 const words = data.content.split(/\s+/);
