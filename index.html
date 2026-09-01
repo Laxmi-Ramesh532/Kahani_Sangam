@@ -72,6 +72,63 @@
   .card .icon{font-size:30px;margin-bottom:8px}
   .card h4{margin:0 0 8px;font-size:19px}
   .card p{margin:0;color:#665a51;font-size:14px}
+ .literature-card{
+  background:#fffdf8;
+  border:1px solid #e6d8c6;
+  border-radius:18px;
+  padding:28px;
+  max-width:700px;
+  margin:25px auto;
+  text-align:center;
+  cursor:pointer;
+  box-shadow:0 8px 20px rgba(91,57,25,.08);
+  transition:transform .2s, box-shadow .2s;
+}
+
+.literature-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 12px 25px rgba(91,57,25,.12);
+}
+
+.literature-card .icon{
+  font-size:42px;
+  margin-bottom:8px;
+}
+
+.literature-card h4{
+  margin:0 0 8px;
+  font-size:24px;
+  color:#5d2f0f;
+}
+
+.literature-card p{
+  margin:0;
+  color:#665a51;
+}
+
+.categories{
+  display:none;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  max-width:700px;
+  margin:20px auto 30px;
+}
+
+.categories button{
+  border:1px solid #e6d8c6;
+  background:#fffdf8;
+  border-radius:12px;
+  padding:14px;
+  font-size:15px;
+  cursor:pointer;
+  color:#5d2f0f;
+}
+
+@media(max-width:560px){
+  .categories{
+    grid-template-columns:1fr 1fr;
+  }
+}
   .flow{
     display:grid;grid-template-columns:repeat(4,1fr);gap:15px;align-items:stretch;
   }
@@ -159,6 +216,20 @@
 <p class="section-intro">
   अपनी पसंद की कहानी चुनें और पढ़ने की एक सुंदर यात्रा शुरू करें।
 </p>
+   <div class="literature-card" onclick="showCategories()">
+  <div class="icon">📚</div>
+  <h4>साहित्य की दुनिया</h4>
+  <p>कहानियाँ, लोककथाएँ, लोकगीत और साहित्य के अनेक रंग…</p>
+</div>
+
+<div id="categories" class="categories">
+  <button>📖 कहानी</button>
+  <button>🌿 लोककथा</button>
+  <button>🎵 लोकगीत</button>
+  <button>🌙 रहस्यमयी कथा</button>
+  <button>🌱 प्रेरणादायक कहानी</button>
+  <button>🏺 ऐतिहासिक कथा</button>
+</div>
    
    <h4>📚 15 वर्ष तक की कहानियाँ</h4>
 <div id="stories-15"></div>
@@ -273,6 +344,18 @@ supabase = window.supabase.createClient(
 });
   }
 }
+  function showCategories(){
+
+  const categories =
+    document.getElementById("categories");
+
+  if(categories.style.display === "grid"){
+    categories.style.display = "none";
+  } else {
+    categories.style.display = "grid";
+  }
+
+  }
 loadStories();
 </script>
 </body>
