@@ -201,6 +201,16 @@ button:disabled{
       <option value="16+">16 वर्ष और अधिक</option>
       
   </select>
+    
+    <label for="chapters">कहानी के भाग / उप-विषय</label>
+<textarea
+  id="chapters"
+  placeholder="उदाहरण:
+भाग 1 — रहस्यमयी शुरुआत
+भाग 2 — अनजानी दुनिया
+भाग 3 — नई दोस्ती
+भाग 4 — घर वापसी"
+></textarea>
 
     <label for="content">अपनी कहानी</label>
     <textarea
@@ -248,8 +258,13 @@ async function submitStory(){
 
   const language =
     document.getElementById("language").value;
+  
   const ageCategory =
   document.getElementById("age_category").value;
+  
+  const chapters =
+  document.getElementById("chapters").value.trim();
+  
 
   const content =
     document.getElementById("content").value.trim();
@@ -278,7 +293,8 @@ async function submitStory(){
           title: title,
           content: content,
           author_name: author,
-          age_category: ageCategory
+          age_category: ageCategory,
+          chapters: chapters
         }
       ])
       .select();
