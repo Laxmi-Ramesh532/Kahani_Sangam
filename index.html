@@ -327,6 +327,7 @@ document.getElementById("stories-16").innerHTML = "";
       <p>${story.content.substring(0, 120)}...</p>
 
       <p>✍️ लेखक: ${story.author_name}</p>
+      <p>🏷️ श्रेणी: ${story.category || "सामान्य"}</p>
 
       <a class="btn primary" href="read.html?id=${story.id}">
         📖 कहानी पढ़ें
