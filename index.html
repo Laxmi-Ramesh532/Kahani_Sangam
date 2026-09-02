@@ -299,12 +299,13 @@ supabase = window.supabase.createClient(
 );
 
  
-  async function loadStories() {
+  async function loadStories(category) {
 
 
   const { data, error } = await supabase
     .from("Story")
     .select("*");
+   console.log("Selected category:", category);
 
   if (error) {
    console.error(error);
@@ -358,8 +359,9 @@ supabase = window.supabase.createClient(
 
   }
   function showCategory(category){
-  alert("आपने चुना: " + category);
+   loadStories(category);
   }
+  
 loadStories();
 </script>
 </body>
