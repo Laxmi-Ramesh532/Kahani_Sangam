@@ -201,6 +201,16 @@ button:disabled{
       <option value="16+">16 वर्ष और अधिक</option>
       
   </select>
+    <label for="category">कहानी की श्रेणी चुनें</label>
+<select id="category">
+  <option value="">श्रेणी चुनें</option>
+  <option value="कहानी">कहानी</option>
+  <option value="लोककथा">लोककथा</option>
+  <option value="लोकगीत">लोकगीत</option>
+  <option value="रहस्यमयी कथा">रहस्यमयी कथा</option>
+  <option value="प्रेरणादायक कहानी">प्रेरणादायक कहानी</option>
+  <option value="ऐतिहासिक कथा">ऐतिहासिक कथा</option>
+</select>
     
     <label for="chapters">कहानी के भाग / उप-विषय</label>
 <textarea
@@ -261,6 +271,8 @@ async function submitStory(){
   
   const ageCategory =
   document.getElementById("age_category").value;
+  const category =
+  document.getElementById("category").value;
   
   const chapters =
   document.getElementById("chapters").value.trim();
@@ -295,6 +307,7 @@ async function submitStory(){
           author_name: author,
           age_category: ageCategory,
           chapters: chapters
+          category:category
         }
       ])
       .select();
