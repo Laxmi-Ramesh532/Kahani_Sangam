@@ -306,6 +306,8 @@ supabase = window.supabase.createClient(
     .from("Story")
     .select("*");
    console.log("Selected category:", category);
+   document.getElementById("stories-15").innerHTML = "";
+document.getElementById("stories-16").innerHTML = "";
 
   if (error) {
    console.error(error);
