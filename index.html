@@ -225,7 +225,7 @@
 <div id="categories" class="categories">
   <button>📖 कहानी</button>
   <button>🌿 लोककथा</button>
-  <button>🎵 लोकगीत</button>
+ <button onclick="showCategory('लोकगीत')">🎵 लोकगीत</button>
   <button>🌙 रहस्यमयी कथा</button>
   <button>🌱 प्रेरणादायक कहानी</button>
   <button>🏺 ऐतिहासिक कथा</button>
@@ -344,18 +344,21 @@ supabase = window.supabase.createClient(
 });
   }
 }
-  alert("showCategories function mil gaya");
+  
   function showCategories(){
 
   const categories =
     document.getElementById("categories");
-
+  
   if(categories.style.display === "grid"){
     categories.style.display = "none";
   } else {
     categories.style.display = "grid";
   }
 
+  }
+  function showCategory(category){
+  alert("आपने चुना: " + category);
   }
 loadStories();
 </script>
