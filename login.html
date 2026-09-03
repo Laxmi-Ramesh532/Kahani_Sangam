@@ -28,18 +28,22 @@
   const SUPABASE_KEY ="sb_publishable_q1J83vS9b3Ngw-Py_QLuzg_ub6pdy3D";
   
     alert("3rd line tak pahunchi");
-    
-    alert(typeof window.supabase);
-    alert("2");
   </script>
+  
   <script>
-  const supabase = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+  alert("createClient se pehle");
 
-  alert("Supabase connect ho gaya");
-</script>
+  try {
+    const supabase = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+    alert("createClient successful");
+  } catch (error) {
+    alert(error.message);
+  }
+  </script>
+  
 
 </body>
 </html>
