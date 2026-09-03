@@ -26,34 +26,31 @@
     alert("ab script shuru ho gayi");
   const SUPABASE_URL = "https://wnvkryudbeafebaluwgq.supabase.co";
   const SUPABASE_KEY ="sb_publishable_q1J83vS9b3Ngw-Py_QLuzg_ub6pdy3D";
-  
-    alert("3rd line tak pahunchi");
+    alert"(line chal rahi hai");
   </script>
-  <script>
+    <script>
   let supabase;
-    alert("let supabase ke bad");
+
+  alert("second script shuru");
 
   try {
-    alert("try ke andr");
     supabase = window.supabase.createClient(
       SUPABASE_URL,
       SUPABASE_KEY
     );
 
-      alert("createClient successful");
+    alert("createClient successful");
 
   } catch (error) {
-    alert(error.message);
+    alert("Supabase Error: " + error.message);
   }
-    </script>
-  <script>
 
 
   // =========================
   // SIGNUP
   // =========================
 
-  document.getElementById("signupBtn").addEventListener("click", async () => {
+  document.getElementById("signupBtn").addEventListener("click", async function () {
 
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
@@ -69,7 +66,7 @@
     });
 
     if (error) {
-      alert(error.message);
+      alert("Signup Error: " + error.message);
       return;
     }
 
@@ -81,7 +78,7 @@
   // LOGIN
   // =========================
 
-  document.getElementById("loginBtn").addEventListener("click", async () => {
+  document.getElementById("loginBtn").addEventListener("click", async function () {
 
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
@@ -97,13 +94,13 @@
     });
 
     if (error) {
-      alert(error.message);
+      alert("Login Error: " + error.message);
       return;
     }
 
     alert("Login successful!");
   });
 
-  </script>
+</script>
 </body>
 </html>
