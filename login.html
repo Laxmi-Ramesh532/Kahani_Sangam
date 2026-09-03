@@ -19,9 +19,9 @@
 
   <input type="password" id="password" placeholder="Password">
   <br><br>
+      <button id="loginBtn">Login</button>
+      <button id="signupBtn">Signup</button>
 
-    <button>Login</button>
-    <button>Signup</button>
   <script>
     alert("ab script shuru ho gayi");
   const SUPABASE_URL = "https://wnvkryudbeafebaluwgq.supabase.co";
@@ -42,6 +42,22 @@
   } catch (error) {
     alert(error.message);
   }
+    signupBtn.addEventListener("click", async () => {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  const { data, error } = await supabase.auth.signUp({
+    email: email,
+    password: password
+  });
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  alert("Signup successful! Email check karo.");
+});
   </script>
   
 
