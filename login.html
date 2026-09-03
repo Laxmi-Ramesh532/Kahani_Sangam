@@ -21,10 +21,17 @@
 
     <button>Login</button>
     <button>Signup</button>
+  <script>
+  const SUPABASE_URL = "https://wnvkryudbeafebaluwgq.supabase.co";
+  const SUPABASE_KEY =
 
-<script>
-  alert("JavaScript चल रही है");
-</script>
+  const supabase = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+  alert("Supabase connect ho gaya");
+  </script>
 
 </body>
 </html>
