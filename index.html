@@ -371,6 +371,27 @@ document.getElementById("stories-16").innerHTML = "";
   function showCategory(category){
    loadStories(category);
   }
+  async function deleteStory(storyId) {
+
+  const confirmDelete = confirm("क्या आप यह कहानी हटाना चाहते हैं?");
+
+  if (!confirmDelete) {
+    return;
+  }
+
+  const { error } = await supabase
+    .from("Story")
+    .delete()
+    .eq("id", storyId);
+
+  if (error) {
+    alert("कहानी हटाई नहीं जा सकी: " + error.message);
+    return;
+  }
+
+  alert("कहानी सफलतापूर्वक हटा दी गई।");
+  loadStories();
+  }
   // Login status check
 async function checkLogin() {
 
