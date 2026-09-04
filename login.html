@@ -29,9 +29,23 @@
   alert("line chal rahi hai");
   </script>
   <script>
-    alert("second chal raha hai");
-    alert("third");
-  alert(typeof supabase);
+  try {
+
+    alert("createClient se pehle");
+
+    supabase = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+    alert("createClient successful");
+
+  } catch (error) {
+
+    alert("Supabase Error: " + error.message);
+
+  }
   </script>
+  
 </body>
 </html>
