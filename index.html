@@ -416,6 +416,25 @@ document.getElementById("stories-16").innerHTML = "";
   function showCategory(category){
    loadStories(category);
   }
+  function showAgeStories(age) {
+
+  alert("Button clicked: " + age);
+
+  const stories15 = document.getElementById("stories-15");
+  const stories16 = document.getElementById("stories-16");
+
+  if (age === "15") {
+    stories15.style.display = "block";
+    stories16.style.display = "none";
+    loadStories("15");
+  }
+
+  if (age === "16+") {
+    stories15.style.display = "none";
+    stories16.style.display = "block";
+    loadStories("16+");
+  }
+  }
   async function deleteStory(storyId) {
 
   const confirmDelete = confirm("क्या आप यह कहानी हटाना चाहते हैं?");
