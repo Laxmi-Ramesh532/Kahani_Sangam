@@ -330,6 +330,9 @@ document.getElementById("stories-16").innerHTML = "";
     
    console.log(data);
    data.forEach(story => {
+    if (category && story.age_category !== (category === "15" ? "15 तक" : "16+")) {
+  return;
+    }
 
   let storyHTML = `
 
