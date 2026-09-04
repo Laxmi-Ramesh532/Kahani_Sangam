@@ -259,6 +259,14 @@ window.supabase.createClient(
 );
 
 async function submitStory(){
+  const { data: { session } } =
+  await supabaseClient.auth.getSession();
+
+if (!session) {
+  alert("कहानी प्रकाशित करने के लिए पहले Login करें।");
+  window.location.href = "login.html";
+  return;
+}
 
   const author =
     document.getElementById("author").value.trim();
