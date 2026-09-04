@@ -315,7 +315,8 @@ if (!session) {
           author_name: author,
           age_category: ageCategory,
           chapters: chapters,
-          category:category
+          category:category,
+          user_id: (await supabaseClient.auth.getUser()).data.user.id
         }
       ])
       .select();
