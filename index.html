@@ -365,6 +365,26 @@ document.getElementById("stories-16").innerHTML = "";
   function showCategory(category){
    loadStories(category);
   }
+  // Login status check
+async function checkLogin() {
+
+  const { data: { session } } = await supabase.auth.getSession();
+
+  const loginButton = document.querySelector('a[href="login.html"]');
+
+  if (session && loginButton) {
+    loginButton.textContent = "Logout";
+    loginButton.removeAttribute("href");
+
+    loginButton.addEventListener("click", async function () {
+      await supabase.auth.signOut();
+      alert("Logout successful!");
+      window.location.reload();
+    });
+  }
+}
+
+checkLogin();
   
 loadStories();
 </script>
