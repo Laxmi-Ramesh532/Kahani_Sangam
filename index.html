@@ -164,6 +164,37 @@
     .cards,.flow{grid-template-columns:1fr}
     .cta{flex-direction:column;align-items:flex-start}
   }
+ .age-boxes{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+  max-width:700px;
+  margin:30px auto;
+}
+
+.age-boxes button{
+  width:100%;
+  min-height:120px;
+  border:1px solid #e6d8c6;
+  background:#fffdf8;
+  border-radius:18px;
+  padding:25px 15px;
+  font-size:20px;
+  font-weight:700;
+  cursor:pointer;
+  color:#5d2f0f;
+  box-shadow:0 8px 20px rgba(91,57,25,.08);
+}
+
+.age-boxes button:hover{
+  transform:translateY(-3px);
+}
+
+@media(max-width:560px){
+  .age-boxes{
+    grid-template-columns:1fr;
+  }
+}
 </style>
  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
