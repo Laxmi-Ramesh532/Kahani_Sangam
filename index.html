@@ -301,6 +301,7 @@ supabase = window.supabase.createClient(
 
  
   async function loadStories(category) {
+   const { data: { user } } = await supabase.auth.getUser();
 
 
   const { data, error } = await supabase
@@ -333,6 +334,11 @@ document.getElementById("stories-16").innerHTML = "";
       <a class="btn primary" href="read.html?id=${story.id}">
         📖 कहानी पढ़ें
       </a>
+      ${user && story.user_id === user.id ? `
+  <button class="btn secondary" onclick="deleteStory('${story.id}')">
+    🗑️ कहानी हटाएँ
+  </button>
+` : ""}
 
     </article>
 
