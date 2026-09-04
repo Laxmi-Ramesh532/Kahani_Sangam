@@ -231,12 +231,23 @@
   <button>🌱 प्रेरणादायक कहानी</button>
   <button>🏺 ऐतिहासिक कथा</button>
 </div>
-   
-   <h4>📚 15 वर्ष तक की कहानियाँ</h4>
-<div id="stories-15"></div>
 
-<h4>📖 16 वर्ष और अधिक की कहानियाँ</h4>
-<div id="stories-16"></div>
+   <div class="age-boxes">
+
+  <button onclick="showAgeStories('15')">
+    📚 15 वर्ष तक
+  </button>
+
+  <button onclick="showAgeStories('16+')">
+    📖 16 वर्ष और अधिक
+  </button>
+
+</div>
+
+<div id="stories-15" style="display:none;"></div>
+
+<div id="stories-16" style="display:none;"></div>
+   
    
     <div class="cards">
       <article class="card">
