@@ -257,6 +257,56 @@ window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
+  async function loadStoryForEdit() {
+
+  const params = new URLSearchParams(window.location.search);
+  const storyId = params.get("edit");
+
+  if (!storyId) {
+    return;
+  }
+
+  const { data: { session } } =
+    await supabaseClient.auth.getSession();
+
+  if (!session) {
+    alert("कहानी edit करने के लिए पहले Login करें।");
+    window.location.href = "login.html";
+    return;
+  }
+
+  const { data: story, error } =
+    await supabaseClient
+      .from("Story")
+      .select("*")
+      .eq("id", storyId)
+      .single();
+
+  if (error) {
+    console.log(error);
+    alert("कहानी की जानकारी नहीं मिल सकी।");
+    return;
+  }
+
+  if (story.user_id !== session.user.id) {
+    alert("आप इस कहानी को edit नहीं कर सकते।");
+    window.location.href = "index.html";
+    return;
+  }
+
+  document.getElementById("author").value = story.author_name || "";
+  document.getElementById("title").value = story.title || "";
+  document.getElementById("language").value = story.language || "";
+  document.getElementById("age_category").value = story.age_category || "";
+  document.getElementById("category").value = story.category || "";
+  document.getElementById("chapters").value = story.chapters || "";
+  document.getElementById("content").value = story.content || "";
+
+  document.getElementById("submitBtn").textContent =
+    "💾 कहानी अपडेट करें";
+}
+
+loadStoryForEdit();
 
 async function submitStory(){
   const { data: { session } } =
@@ -304,38 +354,74 @@ if (!session) {
 
   button.disabled = true;
   button.textContent = "⏳ कहानी सेव हो रही है...";
+  const params = new URLSearchParams(window.location.search);
+const editId = params.get("edit");
 
-  const { data, error } =
-    await supabaseClient
-      .from("Story")
-      .insert([
-        {
-          title: title,
-          content: content,
-          author_name: author,
-          age_category: ageCategory,
-          chapters: chapters,
-          category:category,
-          user_id: (await supabaseClient.auth.getUser()).data.user.id
-        }
-      ])
-      .select();
+let data;
+let error;
 
+if (editId) {
+
+  const result = await supabaseClient
+    .from("Story")
+    .update({
+      title: title,
+      content: content,
+      author_name: author,
+      age_category: ageCategory,
+      chapters: chapters,
+      category: category
+    })
+    .eq("id", editId)
+    .select();
+
+  data = result.data;
+  error = result.error;
+
+} else {
+
+  const result = await supabaseClient
+    .from("Story")
+    .insert([
+      {
+        title: title,
+        content: content,
+        author_name: author,
+        age_category: ageCategory,
+        chapters: chapters,
+        category: category,
+        user_id: (await supabaseClient.auth.getUser()).data.user.id
+      }
+    ])
+    .select();
+
+  data = result.data;
+  error = result.error;
+}
   if(error){
 
-    console.log(error);
-
-    message.textContent =
-      "कहानी सेव नहीं हो सकी। कृपया दोबारा कोशिश करें।";
-
-    button.disabled = false;
-    button.textContent = "📖 कहानी प्रकाशित करें";
-
-    return;
-  }
+  console.log(error);
 
   message.textContent =
+    editId
+      ? "कहानी अपडेट नहीं हो सकी। कृपया दोबारा कोशिश करें।"
+      : "कहानी सेव नहीं हो सकी। कृपया दोबारा कोशिश करें।";
+
+  button.disabled = false;
+  button.textContent =
+    editId
+      ? "💾 कहानी अपडेट करें"
+      : "📖 कहानी प्रकाशित करें";
+
+  return;
+  }
+  if (editId) {
+  message.textContent =
+    "✅ आपकी कहानी सफलतापूर्वक अपडेट हो गई!";
+} else {
+  message.textContent =
     "🎉 आपकी कहानी सफलतापूर्वक प्रकाशित हो गई!";
+  }
 
   document.getElementById("author").value = "";
   document.getElementById("title").value = "";
