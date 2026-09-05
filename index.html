@@ -380,6 +380,10 @@ document.getElementById("stories-16").innerHTML = "";
         📖 कहानी पढ़ें
       </a>
       ${user && story.user_id === user.id ? `
+  <a class="btn secondary" href="writers-register.html?edit=${story.id}">
+    ✏️ कहानी संपादित करें
+  </a>
+
   <button class="btn secondary" onclick="deleteStory('${story.id}')">
     🗑️ कहानी हटाएँ
   </button>
