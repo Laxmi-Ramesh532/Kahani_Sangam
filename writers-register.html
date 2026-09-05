@@ -364,6 +364,42 @@ if (!session) {
   button.textContent = "⏳ कहानी सेव हो रही है...";
   const params = new URLSearchParams(window.location.search);
 const editId = params.get("edit");
+  let imageUrl = null;
+
+if (imageFile) {
+
+  const fileExt = imageFile.name.split(".").pop();
+  const fileName = `${crypto.randomUUID()}.${fileExt}`;
+
+  const { error: uploadError } =
+    await supabaseClient
+      .storage
+      .from("story-images")
+      .upload(fileName, imageFile);
+
+  if (uploadError) {
+    console.log(uploadError);
+
+    message.textContent =
+      "चित्र upload नहीं हो सका। कृपया दोबारा कोशिश करें।";
+
+    button.disabled = false;
+    button.textContent =
+      editId
+        ? "💾 कहानी अपडेट करें"
+        : "📖 कहानी प्रकाशित करें";
+
+    return;
+  }
+
+  const { data: publicUrlData } =
+    supabaseClient
+      .storage
+      .from("story-images")
+      .getPublicUrl(fileName);
+
+  imageUrl = publicUrlData.publicUrl;
+}
 
 let data;
 let error;
@@ -398,6 +434,7 @@ if (editId) {
         age_category: ageCategory,
         chapters: chapters,
         category: category,
+        image_url: imageUrl,
         user_id: (await supabaseClient.auth.getUser()).data.user.id
       }
     ])
