@@ -512,10 +512,21 @@ async function loadStory(){
 
   document.getElementById("story-author").textContent =
   data.author_name;
-  
+  const storyImage = document.createElement("img");
+
+if (data.image_url) {
+  storyImage.src = data.image_url;
+  storyImage.className = "story-image";
+  storyImage.alt = "कहानी का चित्र";
+}
   const storyPages = document.getElementById("story-pages");
 
+if (data.image_url) {
+  storyPages.appendChild(storyImage);
+}
+
 const words = data.content.split(/\s+/);
+  
 let pageText = "";
 let pageNumber = 3;
   
