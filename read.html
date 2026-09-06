@@ -521,65 +521,165 @@ async function loadStory(){
 
   document.getElementById("story-author").textContent =
   data.author_name;
-  const storyImage = document.createElement("img");
+   const storyPages =
+  document.getElementById("story-pages");
 
-if (data.image_url) {
-  storyImage.src = data.image_url;
-  storyImage.className = "story-image";
-  storyImage.alt = "कहानी का चित्र";
-}
-  const storyPages = document.getElementById("story-pages");
+const isKidsStory =
+  data.age_category === "15 तक";
 
-if (data.image_url) {
-  storyPages.appendChild(storyImage);
-}
+const wordsPerPage =
+  isKidsStory ? 120 : 400;
 
-const words = data.content.split(/\s+/);
-  
-let pageText = "";
+const contentHTML =
+  data.content || "";
+
+const parser = new DOMParser();
+
+const doc =
+  parser.parseFromString(
+    contentHTML,
+    "text/html"
+  );
+
+const nodes =
+  Array.from(doc.body.childNodes);
+
 let pageNumber = 3;
-  
-  const wordsPerPage = data.age_category === "15 तक" ? 120 : 400;
-  const isKidsStory = data.age_category === "15 तक";
+let wordCount = 0;
+let currentPageContent = "";
 
-words.forEach((word, index) => {
+function createPage(html) {
 
-  pageText += word + " ";
-  
-  if ((index + 1) % wordsPerPage === 0 || index === words.length - 1) {
-    
-    const page = document.createElement("section");
-page.className = isKidsStory ? "page kids-page" : "page";
+  const page =
+    document.createElement("section");
 
-    page.innerHTML = `
+  page.className =
+    isKidsStory
+      ? "page kids-page"
+      : "page";
+
+  page.innerHTML = `
     <div class="watermark">Laxmi-Ramesh</div>
-    
-      <div class="page-inner">
 
-        <div class="divider">❦ ───────── ❦</div>
+    <div class="page-inner">
 
-        <div class="story">
-          ${pageText.trim()}
-        </div>
-
+      <div class="divider">
+        ❦ ───────── ❦
       </div>
 
-      <div class="page-number">${pageNumber}</div>
-    `;
+      <div class="story">
+        ${html}
+      </div>
 
-    storyPages.appendChild(page);
+    </div>
 
-    pageText = "";
-    pageNumber++;
+    <div class="page-number">
+      ${pageNumber}
+    </div>
+  `;
+
+  storyPages.appendChild(page);
+
+  pageNumber++;
+}
+
+
+nodes.forEach(node => {
+
+  if (node.nodeType === Node.TEXT_NODE) {
+
+    const words =
+      node.textContent
+        .split(/\s+/)
+        .filter(Boolean);
+
+    words.forEach(word => {
+
+      currentPageContent +=
+        word + " ";
+
+      wordCount++;
+
+      if (wordCount >= wordsPerPage) {
+
+        createPage(
+          currentPageContent.trim()
+        );
+
+        currentPageContent = "";
+
+        wordCount = 0;
+      }
+    });
+
+  }
+
+  else if (node.nodeType === Node.ELEMENT_NODE) {
+
+    if (node.tagName === "IMG") {
+
+      if (currentPageContent.trim()) {
+
+        createPage(
+          currentPageContent.trim()
+        );
+
+        currentPageContent = "";
+
+        wordCount = 0;
+      }
+
+      const image =
+        node.cloneNode(true);
+
+      image.classList.add(
+        "story-image"
+      );
+
+      createPage(
+        image.outerHTML
+      );
+
+    }
+
+    else {
+
+      const text =
+        node.textContent.trim();
+
+      if (text) {
+
+        currentPageContent +=
+          `<p>${text}</p>`;
+
+        wordCount +=
+          text
+            .split(/\s+/)
+            .filter(Boolean)
+            .length;
+      }
+    }
   }
 
 });
 
-   document.getElementById("loading").style.display="none";
 
-  document.getElementById("book").style.display="block";
+if (currentPageContent.trim()) {
 
-  document.getElementById("controls").style.display="block";
+  createPage(
+    currentPageContent.trim()
+  );
+}
+
+
+document.getElementById("loading").style.display =
+  "none";
+
+document.getElementById("book").style.display =
+  "block";
+
+document.getElementById("controls").style.display =
+  "block";
 }
 
 loadStory();
