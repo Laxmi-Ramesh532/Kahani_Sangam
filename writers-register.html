@@ -747,6 +747,59 @@ cropSelection.addEventListener("pointerup", function() {
   isDraggingCrop = false;
 
 });
+  function applyCrop() {
+
+  alert("OK button काम कर रहा है");
+
+  const cropImage =
+    document.getElementById("cropImage");
+
+  const cropSelection =
+    document.getElementById("cropSelection");
+
+  const selectedImage =
+    document.getElementById("selectedImage");
+
+  alert("crop elements मिल गए");
+
+  if (!cropImage || !cropSelection || !selectedImage) {
+    alert("जरूरी image element नहीं मिला");
+    return;
+  }
+
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+
+  const scaleX = cropImage.naturalWidth / cropImage.clientWidth;
+  const scaleY = cropImage.naturalHeight / cropImage.clientHeight;
+
+  const x = cropSelection.offsetLeft * scaleX;
+  const y = cropSelection.offsetTop * scaleY;
+
+  const width = cropSelection.offsetWidth * scaleX;
+  const height = cropSelection.offsetHeight * scaleY;
+
+  canvas.width = width;
+  canvas.height = height;
+
+  ctx.drawImage(
+    cropImage,
+    x,
+    y,
+    width,
+    height,
+    0,
+    0,
+    width,
+    height
+  );
+
+  selectedImage.src = canvas.toDataURL("image/png");
+
+  document.getElementById("cropModal").style.display = "none";
+
+  alert("Crop सफल हुआ");
+  }
   function closeCrop() {
   document.getElementById("cropModal").style.display = "none";
   }
