@@ -105,6 +105,25 @@ textarea{
   resize:vertical;
   line-height:1.9;
 }
+  .story-editor{
+  width:100%;
+  min-height:300px;
+  padding:13px;
+  border:1px solid #cdb083;
+  border-radius:9px;
+  background:#fffaf1;
+  color:#3f2b1d;
+  font-size:16px;
+  font-family:inherit;
+  line-height:1.9;
+  outline:none;
+  overflow-y:auto;
+}
+
+.story-editor:empty::before{
+  content:attr(data-placeholder);
+  color:#999;
+}
 
 button{
   display:block;
@@ -221,18 +240,35 @@ button:disabled{
 भाग 3 — नई दोस्ती
 भाग 4 — घर वापसी"
 ></textarea>
-
     <label for="content">अपनी कहानी</label>
-    <textarea
-      id="content"
-      placeholder="यहाँ अपनी पूरी कहानी लिखें..."
-    ></textarea>
+
+<div
+  id="content"
+  contenteditable="true"
+  class="story-editor"
+  data-placeholder="यहाँ अपनी पूरी कहानी लिखें..."
+></div>
+
+    
     <label for="storyImage">कहानी के लिए चित्र (वैकल्पिक)</label>
 <input
   id="storyImage"
   type="file"
   accept="image/*"
 >
+      <div style="text-align:center; margin-top:10px;">
+  <button type="button" onclick="changeImageSize('small')">
+    छोटा
+  </button>
+
+  <button type="button" onclick="changeImageSize('medium')">
+    मध्यम
+  </button>
+
+  <button type="button" onclick="changeImageSize('large')">
+    बड़ा
+  </button>
+      </div>
 
     <button id="submitBtn" onclick="submitStory()">
       📖 कहानी प्रकाशित करें
@@ -333,6 +369,13 @@ document
     image.onclick = function () {
       selectedImage = image;
     };
+    editor.addEventListener("click", function (event) {
+
+  if (event.target.tagName === "IMG") {
+    selectedImage = event.target;
+  }
+
+});
 
     editor.focus();
 
