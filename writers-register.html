@@ -263,6 +263,143 @@ window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
+  let selectedImage = null;
+let savedRange = null;
+
+const editor = document.getElementById("content");
+
+function saveSelection() {
+  const selection = window.getSelection();
+
+  if (selection.rangeCount > 0) {
+    const range = selection.getRangeAt(0);
+
+    if (editor.contains(range.commonAncestorContainer)) {
+      savedRange = range.cloneRange();
+    }
+  }
+}
+
+editor.addEventListener("blur", saveSelection);
+
+document
+  .getElementById("storyImage")
+  .addEventListener("change", async function () {
+
+    const file = this.files[0];
+
+    if (!file) return;
+
+    const fileExt =
+      file.name.split(".").pop();
+
+    const fileName =
+      `${crypto.randomUUID()}.${fileExt}`;
+
+    const { error: uploadError } =
+      await supabaseClient
+        .storage
+        .from("story-images")
+        .upload(fileName, file);
+
+    if (uploadError) {
+      console.log(uploadError);
+      alert(
+        "चित्र upload नहीं हो सका। कृपया दोबारा कोशिश करें।"
+      );
+      return;
+    }
+
+    const { data: publicUrlData } =
+      supabaseClient
+        .storage
+        .from("story-images")
+        .getPublicUrl(fileName);
+
+    const image =
+      document.createElement("img");
+
+    image.src =
+      publicUrlData.publicUrl;
+
+    image.className =
+      "story-editor-image";
+
+    image.style.width = "60%";
+    image.style.maxWidth = "100%";
+    image.style.display = "block";
+    image.style.margin = "15px auto";
+
+    image.onclick = function () {
+      selectedImage = image;
+    };
+
+    editor.focus();
+
+    if (savedRange) {
+
+      const selection =
+        window.getSelection();
+
+      selection.removeAllRanges();
+
+      selection.addRange(savedRange);
+
+      savedRange = null;
+    }
+
+    const selection =
+      window.getSelection();
+
+    if (selection.rangeCount > 0) {
+
+      const range =
+        selection.getRangeAt(0);
+
+      range.deleteContents();
+
+      range.insertNode(image);
+
+      range.setStartAfter(image);
+
+      range.collapse(true);
+
+      selection.removeAllRanges();
+
+      selection.addRange(range);
+
+    } else {
+
+      editor.appendChild(image);
+    }
+
+    this.value = "";
+  });
+
+
+function changeImageSize(size) {
+
+  if (!selectedImage) {
+
+    alert(
+      "पहले कहानी में किसी चित्र पर टैप करें।"
+    );
+
+    return;
+  }
+
+  if (size === "small") {
+    selectedImage.style.width = "30%";
+  }
+
+  if (size === "medium") {
+    selectedImage.style.width = "60%";
+  }
+
+  if (size === "large") {
+    selectedImage.style.width = "90%";
+  }
+}
   async function loadStoryForEdit() {
 
   const params = new URLSearchParams(window.location.search);
@@ -306,7 +443,7 @@ window.supabase.createClient(
   document.getElementById("age_category").value = story.age_category || "";
   document.getElementById("category").value = story.category || "";
   document.getElementById("chapters").value = story.chapters || "";
-  document.getElementById("content").value = story.content || "";
+  document.getElementById("content").innerHTML= story.content || "";
 
   document.getElementById("submitBtn").textContent =
     "💾 कहानी अपडेट करें";
@@ -343,7 +480,7 @@ if (!session) {
   
 
   const content =
-    document.getElementById("content").value.trim();
+    document.getElementById("content").innerHTML.trim();
 
   const message =
     document.getElementById("message");
@@ -430,7 +567,7 @@ if (editId) {
 
   document.getElementById("author").value = "";
   document.getElementById("title").value = "";
-  document.getElementById("content").value = "";
+  document.getElementById("content").innerHTML = "";
 
   button.disabled = false;
   button.textContent = "📖 कहानी प्रकाशित करें";
