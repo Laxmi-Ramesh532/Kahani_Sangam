@@ -333,6 +333,32 @@ button:disabled{
   </section>
 
 </main>
+  <div id="cropModal" class="crop-modal">
+
+  <div class="crop-box">
+
+    <h3>✂️ चित्र काटें</h3>
+
+    <div class="crop-area" id="cropArea">
+      <img id="cropImage" src="" alt="Crop">
+      <div id="cropSelection"></div>
+    </div>
+
+    <div class="crop-buttons">
+
+      <button type="button" onclick="applyCrop()">
+        ✅ ठीक है
+      </button>
+
+      <button type="button" onclick="closeCrop()">
+        ❌ रद्द करें
+      </button>
+
+    </div>
+
+  </div>
+
+  </div>
 
 <script>
 
