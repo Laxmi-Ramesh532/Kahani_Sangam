@@ -457,6 +457,7 @@ alert("cropImage ढूँढने वाला हूँ");
 
   const cropImage =
     document.getElementById("cropImage");
+      cropImage.crossOrigin = "anonymous";
 
   cropImage.src = image.src;
       alert("image source set हो गया");
