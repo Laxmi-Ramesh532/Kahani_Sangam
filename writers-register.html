@@ -416,11 +416,16 @@ document
     image.style.maxWidth = "100%";
     image.style.display = "block";
     image.style.margin = "15px auto";
-
     image.onclick = function () {
-      selectedImage = image;
-    };
+  selectedImage = image;
 
+  const cropImage =
+    document.getElementById("cropImage");
+
+  cropImage.src = image.src;
+
+  document.getElementById("cropModal").style.display = "flex";
+};
     editor.focus();
 
     if (savedRange) {
