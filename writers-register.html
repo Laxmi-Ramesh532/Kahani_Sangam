@@ -416,8 +416,10 @@ document
     image.style.maxWidth = "100%";
     image.style.display = "block";
     image.style.margin = "15px auto";
-    image.onclick = function () {
-      alert("चित्र पर क्लिक हुआ");
+    image.onclick = function (event) {
+  event.stopPropagation();
+
+  alert("चित्र पर क्लिक हुआ");
       
   selectedImage = image;
 
