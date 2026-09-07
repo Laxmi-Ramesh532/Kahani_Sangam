@@ -420,8 +420,13 @@ document
   event.stopPropagation();
 
   alert("चित्र पर क्लिक हुआ");
+      alert("selectedImage set होने वाला है");
+
+selectedImage = image;
+
+alert("selectedImage set हो गया");
       
-  selectedImage = image;
+  
 
   const cropImage =
     document.getElementById("cropImage");
