@@ -278,16 +278,24 @@ button:disabled{
   <option value="प्रेरणादायक कहानी">प्रेरणादायक कहानी</option>
   <option value="ऐतिहासिक कथा">ऐतिहासिक कथा</option>
 </select>
-    
-    <label for="chapters">कहानी के भाग / उप-विषय</label>
+
+    <label for="episode_title">Episode 1 का नाम</label>
+<input
+  id="episode_title"
+  type="text"
+  placeholder="उदाहरण: देवगढ़ की सुनयना"
+>
+
+<label for="subtopics">Episode 1 के उप-विषय</label>
 <textarea
-  id="chapters"
+  id="subtopics"
   placeholder="उदाहरण:
-भाग 1 — रहस्यमयी शुरुआत
-भाग 2 — अनजानी दुनिया
-भाग 3 — नई दोस्ती
-भाग 4 — घर वापसी"
+रहस्यमयी शुरुआत
+देवगढ़ का जीवन
+जंगल के पीछे की चमक"
 ></textarea>
+    
+    
     <label for="content">अपनी कहानी</label>
 
 <div
@@ -608,13 +616,16 @@ if (!session) {
   document.getElementById("age_category").value;
   const category =
   document.getElementById("category").value;
-  
-  const chapters =
-  document.getElementById("chapters").value.trim();
-  
 
-  const content =
-    document.getElementById("content").innerHTML.trim();
+const episodeTitle =
+  document.getElementById("episode_title").value.trim();
+
+const subtopics =
+  document.getElementById("subtopics").value.trim();
+
+const content =
+  document.getElementById("content").innerHTML.trim();
+  
 
   const message =
     document.getElementById("message");
@@ -646,7 +657,6 @@ if (editId) {
       content: content,
       author_name: author,
       age_category: ageCategory,
-      chapters: chapters,
       category: category
     })
     .eq("id", editId)
@@ -654,8 +664,7 @@ if (editId) {
 
   data = result.data;
   error = result.error;
-
-} else {
+  } else {
 
   const result = await supabaseClient
     .from("Story")
@@ -665,16 +674,45 @@ if (editId) {
         content: content,
         author_name: author,
         age_category: ageCategory,
-        chapters: chapters,
         category: category,
         user_id: (await supabaseClient.auth.getUser()).data.user.id
       }
     ])
-    .select();
+    .select()
+    .single();
 
   data = result.data;
   error = result.error;
-}  if(error){
+
+}if (!error && data) {
+
+    const episodeResult =
+      await supabaseClient
+        .from("Episodes")
+        .insert([
+          {
+            story_id: data.id,
+            episode_no: 1,
+            episode_title: episodeTitle,
+            subtopics: subtopics,
+            content: content,
+            user_id: session.user.id
+          }
+        ]);
+
+    if (episodeResult.error) {
+      console.log(episodeResult.error);
+
+      message.textContent =
+        "कहानी बन गई, लेकिन Episode 1 सेव नहीं हो सका।";
+
+      button.disabled = false;
+      button.textContent = "📖 कहानी प्रकाशित करें";
+
+      return;
+    }
+  }
+}if(error){
 
   console.log(error);
 
