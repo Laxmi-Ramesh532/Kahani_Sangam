@@ -533,7 +533,8 @@ const wordsPerPage =
 const contentHTML =
   data.content || "";
 
-const parser = new DOMParser();
+const parser =
+  new DOMParser();
 
 const doc =
   parser.parseFromString(
@@ -541,12 +542,12 @@ const doc =
     "text/html"
   );
 
-const nodes =
-  Array.from(doc.body.childNodes);
-
 let pageNumber = 3;
-let wordCount = 0;
 let currentPageContent = "";
+let wordCount = 0;
+
+
+/* नया page बनाने का function */
 
 function createPage(html) {
 
@@ -559,7 +560,9 @@ function createPage(html) {
       : "page";
 
   page.innerHTML = `
-    <div class="watermark">Laxmi-Ramesh</div>
+    <div class="watermark">
+      Laxmi-Ramesh
+    </div>
 
     <div class="page-inner">
 
@@ -584,7 +587,35 @@ function createPage(html) {
 }
 
 
+/* एक शब्द जोड़ने का function */
+
+function addWord(word) {
+
+  currentPageContent +=
+    word + " ";
+
+  wordCount++;
+
+  if (wordCount >= wordsPerPage) {
+
+    createPage(
+      currentPageContent.trim()
+    );
+
+    currentPageContent = "";
+    wordCount = 0;
+  }
+}
+
+
+/* कहानी के सभी elements पढ़ना */
+
+const nodes =
+  Array.from(doc.body.childNodes);
+
 nodes.forEach(node => {
+
+  /* सामान्य text */
 
   if (node.nodeType === Node.TEXT_NODE) {
 
@@ -594,38 +625,31 @@ nodes.forEach(node => {
         .filter(Boolean);
 
     words.forEach(word => {
-
-      currentPageContent +=
-        word + " ";
-
-      wordCount++;
-
-      if (wordCount >= wordsPerPage) {
-
-        createPage(
-          currentPageContent.trim()
-        );
-
-        currentPageContent = "";
-
-        wordCount = 0;
-      }
+      addWord(word);
     });
 
   }
 
-  else if (node.nodeType === Node.ELEMENT_NODE) {
+
+  /* HTML elements */
+
+  else if (
+    node.nodeType === Node.ELEMENT_NODE
+  ) {
+
+    /* अगर image है */
 
     if (node.tagName === "IMG") {
 
-      if (currentPageContent.trim()) {
+      if (
+        currentPageContent.trim()
+      ) {
 
         createPage(
           currentPageContent.trim()
         );
 
         currentPageContent = "";
-
         wordCount = 0;
       }
 
@@ -642,33 +666,44 @@ nodes.forEach(node => {
 
     }
 
+
+    /* paragraph या दूसरा text element */
+
     else {
 
       const text =
         node.textContent.trim();
 
-      if (text) {
+      if (!text) return;
 
-        currentPageContent +=
-          `<p>${text}</p>`;
+      const words =
+        text
+          .split(/\s+/)
+          .filter(Boolean);
 
-        wordCount +=
-          text
-            .split(/\s+/)
-            .filter(Boolean)
-            .length;
-      }
+      words.forEach(word => {
+
+        addWord(word);
+
+      });
+
     }
+
   }
 
 });
 
 
-if (currentPageContent.trim()) {
+/* बचा हुआ text */
+
+if (
+  currentPageContent.trim()
+) {
 
   createPage(
     currentPageContent.trim()
   );
+
 }
 
 
@@ -680,6 +715,7 @@ document.getElementById("book").style.display =
 
 document.getElementById("controls").style.display =
   "block";
+
 }
 
 loadStory();
