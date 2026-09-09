@@ -593,6 +593,7 @@ function changeImageSize(size) {
 loadStoryForEdit();
 
 async function submitStory(){
+  alert("submit");
   const { data: { session } } =
   await supabaseClient.auth.getSession();
 
