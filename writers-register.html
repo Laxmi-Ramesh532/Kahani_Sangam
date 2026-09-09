@@ -367,7 +367,7 @@ button:disabled{
   </div>
 
   </div>
-
+```html
 <script>
 
 const SUPABASE_URL =
@@ -381,143 +381,282 @@ window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
-  let selectedImage = null;
+
+
+let selectedImage = null;
 let savedRange = null;
 
-const editor = document.getElementById("content");
+const editor =
+  document.getElementById("content");
+
+
+/* =========================
+   TEXT SELECTION
+========================= */
 
 function saveSelection() {
-  const selection = window.getSelection();
+
+  const selection =
+    window.getSelection();
 
   if (selection.rangeCount > 0) {
-    const range = selection.getRangeAt(0);
 
-    if (editor.contains(range.commonAncestorContainer)) {
-      savedRange = range.cloneRange();
+    const range =
+      selection.getRangeAt(0);
+
+    if (
+      editor.contains(
+        range.commonAncestorContainer
+      )
+    ) {
+
+      savedRange =
+        range.cloneRange();
     }
   }
 }
 
-editor.addEventListener("blur", saveSelection);
-  editor.addEventListener("mousedown", function () {
-  saveSelection();
-});
+editor.addEventListener(
+  "blur",
+  saveSelection
+);
+
+editor.addEventListener(
+  "mousedown",
+  function () {
+    saveSelection();
+  }
+);
+
+
+/* =========================
+   IMAGE UPLOAD
+========================= */
 
 document
   .getElementById("storyImage")
-  .addEventListener("change", async function () {
+  .addEventListener(
+    "change",
+    async function () {
 
-    const file = this.files[0];
+      const file =
+        this.files[0];
 
-    if (!file) return;
+      if (!file) return;
 
-    const fileExt =
-      file.name.split(".").pop();
 
-    const fileName =
-      `${crypto.randomUUID()}.${fileExt}`;
+      const fileExt =
+        file.name
+          .split(".")
+          .pop();
 
-    const { error: uploadError } =
-      await supabaseClient
-        .storage
-        .from("story-images")
-        .upload(fileName, file);
 
-    if (uploadError) {
-      console.log(uploadError);
-      alert(
-        "चित्र upload नहीं हो सका। कृपया दोबारा कोशिश करें।"
+      const fileName =
+        `${crypto.randomUUID()}.${fileExt}`;
+
+
+      const { error: uploadError } =
+        await supabaseClient
+          .storage
+          .from("story-images")
+          .upload(
+            fileName,
+            file
+          );
+
+
+      if (uploadError) {
+
+        console.log(uploadError);
+
+        alert(
+          "चित्र upload नहीं हो सका। कृपया दोबारा कोशिश करें।"
+        );
+
+        return;
+      }
+
+
+      const { data: publicUrlData } =
+        supabaseClient
+          .storage
+          .from("story-images")
+          .getPublicUrl(
+            fileName
+          );
+
+
+      const image =
+        document.createElement("img");
+
+
+      image.src =
+        publicUrlData.publicUrl;
+
+
+      image.className =
+        "story-editor-image";
+
+
+      image.style.width =
+        "60%";
+
+      image.style.maxWidth =
+        "100%";
+
+      image.style.display =
+        "block";
+
+      image.style.margin =
+        "15px auto";
+
+
+      /* =========================
+         IMAGE CLICK
+      ========================= */
+
+      image.addEventListener(
+        "click",
+        function (event) {
+
+          event.preventDefault();
+          event.stopPropagation();
+
+          selectedImage =
+            image;
+
+
+          const cropImage =
+            document.getElementById(
+              "cropImage"
+            );
+
+
+          if (!cropImage) {
+
+            alert(
+              "Crop image element नहीं मिला।"
+            );
+
+            return;
+          }
+
+
+          cropImage.crossOrigin =
+            "anonymous";
+
+
+          cropImage.src =
+            image.src;
+
+
+          document.getElementById(
+            "cropModal"
+          ).style.display =
+            "flex";
+
+
+          /* image load होने के बाद
+             crop selection को center में रखें */
+
+          cropImage.onload =
+            function () {
+
+              const cropSelection =
+                document.getElementById(
+                  "cropSelection"
+                );
+
+              if (!cropSelection)
+                return;
+
+
+              cropSelection.style.left =
+                "20px";
+
+              cropSelection.style.top =
+                "20px";
+            };
+        }
       );
-      return;
-    }
 
-    const { data: publicUrlData } =
-      supabaseClient
-        .storage
-        .from("story-images")
-        .getPublicUrl(fileName);
 
-    const image =
-      document.createElement("img");
+      /* =========================
+         INSERT IMAGE INTO EDITOR
+      ========================= */
 
-    image.src =
-      publicUrlData.publicUrl;
+      editor.focus();
 
-    image.className =
-      "story-editor-image";
 
-    image.style.width = "60%";
-    image.style.maxWidth = "100%";
-    image.style.display = "block";
-    image.style.margin = "15px auto";
-    image.onclick = function (event) {
-  event.stopPropagation();
+      if (savedRange) {
 
-  alert("चित्र पर क्लिक हुआ");
-      alert("selectedImage set होने वाला है");
+        const selection =
+          window.getSelection();
 
-selectedImage = image;
 
-alert("selectedImage set हो गया");
-alert("cropImage ढूँढने वाला हूँ"); 
-      
-  
+        selection.removeAllRanges();
 
-  const cropImage =
-    document.getElementById("cropImage");
-      cropImage.crossOrigin = "anonymous";
 
-  cropImage.src = image.src;
-      alert("image source set हो गया");
-      alert("cropImage मिल गया");
+        selection.addRange(
+          savedRange
+        );
 
-  document.getElementById("cropModal").style.display = "flex";
-      
-  alert("Modal खुलने की कोशिश हुई");
-      
-};
-    editor.focus();
 
-    if (savedRange) {
+        savedRange = null;
+      }
+
 
       const selection =
         window.getSelection();
 
-      selection.removeAllRanges();
 
-      selection.addRange(savedRange);
+      if (selection.rangeCount > 0) {
 
-      savedRange = null;
+        const range =
+          selection.getRangeAt(0);
+
+
+        range.deleteContents();
+
+
+        range.insertNode(
+          image
+        );
+
+
+        range.setStartAfter(
+          image
+        );
+
+
+        range.collapse(true);
+
+
+        selection.removeAllRanges();
+
+
+        selection.addRange(
+          range
+        );
+
+      } else {
+
+        editor.appendChild(
+          image
+        );
+      }
+
+
+      /* input reset */
+
+      this.value = "";
     }
+  );
 
-    const selection =
-      window.getSelection();
 
-    if (selection.rangeCount > 0) {
-
-      const range =
-        selection.getRangeAt(0);
-
-      range.deleteContents();
-
-      range.insertNode(image);
-
-      range.setStartAfter(image);
-
-      range.collapse(true);
-
-      selection.removeAllRanges();
-
-      selection.addRange(range);
-
-    } else {
-
-      editor.appendChild(image);
-    }
-
-    this.value = "";
-  });
-
+/* =========================
+   IMAGE SIZE
+========================= */
 
 function changeImageSize(size) {
 
@@ -530,35 +669,68 @@ function changeImageSize(size) {
     return;
   }
 
+
   if (size === "small") {
-    selectedImage.style.width = "30%";
+
+    selectedImage.style.width =
+      "30%";
   }
+
 
   if (size === "medium") {
-    selectedImage.style.width = "60%";
+
+    selectedImage.style.width =
+      "60%";
   }
+
 
   if (size === "large") {
-    selectedImage.style.width = "90%";
+
+    selectedImage.style.width =
+      "90%";
   }
 }
-  async function loadStoryForEdit() {
 
-  const params = new URLSearchParams(window.location.search);
-  const storyId = params.get("edit");
+
+/* =========================
+   LOAD STORY FOR EDIT
+========================= */
+
+async function loadStoryForEdit() {
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+
+  const storyId =
+    params.get("edit");
+
 
   if (!storyId) {
     return;
   }
 
+
   const { data: { session } } =
-    await supabaseClient.auth.getSession();
+    await supabaseClient
+      .auth
+      .getSession();
+
 
   if (!session) {
-    alert("कहानी edit करने के लिए पहले Login करें।");
-    window.location.href = "login.html";
+
+    alert(
+      "कहानी edit करने के लिए पहले Login करें।"
+    );
+
+    window.location.href =
+      "login.html";
+
     return;
   }
+
 
   const { data: story, error } =
     await supabaseClient
@@ -567,280 +739,675 @@ function changeImageSize(size) {
       .eq("id", storyId)
       .single();
 
+
   if (error) {
+
     console.log(error);
-    alert("कहानी की जानकारी नहीं मिल सकी।");
+
+    alert(
+      "कहानी की जानकारी नहीं मिल सकी।"
+    );
+
     return;
   }
 
-  if (story.user_id !== session.user.id) {
-    alert("आप इस कहानी को edit नहीं कर सकते।");
-    window.location.href = "index.html";
+
+  if (
+    story.user_id !==
+    session.user.id
+  ) {
+
+    alert(
+      "आप इस कहानी को edit नहीं कर सकते।"
+    );
+
+    window.location.href =
+      "index.html";
+
     return;
   }
 
-  document.getElementById("author").value = story.author_name || "";
-  document.getElementById("title").value = story.title || "";
-  document.getElementById("language").value = story.language || "";
-  document.getElementById("age_category").value = story.age_category || "";
-  document.getElementById("category").value = story.category || "";
-  document.getElementById("content").innerHTML= story.content || "";
 
-  document.getElementById("submitBtn").textContent =
+  document.getElementById(
+    "author"
+  ).value =
+    story.author_name || "";
+
+
+  document.getElementById(
+    "title"
+  ).value =
+    story.title || "";
+
+
+  document.getElementById(
+    "language"
+  ).value =
+    story.language || "";
+
+
+  document.getElementById(
+    "age_category"
+  ).value =
+    story.age_category || "";
+
+
+  document.getElementById(
+    "category"
+  ).value =
+    story.category || "";
+
+
+  document.getElementById(
+    "content"
+  ).innerHTML =
+    story.content || "";
+
+
+  document.getElementById(
+    "submitBtn"
+  ).textContent =
     "💾 कहानी अपडेट करें";
 }
 
+
 loadStoryForEdit();
 
-async function submitStory(){
+
+/* =========================
+   PUBLISH / UPDATE STORY
+========================= */
+
+async function submitStory() {
+
   alert("submit");
-  const { data: { session } } =
-  await supabaseClient.auth.getSession();
 
-if (!session) {
-  alert("कहानी प्रकाशित करने के लिए पहले Login करें।");
-  window.location.href = "login.html";
-  return;
-}
 
-  const author =
-    document.getElementById("author").value.trim();
+  const {
+    data: { session }
+  } =
+    await supabaseClient
+      .auth
+      .getSession();
 
-  const title =
-    document.getElementById("title").value.trim();
 
-  const language =
-    document.getElementById("language").value;
-  
-  const ageCategory =
-  document.getElementById("age_category").value;
-  const category =
-  document.getElementById("category").value;
+  if (!session) {
 
-const episodeTitle =
-  document.getElementById("episode_title").value.trim();
+    alert(
+      "कहानी प्रकाशित करने के लिए पहले Login करें।"
+    );
 
-const subtopics =
-  document.getElementById("subtopics").value.trim();
+    window.location.href =
+      "login.html";
 
-const content =
-  document.getElementById("content").innerHTML.trim();
-  
-
-  const message =
-    document.getElementById("message");
-
-  const button =
-    document.getElementById("submitBtn");
-  if(!author || !title || !content || !ageCategory){
-
-  message.textContent =
-    "कृपया लेखक का नाम, कहानी का नाम, कहानी और उम्र की श्रेणी चुनें।";
-
-  return;
+    return;
   }
 
+
+  const author =
+    document
+      .getElementById("author")
+      .value
+      .trim();
+
+
+  const title =
+    document
+      .getElementById("title")
+      .value
+      .trim();
+
+
+  const language =
+    document.getElementById(
+      "language"
+    ).value;
+
+
+  const ageCategory =
+    document.getElementById(
+      "age_category"
+    ).value;
+
+
+  const category =
+    document.getElementById(
+      "category"
+    ).value;
+
+
+  const episodeTitle =
+    document
+      .getElementById(
+        "episode_title"
+      )
+      .value
+      .trim();
+
+
+  const subtopics =
+    document
+      .getElementById(
+        "subtopics"
+      )
+      .value
+      .trim();
+
+
+  const content =
+    document
+      .getElementById(
+        "content"
+      )
+      .innerHTML
+      .trim();
+
+
+  const message =
+    document.getElementById(
+      "message"
+    );
+
+
+  const button =
+    document.getElementById(
+      "submitBtn"
+    );
+
+
+  /* =========================
+     VALIDATION
+  ========================= */
+
+  if (
+    !author ||
+    !title ||
+    !content ||
+    !ageCategory
+  ) {
+
+    message.textContent =
+      "कृपया लेखक का नाम, कहानी का नाम, कहानी और उम्र की श्रेणी चुनें।";
+
+    return;
+  }
+
+
   button.disabled = true;
-  button.textContent = "⏳ कहानी सेव हो रही है...";
-  const params = new URLSearchParams(window.location.search);
-const editId = params.get("edit");
-  
-let data;
-let error;
 
-if (editId) {
+  button.textContent =
+    "⏳ कहानी सेव हो रही है...";
 
-  const result = await supabaseClient
-    .from("Story")
-    .update({
-      title: title,
-      content: content,
-      author_name: author,
-      age_category: ageCategory,
-      category: category
-    })
-    .eq("id", editId)
-    .select();
 
-  data = result.data;
-  error = result.error;
-  } else {
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
 
-  const result = await supabaseClient
-    .from("Story")
-    .insert([
-      {
-        title: title,
-        content: content,
-        author_name: author,
-        age_category: ageCategory,
-        category: category,
-        user_id: (await supabaseClient.auth.getUser()).data.user.id
-      }
-    ])
-    .select()
-    .single();
 
-  data = result.data;
-  error = result.error;
+  const editId =
+    params.get("edit");
 
-}if (!error && data) {
+
+  let data = null;
+  let error = null;
+
+
+  /* =========================
+     UPDATE EXISTING STORY
+  ========================= */
+
+  if (editId) {
+
+    const result =
+      await supabaseClient
+        .from("Story")
+        .update({
+
+          title: title,
+
+          content: content,
+
+          author_name: author,
+
+          language: language,
+
+          age_category:
+            ageCategory,
+
+          category: category
+
+        })
+        .eq("id", editId)
+        .select()
+        .single();
+
+
+    data =
+      result.data;
+
+    error =
+      result.error;
+
+
+  }
+
+
+  /* =========================
+     CREATE NEW STORY
+  ========================= */
+
+  else {
+
+    const result =
+      await supabaseClient
+        .from("Story")
+        .insert([{
+
+          title: title,
+
+          content: content,
+
+          author_name: author,
+
+          language: language,
+
+          age_category:
+            ageCategory,
+
+          category: category,
+
+          user_id:
+            session.user.id,
+
+          read_count: 0,
+
+          rating_sum: 0,
+
+          rating_count: 0
+
+        }])
+        .select()
+        .single();
+
+
+    data =
+      result.data;
+
+    error =
+      result.error;
+  }
+
+
+  /* =========================
+     STORY ERROR
+  ========================= */
+
+  if (error) {
+
+    console.log(
+      "Story error:",
+      error
+    );
+
+
+    message.textContent =
+      editId
+        ? "कहानी अपडेट नहीं हो सकी। कृपया दोबारा कोशिश करें।"
+        : "कहानी सेव नहीं हो सकी। कृपया दोबारा कोशिश करें।";
+
+
+    button.disabled =
+      false;
+
+
+    button.textContent =
+      editId
+        ? "💾 कहानी अपडेट करें"
+        : "📖 कहानी प्रकाशित करें";
+
+
+    return;
+  }
+
+
+  /* =========================
+     CREATE EPISODE 1
+  ========================= */
+
+  if (!editId && data) {
 
     const episodeResult =
       await supabaseClient
         .from("Episodes")
-        .insert([
-          {
-            story_id: data.id,
-            episode_number: 1,
-            episode_title: episodeTitle,
-            subtopics: subtopics,
-            content: content,
-            user_id: session.user.id
-          }
-        ]);
+        .insert([{
+
+          story_id:
+            data.id,
+
+          episode_number:
+            1,
+
+          episode_title:
+            episodeTitle,
+
+          subtopics:
+            subtopics,
+
+          content:
+            content,
+
+          user_id:
+            session.user.id
+
+        }]);
+
 
     if (episodeResult.error) {
-      console.log(episodeResult.error);
+
+      console.log(
+        "Episode error:",
+        episodeResult.error
+      );
+
 
       message.textContent =
         "कहानी बन गई, लेकिन Episode 1 सेव नहीं हो सका।";
 
-      button.disabled = false;
-      button.textContent = "📖 कहानी प्रकाशित करें";
+
+      button.disabled =
+        false;
+
+
+      button.textContent =
+        "📖 कहानी प्रकाशित करें";
+
 
       return;
     }
   }
-}if(error){
 
-  console.log(error);
 
-  message.textContent =
-    editId
-      ? "कहानी अपडेट नहीं हो सकी। कृपया दोबारा कोशिश करें।"
-      : "कहानी सेव नहीं हो सकी। कृपया दोबारा कोशिश करें।";
+  /* =========================
+     SUCCESS
+  ========================= */
 
-  button.disabled = false;
-  button.textContent =
-    editId
-      ? "💾 कहानी अपडेट करें"
-      : "📖 कहानी प्रकाशित करें";
-
-  return;
-  }
   if (editId) {
-  message.textContent =
-    "✅ आपकी कहानी सफलतापूर्वक अपडेट हो गई!";
-} else {
-  message.textContent =
-    "🎉 आपकी कहानी सफलतापूर्वक प्रकाशित हो गई!";
+
+    message.textContent =
+      "✅ आपकी कहानी सफलतापूर्वक अपडेट हो गई!";
+
+  } else {
+
+    message.textContent =
+      "🎉 आपकी कहानी सफलतापूर्वक प्रकाशित हो गई!";
   }
 
-  document.getElementById("author").value = "";
-  document.getElementById("title").value = "";
-  document.getElementById("content").innerHTML = "";
 
-  button.disabled = false;
-  button.textContent = "📖 कहानी प्रकाशित करें";
+  document.getElementById(
+    "author"
+  ).value = "";
+
+
+  document.getElementById(
+    "title"
+  ).value = "";
+
+
+  document.getElementById(
+    "content"
+  ).innerHTML = "";
+
+
+  button.disabled =
+    false;
+
+
+  button.textContent =
+    "📖 कहानी प्रकाशित करें";
 }
-let isDraggingCrop = false;
+
+
+/* =========================
+   CROP DRAGGING
+========================= */
+
+let isDraggingCrop =
+  false;
+
 let startX = 0;
 let startY = 0;
 let startLeft = 0;
 let startTop = 0;
 
+
 const cropSelection =
-  document.getElementById("cropSelection");
+  document.getElementById(
+    "cropSelection"
+  );
 
-cropSelection.addEventListener("pointerdown", function(event) {
 
-  isDraggingCrop = true;
+cropSelection.addEventListener(
+  "pointerdown",
+  function (event) {
 
-  startX = event.clientX;
-  startY = event.clientY;
+    isDraggingCrop =
+      true;
 
-  startLeft = cropSelection.offsetLeft;
-  startTop = cropSelection.offsetTop;
 
-  cropSelection.setPointerCapture(event.pointerId);
-});
+    startX =
+      event.clientX;
 
-cropSelection.addEventListener("pointermove", function(event) {
 
-  if (!isDraggingCrop) return;
+    startY =
+      event.clientY;
 
-  const dx = event.clientX - startX;
-  const dy = event.clientY - startY;
 
-  cropSelection.style.left =
-    (startLeft + dx) + "px";
+    startLeft =
+      cropSelection.offsetLeft;
 
-  cropSelection.style.top =
-    (startTop + dy) + "px";
-});
 
-cropSelection.addEventListener("pointerup", function() {
+    startTop =
+      cropSelection.offsetTop;
 
-  isDraggingCrop = false;
 
-});
-  function applyCrop() {
+    cropSelection.setPointerCapture(
+      event.pointerId
+    );
+  }
+);
 
-  alert("OK button काम कर रहा है");
+
+cropSelection.addEventListener(
+  "pointermove",
+  function (event) {
+
+    if (!isDraggingCrop)
+      return;
+
+
+    const dx =
+      event.clientX -
+      startX;
+
+
+    const dy =
+      event.clientY -
+      startY;
+
+
+    cropSelection.style.left =
+      (startLeft + dx) +
+      "px";
+
+
+    cropSelection.style.top =
+      (startTop + dy) +
+      "px";
+  }
+);
+
+
+cropSelection.addEventListener(
+  "pointerup",
+  function () {
+
+    isDraggingCrop =
+      false;
+  }
+);
+
+
+/* =========================
+   APPLY CROP
+========================= */
+
+function applyCrop() {
 
   const cropImage =
-    document.getElementById("cropImage");
+    document.getElementById(
+      "cropImage"
+    );
+
 
   const cropSelection =
-    document.getElementById("cropSelection");
+    document.getElementById(
+      "cropSelection"
+    );
 
-  
 
-  alert("crop elements मिल गए");
+  if (
+    !cropImage ||
+    !cropSelection ||
+    !selectedImage
+  ) {
 
-  if (!cropImage || !cropSelection || !selectedImage) {
-    alert("जरूरी image element नहीं मिला");
+    alert(
+      "जरूरी image element नहीं मिला।"
+    );
+
     return;
   }
 
-  const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d");
 
-  const scaleX = cropImage.naturalWidth / cropImage.clientWidth;
-  const scaleY = cropImage.naturalHeight / cropImage.clientHeight;
+  if (
+    !cropImage.naturalWidth
+  ) {
 
-  const x = cropSelection.offsetLeft * scaleX;
-  const y = cropSelection.offsetTop * scaleY;
+    alert(
+      "चित्र अभी पूरी तरह load नहीं हुआ है।"
+    );
 
-  const width = cropSelection.offsetWidth * scaleX;
-  const height = cropSelection.offsetHeight * scaleY;
-
-  canvas.width = width;
-  canvas.height = height;
-
-  ctx.drawImage(
-    cropImage,
-    x,
-    y,
-    width,
-    height,
-    0,
-    0,
-    width,
-    height
-  );
-
-  selectedImage.src = canvas.toDataURL("image/png");
-
-  document.getElementById("cropModal").style.display = "none";
-
-  alert("Crop सफल हुआ");
+    return;
   }
-  function closeCrop() {
-  document.getElementById("cropModal").style.display = "none";
+
+
+  const canvas =
+    document.createElement(
+      "canvas"
+    );
+
+
+  const ctx =
+    canvas.getContext("2d");
+
+
+  const scaleX =
+    cropImage.naturalWidth /
+    cropImage.clientWidth;
+
+
+  const scaleY =
+    cropImage.naturalHeight /
+    cropImage.clientHeight;
+
+
+  const x =
+    cropSelection.offsetLeft *
+    scaleX;
+
+
+  const y =
+    cropSelection.offsetTop *
+    scaleY;
+
+
+  const width =
+    cropSelection.offsetWidth *
+    scaleX;
+
+
+  const height =
+    cropSelection.offsetHeight *
+    scaleY;
+
+
+  canvas.width =
+    width;
+
+
+  canvas.height =
+    height;
+
+
+  try {
+
+    ctx.drawImage(
+      cropImage,
+      x,
+      y,
+      width,
+      height,
+      0,
+      0,
+      width,
+      height
+    );
+
+
+    selectedImage.src =
+      canvas.toDataURL(
+        "image/png"
+      );
+
+
+    document.getElementById(
+      "cropModal"
+    ).style.display =
+      "none";
+
+
+  } catch (error) {
+
+    console.log(
+      "Crop error:",
+      error
+    );
+
+
+    alert(
+      "चित्र crop नहीं हो सका।"
+    );
   }
+}
+
+
+/* =========================
+   CLOSE CROP
+========================= */
+
+function closeCrop() {
+
+  document.getElementById(
+    "cropModal"
+  ).style.display =
+    "none";
+}
+
 </script>
+```
+
+
 
 </body>
 </html>
