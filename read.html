@@ -515,6 +515,17 @@ async function loadStory(){
 
     return;
   }
+  const { error: readError } =
+  await supabaseClient.rpc(
+    "increment_story_read_count",
+    {
+      story_id_input: storyId
+    }
+  );
+
+if (readError) {
+  console.log("Read count update error:", readError);
+}
 
   document.getElementById("story-title").textContent =
     data.title;
