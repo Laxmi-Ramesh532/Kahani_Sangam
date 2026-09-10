@@ -44,17 +44,17 @@ body{
 
 .book{
   max-width:1100px;
-  margin:35px auto;
+  margin:30px auto;
   padding:0 15px;
 }
 
 .page{
   width:210mm;
+  max-width:100%;
   min-height:297mm;
-  box-sizing:border-box;
   background:#f8eedc;
-  margin-bottom:30px;
-  padding:55px 65px;
+  margin:0 auto 30px;
+  padding:45px 55px;
   position:relative;
   box-shadow:0 8px 25px rgba(0,0,0,.25);
   border:1px solid #d7b98c;
@@ -68,66 +68,6 @@ body{
   border:1px solid #d8b989;
   pointer-events:none;
 }
-  .kids-page{
-  background:#fffaf0;
-  border:2px solid #d9b36c;
-}
-
-.kids-page::before{
-  content:"🌸  🦋  🌼  🦋  🌸";
-  position:absolute;
-  top:12px;
-  left:20px;
-  right:20px;
-  text-align:center;
-  font-size:22px;
-  letter-spacing:8px;
-  pointer-events:none;
-}
-
-.kids-page::after{
-  content:"🌸  🦋  🌼  🦋  🌸";
-  position:absolute;
-  bottom:12px;
-  left:20px;
-  right:20px;
-  text-align:center;
-  font-size:22px;
-  letter-spacing:8px;
-  pointer-events:none;
-}
-
-.watermark{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%) rotate(-25deg);
-  font-size:42px;
-  color:rgba(75,48,28,0.08);
-  white-space:nowrap;
-  pointer-events:none;
-  user-select:none;
-  z-index:0;
-}
-
-.flower{
-  position:absolute;
-  font-size:42px;
-  opacity:.8;
-}
-
-.f1{top:25px;left:28px}
-.f2{top:25px;right:28px}
-.f3{bottom:25px;left:28px}
-.f4{bottom:25px;right:28px}
-
-.butterfly{
-  position:absolute;
-  font-size:38px;
-}
-
-.b1{top:110px;right:70px}
-.b2{bottom:90px;left:70px}
 
 .page-inner{
   position:relative;
@@ -136,91 +76,203 @@ body{
   margin:auto;
 }
 
-h1{
-  text-align:center;
-  font-size:52px;
-  margin:55px 0 15px;
-}
-
-.author{
-  text-align:center;
-  font-size:21px;
-  margin-bottom:35px;
-}
-
 .divider{
   text-align:center;
-  font-size:25px;
+  font-size:23px;
   margin:20px 0;
 }
 
-.info{
-  max-width:600px;
-  margin:30px auto;
-  font-size:19px;
-  line-height:2;
-}
+/* COVER */
 
-.info-row{
+.cover-box{
+  width:150px;
+  height:190px;
+  margin:25px auto 20px;
+  border:1px solid #c8a875;
+  border-radius:10px;
+  background:#eadbc5;
   display:flex;
-  gap:15px;
-  border-bottom:1px dashed #cdb083;
-  padding:6px 0;
-}
-
-.quote{
-  max-width:600px;
-  margin:35px auto;
-  padding:20px;
-  text-align:center;
-  border:1px solid #d4b78b;
-  border-radius:12px;
-  font-size:18px;
-  font-style:italic;
-}
-
-.page-title{
-  text-align:center;
-  font-size:35px;
-  margin-top:40px;
-}
-
-.contents{
-  max-width:700px;
-  margin:45px auto;
-}
-
-.part{
-  display:flex;
-  justify-content:space-between;
   align-items:center;
-  padding:17px 12px;
-  border-bottom:1px dotted #b89464;
-  font-size:19px;
+  justify-content:center;
+  overflow:hidden;
 }
 
-.part span:first-child{
-  background:#ead0b5;
-  padding:6px 12px;
-  border-radius:18px;
+.cover-box img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
-.start{
-  text-align:center;
-  margin-top:45px;
-  font-size:18px;
+.no-cover{
+  font-size:42px;
+  opacity:.5;
 }
+
+/* STORY */
 
 .story-title{
   text-align:center;
-  font-size:38px;
-  margin:30px 0 10px;
+  font-size:42px;
+  margin:20px 0 10px;
 }
 
 .story-author{
   text-align:center;
+  font-size:19px;
+  margin-bottom:25px;
+}
+
+.description{
+  max-width:750px;
+  margin:25px auto;
+  font-size:19px;
+  line-height:2;
+  text-align:justify;
+}
+
+/* INFO */
+
+.info-box{
+  max-width:750px;
+  margin:30px auto;
+  border:1px solid #d4b78b;
+  border-radius:12px;
+  overflow:hidden;
+}
+
+.info-row{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  padding:12px 16px;
+  border-bottom:1px dashed #cdb083;
   font-size:17px;
-  margin-bottom:35px;
+}
+
+.info-row:last-child{
+  border-bottom:none;
+}
+
+/* STATS */
+
+.stats{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  max-width:650px;
+  margin:35px auto;
+}
+
+.stat{
+  flex:1;
+  text-align:center;
+  background:#ead0b5;
+  border:1px solid #cba979;
+  border-radius:12px;
+  padding:15px 10px;
+}
+
+.stat-number{
+  display:block;
+  font-size:25px;
+  font-weight:bold;
+}
+
+.stat-label{
+  display:block;
+  margin-top:5px;
+  font-size:15px;
+}
+
+/* RATING */
+
+.rating-box{
+  max-width:650px;
+  margin:30px auto;
+  padding:20px;
+  text-align:center;
+  border:1px solid #d4b78b;
+  border-radius:12px;
+}
+
+.stars button{
+  border:none;
+  background:none;
+  font-size:30px;
+  cursor:pointer;
+  padding:2px;
+  color:#4b301c;
+}
+
+.rating-message{
+  margin-top:10px;
+  font-size:15px;
+}
+
+/* EPISODES */
+
+.episode-heading{
+  text-align:center;
+  font-size:32px;
+  margin:25px 0;
+}
+
+.episodes{
+  max-width:750px;
+  margin:30px auto;
+}
+
+.episode-card{
+  background:#fdf5e7;
+  border:1px solid #d1b181;
+  border-radius:12px;
+  padding:17px 18px;
+  margin-bottom:15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  cursor:pointer;
+}
+
+.episode-number{
+  background:#ead0b5;
+  padding:7px 12px;
+  border-radius:20px;
+  white-space:nowrap;
+  font-size:15px;
+}
+
+.episode-title{
+  flex:1;
+  font-size:19px;
+  font-weight:bold;
+}
+
+.read-episode{
+  background:#4b301c;
+  color:white;
+  border:none;
+  padding:8px 14px;
+  border-radius:18px;
+}
+
+/* EPISODE PAGE */
+
+.episode-reading{
+  display:none;
+}
+
+.episode-reading-title{
+  text-align:center;
+  font-size:34px;
+  margin:15px 0 8px;
+}
+
+.episode-number-title{
+  text-align:center;
+  font-size:16px;
+  margin-bottom:25px;
 }
 
 .story{
@@ -229,30 +281,61 @@ h1{
   font-size:21px;
   line-height:2.15;
   text-align:justify;
-  white-space:pre-line;
 }
-  .story-image{
-  display:block;
-  width:auto;
-  max-width:100%;
-  max-height:240px;
-  margin:20px auto 30px;
-  border-radius:12px;
-  object-fit:contain;
-  }
 
 .story p{
   margin:0 0 25px;
 }
 
-.page-number{
-  position:absolute;
-  bottom:25px;
-  left:0;
-  right:0;
-  text-align:center;
-  font-size:15px;
+.story img{
+  display:block;
+  max-width:100%;
+  max-height:350px;
+  margin:25px auto;
+  border-radius:10px;
+  object-fit:contain;
 }
+
+/* REVIEW */
+
+.episode-review{
+  max-width:650px;
+  margin:45px auto 20px;
+  padding:20px;
+  border:1px solid #d4b78b;
+  border-radius:12px;
+  text-align:center;
+}
+
+.review-title{
+  font-size:20px;
+  margin-bottom:12px;
+}
+
+textarea{
+  width:100%;
+  min-height:90px;
+  margin-top:15px;
+  padding:12px;
+  border:1px solid #c9aa7c;
+  border-radius:8px;
+  background:#fffaf2;
+  color:#4b301c;
+  font-family:inherit;
+  resize:vertical;
+}
+
+.submit-btn{
+  margin-top:12px;
+  background:#4b301c;
+  color:white;
+  border:none;
+  padding:10px 20px;
+  border-radius:20px;
+  cursor:pointer;
+}
+
+/* CONTROLS */
 
 .controls{
   text-align:center;
@@ -269,52 +352,121 @@ h1{
   cursor:pointer;
 }
 
-#loading{
-  text-align:center;
-  padding:80px 20px;
-  font-size:22px;
-}
+/* LOADING */
 
+#loading,
 #error{
   text-align:center;
   padding:80px 20px;
-  font-size:20px;
+  font-size:21px;
 }
+
+#error{
+  display:none;
+}
+
+/* WATERMARK */
+
+.watermark{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) rotate(-25deg);
+  font-size:42px;
+  color:rgba(75,48,28,0.08);
+  white-space:nowrap;
+  pointer-events:none;
+  user-select:none;
+  z-index:0;
+}
+
+/* MOBILE */
 
 @media(max-width:700px){
 
+  .topbar{
+    padding:12px 14px;
+  }
+
+  .brand{
+    font-size:18px;
+  }
+
+  .back-btn{
+    padding:7px 11px;
+    font-size:14px;
+  }
+
   .page{
-    padding:40px 25px;
-    min-height:297mm;
-  }
-
-  h1{
-    font-size:38px;
-  }
-
-  .page-title{
-    font-size:28px;
+    width:100%;
+    min-height:auto;
+    padding:35px 25px;
   }
 
   .story-title{
-    font-size:30px;
+    font-size:32px;
+  }
+
+  .story-author{
+    font-size:17px;
+  }
+
+  .description{
+    font-size:17px;
+    line-height:1.9;
+  }
+
+  .info-row{
+    font-size:15px;
+    flex-direction:column;
+    gap:4px;
+  }
+
+  .stats{
+    gap:8px;
+  }
+
+  .stat{
+    padding:12px 5px;
+  }
+
+  .stat-number{
+    font-size:21px;
+  }
+
+  .stat-label{
+    font-size:13px;
+  }
+
+  .episode-heading{
+    font-size:27px;
+  }
+
+  .episode-card{
+    padding:13px;
+    flex-wrap:wrap;
+  }
+
+  .episode-title{
+    font-size:17px;
+  }
+
+  .read-episode{
+    width:100%;
+  }
+
+  .episode-reading-title{
+    font-size:28px;
   }
 
   .story{
-    font-size:22px;
+    font-size:21px;
     line-height:2;
   }
 
-  .info{
-    font-size:16px;
-  }
-
-  .flower{
-    font-size:30px;
-  }
-
-  .butterfly{
-    font-size:28px;
+  .cover-box{
+    width:130px;
+    height:165px;
   }
 }
 </style>
@@ -323,254 +475,31 @@ h1{
 <body>
 
 <header class="topbar">
-  <div class="brand">📖 कहानी संसार</div>
-  <a class="back-btn" href="index.html">← वापस जाएँ</a>
+
+  <div class="brand">
+    📖 कहानी संसार
+  </div>
+
+  <a class="back-btn" href="index.html">
+    ← वापस जाएँ
+  </a>
+
 </header>
 
-<div id="loading">📖 कहानी लोड हो रही है...</div>
 
-<div id="error" style="display:none;"></div>
+<div id="loading">
+  📖 कहानी लोड हो रही है...
+</div>
+
+<div id="error"></div>
+
 
 <main class="book" id="book" style="display:none;">
 
-  <!-- PAGE 1 -->
-  <section class="page">
+  <!-- STORY PAGE -->
 
-    <div class="flower f1">🌸</div>
-    <div class="flower f2">🌺</div>
-    <div class="flower f3">🌼</div>
-    <div class="flower f4">🌷</div>
+  <section class="page" id="story-home">
 
-    <div class="butterfly b1">🦋</div>
-    <div class="butterfly b2">🦋</div>
-
-    <div class="page-inner">
-
-      <div class="divider">❦ ───────── ❦</div>
-
-      <h1 id="story-title">कहानी</h1>
-
-      <div class="author">
-        ✍️ लेखक: <strong id="story-author"></strong>
-      </div>
-
-      <div class="divider">🌿 ✦ 🌿</div>
-
-      <div class="info">
-
-        <div class="info-row">
-          <strong>🌐 मूल भाषा:</strong>
-          <span>हिंदी</span>
-        </div>
-
-        <div class="info-row">
-          <strong>📚 विधा:</strong>
-          <span>कहानी</span>
-        </div>
-
-        <div class="info-row">
-          <strong>📖 पढ़ने का अनुभव:</strong>
-          <span>साहित्यिक पठन</span>
-        </div>
-
-      </div>
-
-      <div class="quote">
-        “हर कहानी अपने भीतर एक छोटी-सी दुनिया लेकर चलती है।”
-      </div>
-
-      <div class="divider">🦋 ❦ 🌸 ❦ 🦋</div>
-
-    </div>
-
-    <div class="page-number">01</div>
-  </section>
-
-
-  <!-- PAGE 2 -->
-  <section class="page">
-
-    <div class="flower f1">🌸</div>
-    <div class="flower f2">🌷</div>
-    <div class="flower f3">🌺</div>
-    <div class="flower f4">🌼</div>
-
-    <div class="butterfly b1">🦋</div>
-    <div class="butterfly b2">🦋</div>
-
-    <div class="page-inner">
-
-      <div class="divider">❦ ───────── ❦</div>
-
-      <h2 class="page-title">कहानी के भाग</h2>
-
-      <div class="contents">
-
-        <div class="part">
-          <span>भाग 1</span>
-          <strong>कहानी की शुरुआत</strong>
-          <span>03</span>
-        </div>
-
-        <div class="part">
-          <span>भाग 2</span>
-          <strong>आगे की यात्रा</strong>
-          <span>—</span>
-        </div>
-
-        <div class="part">
-          <span>भाग 3</span>
-          <strong>एक नया मोड़</strong>
-          <span>—</span>
-        </div>
-
-        <div class="part">
-          <span>भाग 4</span>
-          <strong>अंतिम पड़ाव</strong>
-          <span>—</span>
-        </div>
-
-      </div>
-
-      <div class="start">
-        🌸 कहानी अगले पृष्ठ से शुरू होती है 🌸
-        <br><br>
-        <strong>पृष्ठ 03 से पढ़ना शुरू करें</strong>
-      </div>
-
-    </div>
-
-    <div class="page-number">02</div>
-  </section>
-
- <!-- STORY PAGES -->
-
-    <div id="story-pages"></div> 
-
-
-</main>
-
-<div class="controls" id="controls" style="display:none;">
-  <button onclick="window.scrollTo({top:0,behavior:'smooth'})">
-    ↑ ऊपर जाएँ
-  </button>
-
-  <button onclick="history.back()">
-    ← वापस
-  </button>
-</div>
-
-
-<script>
-
-const SUPABASE_URL =
-"https://wnvkryudbeafebaluwgq.supabase.co";
-
-const SUPABASE_KEY =
-"sb_publishable_q1J83vS9b3Ngw-Py_QLuzg_ub6pdy3D";
-
-const supabaseClient =
-window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
-
-async function loadStory(){
-
-  const params = new URLSearchParams(
-    window.location.search
-  );
-
-  const storyId = params.get("id");
-
-  if(!storyId){
-
-    document.getElementById("loading").style.display="none";
-
-    document.getElementById("error").style.display="block";
-
-    document.getElementById("error").textContent =
-      "कहानी नहीं मिली।";
-
-    return;
-  }
-
-  const { data, error } =
-    await supabaseClient
-      .from("Story")
-      .select("*")
-      .eq("id", storyId)
-      .single();
-
-  if(error){
-
-    console.log(error);
-
-    document.getElementById("loading").style.display="none";
-
-    document.getElementById("error").style.display="block";
-
-    document.getElementById("error").textContent =
-      "कहानी लोड नहीं हो सकी।";
-
-    return;
-  }
-  const { error: readError } =
-  await supabaseClient.rpc(
-    "increment_story_read_count",
-    {
-      story_id_input: storyId
-    }
-  );
-
-if (readError) {
-  console.log("Read count update error:", readError);
-}
-
-  document.getElementById("story-title").textContent =
-    data.title;
-
-  document.getElementById("story-author").textContent =
-  data.author_name;
-   const storyPages =
-  document.getElementById("story-pages");
-
-const isKidsStory =
-  data.age_category === "15 तक";
-
-const wordsPerPage =
-  isKidsStory ? 120 : 400;
-
-const contentHTML =
-  data.content || "";
-
-const parser =
-  new DOMParser();
-
-const doc =
-  parser.parseFromString(
-    contentHTML,
-    "text/html"
-  );
-
-let pageNumber = 3;
-let currentPageContent = "";
-let wordCount = 0;
-
-
-/* नया page बनाने का function */
-
-function createPage(html) {
-
-  const page =
-    document.createElement("section");
-
-  page.className =
-    isKidsStory
-      ? "page kids-page"
-      : "page";
-
-  page.innerHTML = `
     <div class="watermark">
       Laxmi-Ramesh
     </div>
@@ -581,153 +510,1277 @@ function createPage(html) {
         ❦ ───────── ❦
       </div>
 
-      <div class="story">
-        ${html}
+
+      <!-- COVER -->
+
+      <div class="cover-box" id="cover-box">
+
+        <div class="no-cover">
+          📖
+        </div>
+
+      </div>
+
+
+      <!-- TITLE -->
+
+      <h1 class="story-title" id="story-title">
+        कहानी
+      </h1>
+
+
+      <!-- AUTHOR -->
+
+      <div class="story-author">
+
+        ✍️ लेखक:
+        <strong id="story-author">
+        </strong>
+
+      </div>
+
+
+      <div class="divider">
+        🌿 ✦ 🌿
+      </div>
+
+
+      <!-- DESCRIPTION -->
+
+      <div
+        class="description"
+        id="story-description"
+      ></div>
+
+
+      <!-- INFO -->
+
+      <div class="info-box">
+
+        <div class="info-row">
+
+          <strong>🌐 भाषा</strong>
+
+          <span id="story-language">
+            —
+          </span>
+
+        </div>
+
+
+        <div class="info-row">
+
+          <strong>📚 विधा</strong>
+
+          <span id="story-category">
+            —
+          </span>
+
+        </div>
+
+
+        <div class="info-row">
+
+          <strong>👥 आयु वर्ग</strong>
+
+          <span id="story-age">
+            —
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- STATS -->
+
+      <div class="stats">
+
+        <div class="stat">
+
+          <span
+            class="stat-number"
+            id="rating-count"
+          >
+            0
+          </span>
+
+          <span class="stat-label">
+            ⭐ रेटिंग देने वाले
+          </span>
+
+        </div>
+
+
+        <div class="stat">
+
+          <span
+            class="stat-number"
+            id="read-count"
+          >
+            0
+          </span>
+
+          <span class="stat-label">
+            👁️ पढ़े गए
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- STORY RATING -->
+
+      <div class="rating-box">
+
+        <div>
+          ⭐ इस कहानी को रेट करें
+        </div>
+
+
+        <div
+          class="stars"
+          id="story-stars"
+        >
+
+          <button onclick="rateStory(1)">
+            ☆
+          </button>
+
+          <button onclick="rateStory(2)">
+            ☆
+          </button>
+
+          <button onclick="rateStory(3)">
+            ☆
+          </button>
+
+          <button onclick="rateStory(4)">
+            ☆
+          </button>
+
+          <button onclick="rateStory(5)">
+            ☆
+          </button>
+
+        </div>
+
+
+        <div
+          class="rating-message"
+          id="story-rating-message"
+        ></div>
+
+      </div>
+
+
+      <div class="divider">
+        🦋 ❦ 🌸 ❦ 🦋
+      </div>
+
+
+      <!-- EPISODES -->
+
+      <h2 class="episode-heading">
+        📚 Episodes
+      </h2>
+
+
+      <div
+        class="episodes"
+        id="episodes"
+      >
+        Episodes लोड हो रहे हैं...
       </div>
 
     </div>
 
-    <div class="page-number">
-      ${pageNumber}
+  </section>
+
+
+  <!-- EPISODE READING PAGE -->
+
+  <section
+    class="page episode-reading"
+    id="episode-page"
+  >
+
+    <div class="watermark">
+      Laxmi-Ramesh
     </div>
-  `;
-
-  storyPages.appendChild(page);
-
-  pageNumber++;
-}
 
 
-/* एक शब्द जोड़ने का function */
+    <div class="page-inner">
 
-function addWord(word) {
+      <div class="divider">
+        ❦ ───────── ❦
+      </div>
 
-  currentPageContent +=
-    word + " ";
 
-  wordCount++;
+      <div
+        class="episode-number-title"
+        id="episode-number"
+      >
+        Episode
+      </div>
 
-  if (wordCount >= wordsPerPage) {
 
-    createPage(
-      currentPageContent.trim()
+      <h1
+        class="episode-reading-title"
+        id="episode-title"
+      >
+        Episode title
+      </h1>
+
+
+      <div class="divider">
+        🌿 ✦ 🌿
+      </div>
+
+
+      <div
+        class="story"
+        id="episode-content"
+      ></div>
+
+
+      <!-- EPISODE REVIEW -->
+
+      <div class="episode-review">
+
+        <div class="review-title">
+          ⭐ इस Episode को रेट करें
+        </div>
+
+
+        <div
+          class="stars"
+          id="episode-stars"
+        >
+
+          <button onclick="setEpisodeRating(1)">
+            ☆
+          </button>
+
+          <button onclick="setEpisodeRating(2)">
+            ☆
+          </button>
+
+          <button onclick="setEpisodeRating(3)">
+            ☆
+          </button>
+
+          <button onclick="setEpisodeRating(4)">
+            ☆
+          </button>
+
+          <button onclick="setEpisodeRating(5)">
+            ☆
+          </button>
+
+        </div>
+
+
+        <textarea
+          id="episode-review-text"
+          placeholder="इस Episode के बारे में अपना छोटा-सा विचार लिखें..."
+        ></textarea>
+
+
+        <button
+          class="submit-btn"
+          onclick="submitEpisodeReview()"
+        >
+          समीक्षा भेजें
+        </button>
+
+
+        <div
+          class="rating-message"
+          id="episode-rating-message"
+        ></div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<div
+  class="controls"
+  id="controls"
+  style="display:none;"
+>
+
+  <button
+    onclick="window.scrollTo({top:0,behavior:'smooth'})"
+  >
+    ↑ ऊपर जाएँ
+  </button>
+
+
+  <button onclick="goBackToStory()">
+    ← Episodes पर वापस
+  </button>
+
+</div>
+
+
+<script>
+
+/* =================================
+   SUPABASE
+================================= */
+
+const SUPABASE_URL =
+  "https://wnvkryudbeafebaluwgq.supabase.co";
+
+
+const SUPABASE_KEY =
+  "sb_publishable_q1J83vS9b3Ngw-Py_QLuzg_ub6pdy3D";
+
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+/* =================================
+   VARIABLES
+================================= */
+
+let storyId = null;
+
+let currentEpisodeId = null;
+
+let selectedStoryRating = 0;
+
+let selectedEpisodeRating = 0;
+
+
+/* =================================
+   LOAD STORY
+================================= */
+
+async function loadStory(){
+
+  const params =
+    new URLSearchParams(
+      window.location.search
     );
 
-    currentPageContent = "";
-    wordCount = 0;
+
+  storyId =
+    params.get("id");
+
+
+  if(!storyId){
+
+    showError(
+      "कहानी नहीं मिली।"
+    );
+
+    return;
   }
+
+
+  const { data, error } =
+    await supabaseClient
+      .from("Story")
+      .select("*")
+      .eq("id", storyId)
+      .single();
+
+
+  if(error){
+
+    console.log(error);
+
+    showError(
+      "कहानी लोड नहीं हो सकी।"
+    );
+
+    return;
+  }
+
+
+  /* READ COUNT */
+
+  const { error: readError } =
+    await supabaseClient.rpc(
+      "increment_story_read_count",
+      {
+        story_id_input: storyId
+      }
+    );
+
+
+  if(readError){
+
+    console.log(
+      "Read count update error:",
+      readError
+    );
+
+  }
+
+
+  /* STORY DETAILS */
+
+  document.getElementById(
+    "story-title"
+  ).textContent =
+    data.title || "कहानी";
+
+
+  document.getElementById(
+    "story-author"
+  ).textContent =
+    data.author_name || "अज्ञात लेखक";
+
+
+  document.getElementById(
+    "story-language"
+  ).textContent =
+    data.language || "—";
+
+
+  document.getElementById(
+    "story-category"
+  ).textContent =
+    data.category || "—";
+
+
+  document.getElementById(
+    "story-age"
+  ).textContent =
+    data.age_category || "—";
+
+
+  /* DESCRIPTION */
+
+  const description =
+    data.description || "";
+
+
+  const descriptionBox =
+    document.getElementById(
+      "story-description"
+    );
+
+
+  if(description.trim()){
+
+    descriptionBox.textContent =
+      description;
+
+  }else{
+
+    descriptionBox.textContent =
+      "इस कहानी के बारे में अभी कोई विवरण उपलब्ध नहीं है।";
+
+  }
+
+
+  /* COVER */
+
+  const coverBox =
+    document.getElementById(
+      "cover-box"
+    );
+
+
+  if(data.cover_image){
+
+    coverBox.innerHTML = "";
+
+
+    const img =
+      document.createElement("img");
+
+
+    img.src =
+      data.cover_image;
+
+
+    img.alt =
+      data.title ||
+      "कहानी का cover";
+
+
+    coverBox.appendChild(img);
+
+  }
+
+
+  /* READ COUNT */
+
+  document.getElementById(
+    "read-count"
+  ).textContent =
+    Number(data.read_count || 0) + 1;
+
+
+  /* STORY RATINGS */
+
+  await loadStoryRatings();
+
+
+  /* EPISODES */
+
+  await loadEpisodes();
+
+
+  /* SHOW PAGE */
+
+  document.getElementById(
+    "loading"
+  ).style.display =
+    "none";
+
+
+  document.getElementById(
+    "book"
+  ).style.display =
+    "block";
+
+
+  document.getElementById(
+    "controls"
+  ).style.display =
+    "block";
+
+
+  /* DIRECT EPISODE */
+
+  const episodeId =
+    params.get("episode");
+
+
+  if(episodeId){
+
+    await openEpisode(
+      episodeId,
+      false
+    );
+
+  }
+
 }
 
 
-/* कहानी के सभी elements पढ़ना */
+/* =================================
+   LOAD EPISODES
+================================= */
 
-const nodes =
-  Array.from(doc.body.childNodes);
+async function loadEpisodes(){
 
-nodes.forEach(node => {
+  const episodeBox =
+    document.getElementById(
+      "episodes"
+    );
 
-  /* सामान्य text */
 
-  if (node.nodeType === Node.TEXT_NODE) {
+  const { data, error } =
+    await supabaseClient
+      .from("Episodes")
+      .select(
+        "id, episode_number, episode_title"
+      )
+      .eq(
+        "story_id",
+        storyId
+      )
+      .order(
+        "episode_number",
+        {
+          ascending:true
+        }
+      );
 
-    const words =
-      node.textContent
-        .split(/\s+/)
-        .filter(Boolean);
 
-    words.forEach(word => {
-      addWord(word);
-    });
+  if(error){
 
+    console.log(error);
+
+    episodeBox.innerHTML =
+      "Episodes लोड नहीं हो सके।";
+
+    return;
   }
 
 
-  /* HTML elements */
+  if(!data || data.length === 0){
 
-  else if (
-    node.nodeType === Node.ELEMENT_NODE
-  ) {
+    episodeBox.innerHTML =
+      `
+      <div style="text-align:center;padding:25px;">
+        इस कहानी में अभी कोई Episode प्रकाशित नहीं हुआ है।
+      </div>
+      `;
 
-    /* अगर image है */
+    return;
+  }
 
-    if (node.tagName === "IMG") {
 
-      if (
-        currentPageContent.trim()
-      ) {
+  episodeBox.innerHTML = "";
 
-        createPage(
-          currentPageContent.trim()
+
+  data.forEach(
+    episode => {
+
+      const card =
+        document.createElement(
+          "div"
         );
 
-        currentPageContent = "";
-        wordCount = 0;
-      }
 
-      const image =
-        node.cloneNode(true);
+      card.className =
+        "episode-card";
 
-      image.classList.add(
-        "story-image"
-      );
 
-      createPage(
-        image.outerHTML
+      card.onclick =
+        function(){
+
+          openEpisode(
+            episode.id
+          );
+
+        };
+
+
+      card.innerHTML = `
+
+        <span class="episode-number">
+          Episode ${episode.episode_number}
+        </span>
+
+        <span class="episode-title">
+          ${escapeHTML(
+            episode.episode_title ||
+            "बिना शीर्षक"
+          )}
+        </span>
+
+        <button
+          class="read-episode"
+          onclick="event.stopPropagation(); openEpisode('${episode.id}')"
+        >
+          पढ़ें
+        </button>
+
+      `;
+
+
+      episodeBox.appendChild(
+        card
       );
 
     }
-
-
-    /* paragraph या दूसरा text element */
-
-    else {
-
-      const text =
-        node.textContent.trim();
-
-      if (!text) return;
-
-      const words =
-        text
-          .split(/\s+/)
-          .filter(Boolean);
-
-      words.forEach(word => {
-
-        addWord(word);
-
-      });
-
-    }
-
-  }
-
-});
-
-
-/* बचा हुआ text */
-
-if (
-  currentPageContent.trim()
-) {
-
-  createPage(
-    currentPageContent.trim()
   );
 
 }
 
 
-document.getElementById("loading").style.display =
-  "none";
+/* =================================
+   OPEN EPISODE
+================================= */
 
-document.getElementById("book").style.display =
-  "block";
+async function openEpisode(
+  episodeId,
+  changeURL = true
+){
 
-document.getElementById("controls").style.display =
-  "block";
+  currentEpisodeId =
+    episodeId;
+
+
+  const { data, error } =
+    await supabaseClient
+      .from("Episodes")
+      .select("*")
+      .eq(
+        "id",
+        episodeId
+      )
+      .single();
+
+
+  if(error){
+
+    console.log(error);
+
+    alert(
+      "Episode लोड नहीं हो सका।"
+    );
+
+    return;
+  }
+
+
+  /* CHECK STORY */
+
+  if(
+    String(data.story_id) !==
+    String(storyId)
+  ){
+
+    alert(
+      "यह Episode इस कहानी का हिस्सा नहीं है।"
+    );
+
+    return;
+  }
+
+
+  document.getElementById(
+    "episode-number"
+  ).textContent =
+    "Episode " +
+    data.episode_number;
+
+
+  document.getElementById(
+    "episode-title"
+  ).textContent =
+    data.episode_title ||
+    "बिना शीर्षक";
+
+
+  document.getElementById(
+    "episode-content"
+  ).innerHTML =
+    data.content || "";
+
+
+  /* SHOW EPISODE */
+
+  document.getElementById(
+    "story-home"
+  ).style.display =
+    "none";
+
+
+  document.getElementById(
+    "episode-page"
+  ).style.display =
+    "block";
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+
+  /* URL */
+
+  if(changeURL){
+
+    const newURL =
+      "read.html?id=" +
+      encodeURIComponent(
+        storyId
+      ) +
+      "&episode=" +
+      encodeURIComponent(
+        episodeId
+      );
+
+
+    window.history.pushState(
+      {},
+      "",
+      newURL
+    );
+
+  }
+
+
+  await loadMyEpisodeReview();
 
 }
+
+
+/* =================================
+   BACK TO STORY
+================================= */
+
+function goBackToStory(){
+
+  document.getElementById(
+    "episode-page"
+  ).style.display =
+    "none";
+
+
+  document.getElementById(
+    "story-home"
+  ).style.display =
+    "block";
+
+
+  const newURL =
+    "read.html?id=" +
+    encodeURIComponent(
+      storyId
+    );
+
+
+  window.history.pushState(
+    {},
+    "",
+    newURL
+  );
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =================================
+   STORY RATINGS
+================================= */
+
+async function loadStoryRatings(){
+
+  const { data, error } =
+    await supabaseClient
+      .from("Story_Ratings")
+      .select("rating")
+      .eq(
+        "story_id",
+        storyId
+      );
+
+
+  if(error){
+
+    console.log(
+      "Story rating load error:",
+      error
+    );
+
+    return;
+  }
+
+
+  const count =
+    data ?
+    data.length :
+    0;
+
+
+  document.getElementById(
+    "rating-count"
+  ).textContent =
+    count;
+
+
+  if(count > 0){
+
+    const total =
+      data.reduce(
+        (sum,item) =>
+          sum +
+          Number(
+            item.rating || 0
+          ),
+        0
+      );
+
+
+    const average =
+      (
+        total / count
+      ).toFixed(1);
+
+
+    document.getElementById(
+      "story-rating-message"
+    ).textContent =
+      "औसत रेटिंग: ⭐ " +
+      average +
+      " / 5";
+
+  }
+
+}
+
+
+/* =================================
+   RATE STORY
+================================= */
+
+async function rateStory(
+  rating
+){
+
+  selectedStoryRating =
+    rating;
+
+
+  const sessionResult =
+    await supabaseClient.auth.getSession();
+
+
+  const session =
+    sessionResult.data.session;
+
+
+  if(!session){
+
+    document.getElementById(
+      "story-rating-message"
+    ).textContent =
+      "रेटिंग देने के लिए पहले Login करें।";
+
+    return;
+  }
+
+
+  const { error } =
+    await supabaseClient
+      .from("Story_Ratings")
+      .upsert(
+        {
+          story_id:
+            storyId,
+
+          user_id:
+            session.user.id,
+
+          rating:
+            rating
+        },
+        {
+          onConflict:
+            "user_id,story_id"
+        }
+      );
+
+
+  if(error){
+
+    console.log(error);
+
+    document.getElementById(
+      "story-rating-message"
+    ).textContent =
+      "रेटिंग सेव नहीं हो सकी।";
+
+    return;
+  }
+
+
+  showStars(
+    "story-stars",
+    rating
+  );
+
+
+  document.getElementById(
+    "story-rating-message"
+  ).textContent =
+    "आपकी रेटिंग सेव हो गई। ⭐";
+
+
+  await loadStoryRatings();
+
+}
+
+
+/* =================================
+   EPISODE RATING
+================================= */
+
+function setEpisodeRating(
+  rating
+){
+
+  selectedEpisodeRating =
+    rating;
+
+
+  showStars(
+    "episode-stars",
+    rating
+  );
+
+}
+
+
+/* =================================
+   EPISODE REVIEW
+================================= */
+
+async function submitEpisodeReview(){
+
+  if(!currentEpisodeId){
+    return;
+  }
+
+
+  const sessionResult =
+    await supabaseClient.auth.getSession();
+
+
+  const session =
+    sessionResult.data.session;
+
+
+  if(!session){
+
+    document.getElementById(
+      "episode-rating-message"
+    ).textContent =
+      "समीक्षा देने के लिए पहले Login करें।";
+
+    return;
+  }
+
+
+  if(
+    selectedEpisodeRating < 1
+  ){
+
+    document.getElementById(
+      "episode-rating-message"
+    ).textContent =
+      "कृपया पहले Rating चुनें।";
+
+    return;
+  }
+
+
+  const review =
+    document.getElementById(
+      "episode-review-text"
+    ).value.trim();
+
+
+  const { error } =
+    await supabaseClient
+      .from("Feedback")
+      .upsert(
+        {
+          episode_id:
+            currentEpisodeId,
+
+          user_id:
+            session.user.id,
+
+          rating:
+            selectedEpisodeRating,
+
+          feedback:
+            review
+        },
+        {
+          onConflict:
+            "user_id,episode_id"
+        }
+      );
+
+
+  if(error){
+
+    console.log(error);
+
+    document.getElementById(
+      "episode-rating-message"
+    ).textContent =
+      "समीक्षा सेव नहीं हो सकी।";
+
+    return;
+  }
+
+
+  document.getElementById(
+    "episode-rating-message"
+  ).textContent =
+    "आपकी Rating और समीक्षा सेव हो गई। ⭐";
+
+
+  await loadMyEpisodeReview();
+
+}
+
+
+/* =================================
+   LOAD MY REVIEW
+================================= */
+
+async function loadMyEpisodeReview(){
+
+  if(!currentEpisodeId){
+    return;
+  }
+
+
+  const sessionResult =
+    await supabaseClient.auth.getSession();
+
+
+  const session =
+    sessionResult.data.session;
+
+
+  if(!session){
+    return;
+  }
+
+
+  const { data, error } =
+    await supabaseClient
+      .from("Feedback")
+      .select(
+        "rating, feedback"
+      )
+      .eq(
+        "episode_id",
+        currentEpisodeId
+      )
+      .eq(
+        "user_id",
+        session.user.id
+      )
+      .maybeSingle();
+
+
+  if(error){
+
+    console.log(error);
+
+    return;
+  }
+
+
+  if(data){
+
+    selectedEpisodeRating =
+      Number(
+        data.rating || 0
+      );
+
+
+    showStars(
+      "episode-stars",
+      selectedEpisodeRating
+    );
+
+
+    document.getElementById(
+      "episode-review-text"
+    ).value =
+      data.feedback || "";
+
+  }
+
+}
+
+
+/* =================================
+   SHOW STARS
+================================= */
+
+function showStars(
+  elementId,
+  rating
+){
+
+  const box =
+    document.getElementById(
+      elementId
+    );
+
+
+  const buttons =
+    box.querySelectorAll(
+      "button"
+    );
+
+
+  buttons.forEach(
+    (button,index) => {
+
+      button.textContent =
+        index < rating
+          ? "★"
+          : "☆";
+
+    }
+  );
+
+}
+
+
+/* =================================
+   HTML SAFETY
+================================= */
+
+function escapeHTML(
+  text
+){
+
+  const div =
+    document.createElement(
+      "div"
+    );
+
+
+  div.textContent =
+    text || "";
+
+
+  return div.innerHTML;
+
+}
+
+
+/* =================================
+   ERROR
+================================= */
+
+function showError(
+  message
+){
+
+  document.getElementById(
+    "loading"
+  ).style.display =
+    "none";
+
+
+  const error =
+    document.getElementById(
+      "error"
+    );
+
+
+  error.style.display =
+    "block";
+
+
+  error.textContent =
+    message;
+
+}
+
+
+/* =================================
+   START
+================================= */
 
 loadStory();
 
