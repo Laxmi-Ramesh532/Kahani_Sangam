@@ -1463,20 +1463,17 @@ async function rateStory(
             "user_id,story_id"
         }
       );
-
-
   if(error){
 
-    console.log(error);
+  console.log(error);
 
-    document.getElementById(
-      "story-rating-message"
-    ).textContent =
-      "रेटिंग सेव नहीं हो सकी।";
+  document.getElementById(
+    "story-rating-message"
+  ).textContent =
+    "Rating error: " + error.message;
 
-    return;
+  return;
   }
-
 
   showStars(
     "story-stars",
