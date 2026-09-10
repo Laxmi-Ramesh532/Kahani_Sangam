@@ -1,606 +1,1094 @@
-
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
 
-<title>लेखक बनें • कहानी संसार</title>
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <title>लेखक बनें - कहानी संसार</title>
 
-<style>
-*{
-  box-sizing:border-box;
-}
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-body{
-  margin:0;
-  background:#ead8bd;
-  color:#4b301c;
-  font-family:Georgia,"Noto Serif Devanagari",serif;
-}
+  <style>
 
-header{
-  background:#302219;
-  color:#f8ead2;
-  padding:16px 25px;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-.header-inner{
-  max-width:1000px;
-  margin:auto;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
+    body {
+      margin: 0;
+      background: #f8f5ef;
+      color: #302820;
+      font-family: Georgia, "Noto Serif Devanagari",
+                   "Mangal", serif;
+    }
 
-.logo{
-  font-size:22px;
-  font-weight:bold;
-}
+    .container {
+      width: 92%;
+      max-width: 850px;
+      margin: 25px auto 50px;
+    }
 
-.back{
-  color:#f8ead2;
-  text-decoration:none;
-  border:1px solid #c99b57;
-  padding:8px 15px;
-  border-radius:20px;
-}
+    .top-box {
+      background: #fffdf9;
+      border: 1px solid #d8cbb8;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+    }
 
-.container{
-  max-width:850px;
-  margin:40px auto;
-  padding:0 18px;
-}
+    h1 {
+      text-align: center;
+      margin-top: 5px;
+      margin-bottom: 25px;
+      font-size: 30px;
+      font-weight: 600;
+    }
 
-.form-box{
-  background:#f9efdf;
-  padding:45px;
-  border-radius:18px;
-  box-shadow:0 8px 25px rgba(0,0,0,.18);
-  border:1px solid #d4b487;
-}
+    .field {
+      margin-bottom: 20px;
+    }
 
-.decor{
-  text-align:center;
-  font-size:30px;
-  margin-bottom:10px;
-}
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 18px;
+      font-weight: 600;
+    }
 
-h1{
-  text-align:center;
-  font-size:38px;
-  margin:10px 0;
-}
+    input,
+    select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #cdbfae;
+      border-radius: 9px;
+      background: white;
+      color: #302820;
+      font-size: 17px;
+      font-family: inherit;
+      outline: none;
+    }
 
-.intro{
-  text-align:center;
-  font-size:17px;
-  line-height:1.8;
-  margin-bottom:35px;
-}
+    input:focus,
+    select:focus {
+      border-color: #8f7658;
+    }
 
-label{
-  display:block;
-  font-weight:bold;
-  margin:18px 0 7px;
-}
+    .editor {
+      min-height: 350px;
+      width: 100%;
+      padding: 18px;
+      background: white;
+      border: 1px solid #cdbfae;
+      border-radius: 10px;
+      font-size: 19px;
+      line-height: 2;
+      outline: none;
+    }
 
-input,
-textarea,
-select{
-  width:100%;
-  padding:13px;
-  border:1px solid #cdb083;
-  border-radius:9px;
-  background:#fffaf1;
-  color:#3f2b1d;
-  font-size:16px;
-  font-family:inherit;
-}
+    .editor:focus {
+      border-color: #8f7658;
+    }
 
-textarea{
-  min-height:300px;
-  resize:vertical;
-  line-height:1.9;
-}
-  .story-editor{
-  width:100%;
-  min-height:300px;
-  padding:13px;
-  border:1px solid #cdb083;
-  border-radius:9px;
-  background:#fffaf1;
-  color:#3f2b1d;
-  font-size:16px;
-  font-family:inherit;
-  line-height:1.9;
-  outline:none;
-  overflow-y:auto;
-}
+    .editor img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 18px auto;
+      cursor: pointer;
+      border-radius: 5px;
+    }
 
-.story-editor:empty::before{
-  content:attr(data-placeholder);
-  color:#999;
-}
-  .crop-modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.75);
-  z-index:9999;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
+    .image-section {
+      margin-top: 22px;
+      padding: 16px;
+      border: 1px dashed #cdbfae;
+      border-radius: 10px;
+      background: #fffaf3;
+    }
 
-.crop-box{
-  background:#f9efdf;
-  width:100%;
-  max-width:500px;
-  padding:20px;
-  border-radius:15px;
-  text-align:center;
-}
+    .image-section input[type="file"] {
+      border: none;
+      padding: 5px;
+      background: transparent;
+    }
 
-.crop-area{
-  position:relative;
-  display:inline-block;
-  max-width:100%;
-  overflow:hidden;
-}
+    .cover-preview {
+      display: none;
+      margin-top: 12px;
+      text-align: center;
+    }
 
-.crop-area img{
-  display:block;
-  max-width:100%;
-  max-height:60vh;
-}
+    .cover-preview img {
+      max-width: 180px;
+      max-height: 180px;
+      border-radius: 8px;
+      border: 1px solid #cdbfae;
+    }
 
-#cropSelection{
-  position:absolute;
-  width:70%;
-  aspect-ratio:1 / 1;
-  left:15%;
-  top:15%;
-  border:2px solid white;
-  box-shadow:0 0 0 9999px rgba(0,0,0,.45);
-  cursor:move;
-  touch-action:none;
-}
+    .submit-btn {
+      width: 100%;
+      margin-top: 25px;
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      background: #594633;
+      color: white;
+      font-size: 19px;
+      font-family: inherit;
+      cursor: pointer;
+    }
 
-.crop-buttons{
-  margin-top:15px;
-}
+    .submit-btn:hover {
+      opacity: 0.92;
+    }
 
-button{
-  display:block;
-  margin:30px auto 5px;
-  padding:13px 30px;
-  border:0;
-  border-radius:25px;
-  background:#4b301c;
-  color:white;
-  font-size:17px;
-  cursor:pointer;
-}
+    .message {
+      margin-top: 18px;
+      text-align: center;
+      font-size: 17px;
+      min-height: 25px;
+    }
 
-button:disabled{
-  opacity:.6;
-}
+    /* Image long-press menu */
 
-#message{
-  text-align:center;
-  margin-top:20px;
-  font-weight:bold;
-}
+    .image-menu {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      min-width: 180px;
+      background: white;
+      border: 1px solid #cdbfae;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.18);
+      overflow: hidden;
+    }
 
-.note{
-  margin-top:25px;
-  padding:15px;
-  background:#f0dfc5;
-  border-radius:10px;
-  line-height:1.7;
-  font-size:14px;
-}
+    .image-menu button {
+      display: block;
+      width: 100%;
+      padding: 12px 15px;
+      border: none;
+      background: white;
+      text-align: left;
+      font-family: inherit;
+      font-size: 16px;
+      cursor: pointer;
+    }
 
-@media(max-width:600px){
-  .form-box{
-    padding:25px 18px;
-  }
+    .image-menu button:hover {
+      background: #f4eee5;
+    }
 
-  h1{
-    font-size:30px;
-  }
-}
-</style>
+    /* Resize handle */
+
+    .selected-image {
+      outline: 2px dashed #9a805f;
+    }
+
+    .resize-box {
+      display: none;
+      position: fixed;
+      z-index: 9998;
+      background: white;
+      border: 1px solid #cdbfae;
+      border-radius: 10px;
+      padding: 12px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.18);
+    }
+
+    .resize-box input {
+      width: 150px;
+    }
+
+    .resize-box button {
+      margin-top: 8px;
+      padding: 7px 12px;
+      border: none;
+      border-radius: 6px;
+      background: #594633;
+      color: white;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+
+      .container {
+        width: 94%;
+        margin-top: 15px;
+      }
+
+      .top-box {
+        padding: 18px;
+      }
+
+      h1 {
+        font-size: 25px;
+      }
+
+      label {
+        font-size: 17px;
+      }
+
+      input,
+      select {
+        font-size: 16px;
+      }
+
+      .editor {
+        min-height: 330px;
+        font-size: 19px;
+      }
+    }
+
+  </style>
 </head>
 
 <body>
 
-<header>
-  <div class="header-inner">
-    <div class="logo">📖 कहानी संसार</div>
-    <a class="back" href="index.html">← वापस</a>
-  </div>
-</header>
+  <div class="container">
 
-<main class="container">
+    <div class="top-box">
 
-  <section class="form-box">
+      <h1>✍️ लेखक बनें</h1>
 
-    <div class="decor">🌸 🦋 🌸</div>
+      <div class="field">
+        <label for="author">
+          लेखक का नाम
+        </label>
 
-    <h1>✍️ अपनी कहानी लिखें</h1>
-
-    <p class="intro">
-      आपकी कहानी किसी पाठक की कल्पना को छू सकती है।
-      अपनी मौलिक रचना यहाँ साझा करें और कहानी संसार का हिस्सा बनें।
-    </p>
-
-    <label for="author">लेखक का नाम</label>
-    <input
-      id="author"
-      type="text"
-      placeholder="अपना नाम लिखें"
-    >
-
-    <label for="title">कहानी का नाम</label>
-    <input
-      id="title"
-      type="text"
-      placeholder="अपनी कहानी का शीर्षक लिखें"
-    >
-
-    <label for="language">मूल भाषा</label>
-    <select id="language">
-      <option value="हिंदी">हिंदी</option>
-      <option value="अवधी">अवधी</option>
-      <option value="भोजपुरी">भोजपुरी</option>
-      <option value="उर्दू">उर्दू</option>
-      <option value="अन्य">अन्य</option>
-    </select>
-    
-    <label for="age_category">कहानी किस उम्र के पाठकों के लिए है?</label>
-    <select id="age_category">
-      <option value="">उम्र चुनें</option>
-      <option value="15 तक">15 वर्ष तक</option>
-      <option value="16+">16 वर्ष और अधिक</option>
-      
-  </select>
-    <label for="category">कहानी की श्रेणी चुनें</label>
-<select id="category">
-  <option value="">श्रेणी चुनें</option>
-  <option value="कहानी">कहानी</option>
-  <option value="लोककथा">लोककथा</option>
-  <option value="लोकगीत">लोकगीत</option>
-  <option value="रहस्यमयी कथा">रहस्यमयी कथा</option>
-  <option value="प्रेरणादायक कहानी">प्रेरणादायक कहानी</option>
-  <option value="ऐतिहासिक कथा">ऐतिहासिक कथा</option>
-</select>
-    
-    
-    <label for="content">अपनी कहानी</label>
-
-<div
-  id="content"
-  contenteditable="true"
-  class="story-editor"
-  data-placeholder="यहाँ अपनी पूरी कहानी लिखें..."
-></div>
-
-    
-    <label for="storyImage">कहानी के लिए चित्र (वैकल्पिक)</label>
-<input
-  id="storyImage"
-  type="file"
-  accept="image/*"
->
-      <div style="text-align:center; margin-top:10px;">
-  <button type="button" onclick="changeImageSize('small')">
-    छोटा
-  </button>
-
-  <button type="button" onclick="changeImageSize('medium')">
-    मध्यम
-  </button>
-
-  <button type="button" onclick="changeImageSize('large')">
-    बड़ा
-  </button>
+        <input
+          type="text"
+          id="author"
+          placeholder="अपना नाम लिखें"
+        >
       </div>
 
-    <button id="submitBtn" type="button" onclick="submitStory()">
-      📖 कहानी प्रकाशित करें
+
+      <div class="field">
+        <label for="title">
+          कहानी का नाम
+        </label>
+
+        <input
+          type="text"
+          id="title"
+          placeholder="कहानी का शीर्षक लिखें"
+        >
+      </div>
+
+
+      <div class="field">
+        <label for="language">
+          मूल भाषा
+        </label>
+
+        <select id="language">
+
+          <option value="">
+            भाषा चुनें
+          </option>
+
+          <option value="हिंदी">
+            हिंदी
+          </option>
+
+          <option value="अंग्रेज़ी">
+            अंग्रेज़ी
+          </option>
+
+          <option value="उर्दू">
+            उर्दू
+          </option>
+
+          <option value="बंगाली">
+            बंगाली
+          </option>
+
+          <option value="मराठी">
+            मराठी
+          </option>
+
+          <option value="तमिल">
+            तमिल
+          </option>
+
+          <option value="तेलुगु">
+            तेलुगु
+          </option>
+
+          <option value="अन्य">
+            अन्य
+          </option>
+
+        </select>
+      </div>
+
+
+      <div class="field">
+        <label for="age_category">
+          आयु वर्ग
+        </label>
+
+        <select id="age_category">
+
+          <option value="">
+            आयु वर्ग चुनें
+          </option>
+
+          <option value="15 तक">
+            15 वर्ष तक
+          </option>
+
+          <option value="16+">
+            16 वर्ष और अधिक
+          </option>
+
+        </select>
+      </div>
+
+
+      <div class="field">
+        <label for="category">
+          कहानी की श्रेणी
+        </label>
+
+        <select id="category">
+
+          <option value="">
+            श्रेणी चुनें
+          </option>
+
+          <option value="कहानी">
+            कहानी
+          </option>
+
+          <option value="लोककथा">
+            लोककथा
+          </option>
+
+          <option value="लोकगीत">
+            लोकगीत
+          </option>
+
+          <option value="रहस्यमयी कथा">
+            रहस्यमयी कथा
+          </option>
+
+          <option value="प्रेरणादायक कहानी">
+            प्रेरणादायक कहानी
+          </option>
+
+          <option value="ऐतिहासिक कथा">
+            ऐतिहासिक कथा
+          </option>
+
+          <option value="हॉरर स्टोरी">
+            हॉरर स्टोरी
+          </option>
+
+          <option value="रोमांटिक स्टोरी">
+            रोमांटिक स्टोरी
+          </option>
+
+          <option value="लघुकथा">
+            लघुकथा
+          </option>
+
+          <option value="कविता">
+            कविता
+          </option>
+
+          <option value="संस्मरण">
+            संस्मरण
+          </option>
+
+          <option value="धार्मिक कहानी">
+            धार्मिक कहानी
+          </option>
+
+          <option value="पारिवारिक कहानी">
+            पारिवारिक कहानी
+          </option>
+
+          <option value="अन्य">
+            अन्य
+          </option>
+
+        </select>
+      </div>
+
+
+      <div class="field">
+
+        <label for="content">
+          अपनी रचना लिखें
+        </label>
+
+        <div
+          id="content"
+          class="editor"
+          contenteditable="true"
+          spellcheck="true"
+        ></div>
+
+      </div>
+
+
+      <!-- Optional Cover -->
+
+      <div class="image-section">
+
+        <label for="storyImage">
+          कहानी का Cover Picture
+          <span style="font-weight:normal;">
+            (वैकल्पिक)
+          </span>
+        </label>
+
+        <input
+          type="file"
+          id="storyImage"
+          accept="image/*"
+        >
+
+        <div
+          class="cover-preview"
+          id="coverPreview"
+        >
+          <img
+            id="coverPreviewImage"
+            src=""
+            alt="Cover Preview"
+          >
+        </div>
+
+      </div>
+
+
+      <button
+        id="submitBtn"
+        class="submit-btn"
+        type="button"
+        onclick="submitStory()"
+      >
+        📖 कहानी प्रकाशित करें
+      </button>
+
+
+      <div
+        id="message"
+        class="message"
+      ></div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Image option menu -->
+
+  <div
+    id="imageMenu"
+    class="image-menu"
+  >
+
+    <button
+      type="button"
+      onclick="addImageFromMenu()"
+    >
+      🖼️ चित्र बदलें
     </button>
 
-    <div id="message"></div>
+    <button
+      type="button"
+      onclick="openResizeBox()"
+    >
+      ↔️ चित्र का आकार बदलें
+    </button>
 
-    <div class="note">
-      🌱 <strong>एक छोटी-सी बात:</strong>
-      कृपया अपनी मौलिक रचना साझा करें या ऐसी रचना जिसके प्रकाशन की
-      अनुमति आपके पास हो।
-    </div>
-
-  </section>
-
-</main>
-  <div id="cropModal" class="crop-modal">
-
-  <div class="crop-box">
-
-    <h3>✂️ चित्र काटें</h3>
-
-    <div class="crop-area" id="cropArea">
-      <img id="cropImage" src="" alt="Crop">
-      <div id="cropSelection"></div>
-    </div>
-
-    <div class="crop-buttons">
-
-      <button type="button" onclick="applyCrop()">
-        ✅ ठीक है
-      </button>
-
-      <button type="button" onclick="closeCrop()">
-        ❌ रद्द करें
-      </button>
-
-    </div>
+    <button
+      type="button"
+      onclick="removeSelectedImage()"
+    >
+      🗑️ चित्र हटाएँ
+    </button>
 
   </div>
 
+
+  <!-- Resize menu -->
+
+  <div
+    id="resizeBox"
+    class="resize-box"
+  >
+
+    <div>
+      चित्र का आकार
+    </div>
+
+    <input
+      id="imageWidth"
+      type="range"
+      min="20"
+      max="100"
+      value="70"
+    >
+
+    <div id="imageWidthText">
+      70%
+    </div>
+
+    <button
+      type="button"
+      onclick="applyImageSize()"
+    >
+      लागू करें
+    </button>
+
   </div>
-  <script>
+
+
+<script>
+
+/* =========================
+   SUPABASE
+========================= */
 
 const SUPABASE_URL =
-"https://wnvkryudbeafebaluwgq.supabase.co";
+  "https://wnvkryudbeafebaluwgq.supabase.co";
 
-const SUPABASE_KEY =
-"sb_publishable_q1J83vS9b3Ngw-Py_QLuzg_ub6pdy3D";
+const SUPABASE_ANON_KEY =
+  "sb_publishable_q1j83vS9b3Ngw-py_QLuzg_ub6pdy3D";
 
 const supabaseClient =
-window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+
+
+/* =========================
+   BASIC VARIABLES
+========================= */
 
 let selectedImage = null;
-let savedRange = null;
+let longPressTimer = null;
 
-const editor =
-  document.getElementById("content");
 
-function saveSelection() {
+/* =========================
+   COVER PREVIEW
+========================= */
 
-  if (!editor) return;
-
-  const selection =
-    window.getSelection();
-
-  if (selection.rangeCount === 0) return;
-
-  const range =
-    selection.getRangeAt(0);
-
-  if (
-    editor.contains(
-      range.commonAncestorContainer
-    )
-  ) {
-    savedRange =
-      range.cloneRange();
-  }
-}
-
-if (editor) {
-
-  editor.addEventListener(
-    "blur",
-    saveSelection
-  );
-
-  editor.addEventListener(
-    "keyup",
-    saveSelection
-  );
-
-  editor.addEventListener(
-    "mouseup",
-    saveSelection
-  );
-
-}
-
-const storyImage =
-  document.getElementById("storyImage");
-
-if (storyImage) {
-
-  storyImage.addEventListener(
+document
+  .getElementById("storyImage")
+  .addEventListener(
     "change",
-    async function () {
+    function () {
 
-      const file =
-        this.files[0];
+      const file = this.files[0];
 
-      if (!file) return;
-
-      const fileExt =
-        file.name.split(".").pop();
-
-      const fileName =
-        `${crypto.randomUUID()}.${fileExt}`;
-
-      const { error: uploadError } =
-        await supabaseClient
-          .storage
-          .from("story-images")
-          .upload(
-            fileName,
-            file
-          );
-
-      if (uploadError) {
-
-        console.log(uploadError);
-
-        alert(
-          "चित्र upload नहीं हो सका। कृपया दोबारा कोशिश करें।"
-        );
-
+      if (!file) {
         return;
       }
 
-      const { data: publicUrlData } =
-        supabaseClient
-          .storage
-          .from("story-images")
-          .getPublicUrl(fileName);
+      const reader =
+        new FileReader();
 
-      const image =
-        document.createElement("img");
+      reader.onload = function (e) {
 
-      image.src =
-        publicUrlData.publicUrl;
-
-      image.className =
-        "story-editor-image";
-
-      image.style.width = "60%";
-      image.style.maxWidth = "100%";
-      image.style.display = "block";
-      image.style.margin = "15px auto";
-
-      image.addEventListener(
-        "click",
-        function (event) {
-
-          event.preventDefault();
-          event.stopPropagation();
-
-          selectedImage = image;
-
-          const cropImage =
-            document.getElementById(
-              "cropImage"
-            );
-
-          const cropModal =
-            document.getElementById(
-              "cropModal"
-            );
-
-          if (!cropImage || !cropModal) {
-
-            alert(
-              "Crop window नहीं मिल सकी।"
-            );
-
-            return;
-          }
-
-          cropImage.src =
-            image.src;
-
-          cropImage.onload =
-            function () {
-
-              cropModal.style.display =
-                "flex";
-
-            };
-
-        }
-      );
-
-
-      if (editor) {
-
-        editor.focus();
-
-        if (savedRange) {
-
-          const selection =
-            window.getSelection();
-
-          selection.removeAllRanges();
-
-          selection.addRange(
-            savedRange
+        const preview =
+          document.getElementById(
+            "coverPreview"
           );
 
-          savedRange = null;
+        const image =
+          document.getElementById(
+            "coverPreviewImage"
+          );
 
-        }
+        image.src = e.target.result;
 
-        const selection =
-          window.getSelection();
+        preview.style.display = "block";
 
-        if (selection.rangeCount > 0) {
+      };
 
-          const range =
-            selection.getRangeAt(0);
-
-          range.deleteContents();
-
-          range.insertNode(image);
-
-          range.setStartAfter(image);
-
-          range.collapse(true);
-
-          selection.removeAllRanges();
-
-          selection.addRange(range);
-
-        } else {
-
-          editor.appendChild(image);
-
-        }
-
-      }
-
-      this.value = "";
+      reader.readAsDataURL(file);
 
     }
   );
 
-}
-function changeImageSize(size) {
 
-  if (!selectedImage) {
+/* =========================
+   IMAGE FROM CONTENT
+========================= */
 
-    alert(
-      "पहले कहानी में किसी चित्र पर टैप करें।"
+document
+  .getElementById("content")
+  .addEventListener(
+    "contextmenu",
+    function (event) {
+
+      const image =
+        event.target.closest("img");
+
+      if (!image) {
+        return;
+      }
+
+      event.preventDefault();
+
+      selectedImage = image;
+
+      showImageMenu(
+        event.clientX,
+        event.clientY
+      );
+
+    }
+  );
+
+
+/* =========================
+   LONG PRESS
+========================= */
+
+document
+  .getElementById("content")
+  .addEventListener(
+    "touchstart",
+    function (event) {
+
+      const image =
+        event.target.closest("img");
+
+      if (!image) {
+        return;
+      }
+
+      selectedImage = image;
+
+      longPressTimer =
+        setTimeout(
+          function () {
+
+            const touch =
+              event.touches[0];
+
+            showImageMenu(
+              touch.clientX,
+              touch.clientY
+            );
+
+          },
+          650
+        );
+
+    },
+    {
+      passive: true
+    }
+  );
+
+
+document
+  .getElementById("content")
+  .addEventListener(
+    "touchend",
+    function () {
+
+      clearTimeout(
+        longPressTimer
+      );
+
+    }
+  );
+
+
+document
+  .getElementById("content")
+  .addEventListener(
+    "touchmove",
+    function () {
+
+      clearTimeout(
+        longPressTimer
+      );
+
+    }
+  );
+
+
+/* =========================
+   IMAGE MENU
+========================= */
+
+function showImageMenu(x, y) {
+
+  const menu =
+    document.getElementById(
+      "imageMenu"
     );
 
+  menu.style.display = "block";
+
+  const maxX =
+    window.innerWidth -
+    menu.offsetWidth -
+    10;
+
+  const maxY =
+    window.innerHeight -
+    menu.offsetHeight -
+    10;
+
+  menu.style.left =
+    Math.max(
+      10,
+      Math.min(x, maxX)
+    ) + "px";
+
+  menu.style.top =
+    Math.max(
+      10,
+      Math.min(y, maxY)
+    ) + "px";
+}
+
+
+function hideImageMenu() {
+
+  document
+    .getElementById(
+      "imageMenu"
+    )
+    .style.display = "none";
+
+}
+
+
+/* =========================
+   ADD / CHANGE IMAGE
+========================= */
+
+function addImageFromMenu() {
+
+  hideImageMenu();
+
+  const input =
+    document.createElement(
+      "input"
+    );
+
+  input.type = "file";
+  input.accept = "image/*";
+
+  input.onchange =
+    function () {
+
+      const file =
+        this.files[0];
+
+      if (!file) {
+        return;
+      }
+
+      const reader =
+        new FileReader();
+
+      reader.onload =
+        function (e) {
+
+          if (!selectedImage) {
+            return;
+          }
+
+          selectedImage.src =
+            e.target.result;
+
+        };
+
+      reader.readAsDataURL(file);
+
+    };
+
+  input.click();
+
+}
+
+
+/* =========================
+   RESIZE
+========================= */
+
+function openResizeBox() {
+
+  hideImageMenu();
+
+  if (!selectedImage) {
     return;
   }
 
-  if (size === "small") {
+  selectedImage.classList.add(
+    "selected-image"
+  );
 
-    selectedImage.style.width =
-      "30%";
+  const box =
+    document.getElementById(
+      "resizeBox"
+    );
 
+  const width =
+    selectedImage.getBoundingClientRect()
+      .width;
+
+  const editorWidth =
+    document
+      .getElementById("content")
+      .getBoundingClientRect()
+      .width;
+
+  let percent =
+    Math.round(
+      (width / editorWidth) * 100
+    );
+
+  percent =
+    Math.max(
+      20,
+      Math.min(
+        100,
+        percent
+      )
+    );
+
+  const slider =
+    document.getElementById(
+      "imageWidth"
+    );
+
+  slider.value =
+    percent;
+
+  document
+    .getElementById(
+      "imageWidthText"
+    )
+    .innerText =
+    percent + "%";
+
+  slider.oninput =
+    function () {
+
+      document
+        .getElementById(
+          "imageWidthText"
+        )
+        .innerText =
+        this.value + "%";
+
+    };
+
+  box.style.display =
+    "block";
+
+  const rect =
+    selectedImage
+      .getBoundingClientRect();
+
+  let left =
+    rect.left;
+
+  let top =
+    rect.bottom + 10;
+
+  if (
+    left + 180 >
+    window.innerWidth
+  ) {
+    left =
+      window.innerWidth - 190;
   }
 
-  if (size === "medium") {
-
-    selectedImage.style.width =
-      "60%";
-
+  if (
+    top + 100 >
+    window.innerHeight
+  ) {
+    top =
+      rect.top - 110;
   }
 
-  if (size === "large") {
+  box.style.left =
+    Math.max(
+      10,
+      left
+    ) + "px";
 
-    selectedImage.style.width =
-      "90%";
-
-  }
+  box.style.top =
+    Math.max(
+      10,
+      top
+    ) + "px";
 
 }
+
+
+function applyImageSize() {
+
+  if (!selectedImage) {
+    return;
+  }
+
+  const value =
+    document
+      .getElementById(
+        "imageWidth"
+      )
+      .value;
+
+  selectedImage.style.width =
+    value + "%";
+
+  selectedImage.style.height =
+    "auto";
+
+  selectedImage.classList.remove(
+    "selected-image"
+  );
+
+  document
+    .getElementById(
+      "resizeBox"
+    )
+    .style.display =
+    "none";
+
+}
+
+
+/* =========================
+   DELETE IMAGE
+========================= */
+
+function removeSelectedImage() {
+
+  hideImageMenu();
+
+  if (!selectedImage) {
+    return;
+  }
+
+  selectedImage.remove();
+
+  selectedImage = null;
+
+}
+
+
+/* =========================
+   CLOSE MENUS
+========================= */
+
+document.addEventListener(
+  "click",
+  function (event) {
+
+    const menu =
+      document.getElementById(
+        "imageMenu"
+      );
+
+    const resize =
+      document.getElementById(
+        "resizeBox"
+      );
+
+    if (
+      !menu.contains(event.target) &&
+      event.target !== selectedImage
+    ) {
+      menu.style.display =
+        "none";
+    }
+
+    if (
+      !resize.contains(event.target)
+    ) {
+      if (
+        !event.target.closest("img")
+      ) {
+
+        resize.style.display =
+          "none";
+
+      }
+    }
+
+  }
+);
+
+
+/* =========================
+   UPLOAD IMAGE
+========================= */
+
+async function uploadImage(
+  file,
+  folder
+) {
+
+  const extension =
+    file.name
+      .split(".")
+      .pop();
+
+  const fileName =
+    folder +
+    "/" +
+    Date.now() +
+    "_" +
+    Math.random()
+      .toString(36)
+      .substring(2) +
+    "." +
+    extension;
+
+  const {
+    error
+  } =
+    await supabaseClient
+      .storage
+      .from("story-images")
+      .upload(
+        fileName,
+        file
+      );
+
+  if (error) {
+    throw error;
+  }
+
+  const {
+    data
+  } =
+    supabaseClient
+      .storage
+      .from("story-images")
+      .getPublicUrl(
+        fileName
+      );
+
+  return data.publicUrl;
+
+}
+
+
+/* =========================
+   EDIT STORY LOADING
+========================= */
 
 async function loadStoryForEdit() {
 
@@ -612,124 +1100,164 @@ async function loadStoryForEdit() {
   const storyId =
     params.get("edit");
 
-  if (!storyId) return;
-
-
-  const {
-    data: { session }
-  } =
-    await supabaseClient.auth.getSession();
-
-
-  if (!session) {
-
-    alert(
-      "कहानी edit करने के लिए पहले Login करें।"
-    );
-
-    window.location.href =
-      "login.html";
-
+  if (!storyId) {
     return;
   }
-
-
-  const {
-    data: story,
-    error
-  } =
-    await supabaseClient
-      .from("Story")
-      .select("*")
-      .eq("id", storyId)
-      .single();
-
-
-  if (error) {
-
-    console.log(error);
-
-    alert(
-      "कहानी की जानकारी नहीं मिल सकी।"
-    );
-
-    return;
-  }
-
-
-  if (
-    story.user_id !==
-    session.user.id
-  ) {
-
-    alert(
-      "आप इस कहानी को edit नहीं कर सकते।"
-    );
-
-    window.location.href =
-      "index.html";
-
-    return;
-  }
-
-
-  document.getElementById(
-    "author"
-  ).value =
-    story.author_name || "";
-
-
-  document.getElementById(
-    "title"
-  ).value =
-    story.title || "";
-
-
-  document.getElementById(
-    "language"
-  ).value =
-    story.language || "";
-
-
-  document.getElementById(
-    "age_category"
-  ).value =
-    story.age_category || "";
-
-
-  document.getElementById(
-    "category"
-  ).value =
-    story.category || "";
-
-
-  document.getElementById(
-    "content"
-  ).innerHTML =
-    story.content || "";
-
-
-  document.getElementById(
-    "submitBtn"
-  ).textContent =
-    "💾 कहानी अपडेट करें";
-
-}
-
-
-loadStoryForEdit();
-
-async function submitStory() {
-
-  alert("submit");
-
 
   try {
 
     const {
-      data: { session }
+      data: sessionData
     } =
-    await supabaseClient.auth.getSession();
+      await supabaseClient
+        .auth
+        .getSession();
+
+    const session =
+      sessionData.session;
+
+    if (!session) {
+
+      alert(
+        "कहानी edit करने के लिए पहले login करें।"
+      );
+
+      return;
+
+    }
+
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("Story")
+        .select("*")
+        .eq("id", storyId)
+        .single();
+
+
+    if (error) {
+      throw error;
+    }
+
+
+    if (
+      data.user_id !==
+      session.user.id
+    ) {
+
+      alert(
+        "आप इस कहानी को edit नहीं कर सकते।"
+      );
+
+      return;
+
+    }
+
+
+    document
+      .getElementById("author")
+      .value =
+      data.author_name || "";
+
+
+    document
+      .getElementById("title")
+      .value =
+      data.title || "";
+
+
+    document
+      .getElementById("language")
+      .value =
+      data.language || "";
+
+
+    document
+      .getElementById("age_category")
+      .value =
+      data.age_category || "";
+
+
+    document
+      .getElementById("category")
+      .value =
+      data.category || "";
+
+
+    document
+      .getElementById("content")
+      .innerHTML =
+      data.content || "";
+
+
+    document
+      .getElementById("submitBtn")
+      .innerText =
+      "💾 कहानी अपडेट करें";
+
+
+    document
+      .getElementById("submitBtn")
+      .dataset.editId =
+      storyId;
+
+
+  } catch (error) {
+
+    console.error(
+      "Edit loading error:",
+      error
+    );
+
+    alert(
+      error.message
+    );
+
+  }
+
+}
+
+
+/* =========================
+   SUBMIT STORY
+========================= */
+
+async function submitStory() {
+
+  const message =
+    document.getElementById(
+      "message"
+    );
+
+  const button =
+    document.getElementById(
+      "submitBtn"
+    );
+
+
+  message.innerText =
+    "कृपया प्रतीक्षा करें...";
+
+  button.disabled =
+    true;
+
+
+  try {
+
+    /* LOGIN CHECK */
+
+    const {
+      data: sessionData
+    } =
+      await supabaseClient
+        .auth
+        .getSession();
+
+    const session =
+      sessionData.session;
 
 
     if (!session) {
@@ -738,12 +1266,15 @@ async function submitStory() {
         "कहानी प्रकाशित करने के लिए पहले Login करें।"
       );
 
-      window.location.href =
-        "login.html";
+      button.disabled =
+        false;
 
       return;
+
     }
 
+
+    /* FORM VALUES */
 
     const author =
       document
@@ -775,23 +1306,13 @@ async function submitStory() {
       document
         .getElementById("category")
         .value;
+
+
     const content =
       document
         .getElementById("content")
         .innerHTML
         .trim();
-
-
-    const message =
-      document.getElementById(
-        "message"
-      );
-
-
-    const button =
-      document.getElementById(
-        "submitBtn"
-      );
 
 
     if (
@@ -801,35 +1322,29 @@ async function submitStory() {
       !ageCategory
     ) {
 
-      message.textContent =
-        "कृपया लेखक का नाम, कहानी का नाम, कहानी और उम्र की श्रेणी चुनें।";
+      alert(
+        "कृपया नाम, कहानी का नाम, आयु वर्ग और कहानी लिखें।"
+      );
+
+      button.disabled =
+        false;
 
       return;
+
     }
 
 
-    button.disabled = true;
-
-    button.textContent =
-      "⏳ कहानी सेव हो रही है...";
-
-
-    const params =
-      new URLSearchParams(
-        window.location.search
-      );
-
+    /* EDIT OR NEW STORY */
 
     const editId =
-      params.get("edit");
+      button.dataset.editId;
 
-
-    let data = null;
-    let error = null;
 
     if (editId) {
 
-      const result =
+      const {
+        error
+      } =
         await supabaseClient
           .from("Story")
           .update({
@@ -842,367 +1357,205 @@ async function submitStory() {
 
             language: language,
 
-            age_category: ageCategory,
+            age_category:
+              ageCategory,
 
-            category: category
+            category:
+              category
 
           })
-          .eq("id", editId)
-          .select()
-          .single();
+          .eq(
+            "id",
+            editId
+          )
+          .eq(
+            "user_id",
+            session.user.id
+          );
 
 
-      data = result.data;
-      error = result.error;
+      if (error) {
+        throw error;
+      }
+
+
+      message.innerText =
+        "🎉 आपकी कहानी सफलतापूर्वक अपडेट हो गई!";
+
+
+      button.disabled =
+        false;
+
+
+      return;
+
+    }
+
+
+    /* NEW STORY */
+
+    let coverUrl =
+      null;
+
+
+    const coverInput =
+      document.getElementById(
+        "storyImage"
+      );
+
+
+    const coverFile =
+      coverInput.files[0];
+
+
+    if (coverFile) {
+
+      coverUrl =
+        await uploadImage(
+          coverFile,
+          "covers"
+        );
 
     }
 
-    else {
 
-      const result =
-        await supabaseClient
-          .from("Story")
-          .insert([{
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("Story")
+        .insert({
 
-            title: title,
+          title: title,
 
-            content: content,
+          content: content,
 
-            author_name: author,
+          author_name: author,
 
-            language: language,
+          language: language,
 
-            age_category: ageCategory,
+          age_category:
+            ageCategory,
 
-            category: category,
+          category:
+            category,
 
-            user_id:
-              session.user.id,
+          user_id:
+            session.user.id,
 
-            read_count: 0,
+          cover_image:
+            coverUrl,
 
-            rating_sum: 0,
+          read_count: 0,
 
-            rating_count: 0
+          rating_sum: 0,
 
-          }])
-          .select()
-          .single();
+          rating_count: 0
 
+        })
+        .select()
+        .single();
 
-      data = result.data;
-      error = result.error;
-
-    }
 
     if (error) {
-
-      console.log(
-        "Story error:",
-        error
-      );
-
-      message.textContent =
-        editId
-          ? "कहानी अपडेट नहीं हो सकी। कृपया दोबारा कोशिश करें।"
-          : "कहानी सेव नहीं हो सकी। कृपया दोबारा कोशिश करें।";
-
-
-      button.disabled = false;
-
-      button.textContent =
-        editId
-          ? "💾 कहानी अपडेट करें"
-          : "📖 कहानी प्रकाशित करें";
-
-    if (editId) {
-
-      message.textContent =
-        "✅ आपकी कहानी सफलतापूर्वक अपडेट हो गई!";
-
-    } else {
-
-      message.textContent =
-        "🎉 आपकी कहानी सफलतापूर्वक प्रकाशित हो गई!";
-
+      throw error;
     }
 
 
-    document.getElementById(
-      "author"
-    ).value = "";
+    console.log(
+      "Story created:",
+      data
+    );
 
 
-    document.getElementById(
-      "title";
-    ).value = ""
-    document.getElementById(
-      "content"
-    ).innerHTML = "";
+    message.innerText =
+      "🎉 आपकी कहानी सफलतापूर्वक प्रकाशित हो गई!";
 
 
-    button.disabled = false;
+    /* CLEAR FORM */
 
-    button.textContent =
-      "📖 कहानी प्रकाशित करें";
+    document
+      .getElementById("author")
+      .value = "";
+
+
+    document
+      .getElementById("title")
+      .value = "";
+
+
+    document
+      .getElementById("language")
+      .value = "";
+
+
+    document
+      .getElementById("age_category")
+      .value = "";
+
+
+    document
+      .getElementById("category")
+      .value = "";
+
+
+    document
+      .getElementById("content")
+      .innerHTML = "";
+
+
+    document
+      .getElementById("storyImage")
+      .value = "";
+
+
+    document
+      .getElementById(
+        "coverPreview"
+      )
+      .style.display =
+      "none";
+
+
+    alert(
+      "🎉 आपकी कहानी सफलतापूर्वक प्रकाशित हो गई!"
+    );
 
 
   } catch (error) {
 
-    console.log(
-      "Unexpected error:",
+    console.error(
+      "Submit error:",
       error
     );
 
-    const message =
-      document.getElementById(
-        "message"
-      );
+    message.innerText =
+      "❌ कहानी प्रकाशित नहीं हो सकी।";
 
-    const button =
-      document.getElementById(
-        "submitBtn"
-      );
-
-
-    message.textContent =
-      "कुछ तकनीकी समस्या हुई। कृपया दोबारा कोशिश करें।";
-
-
-    button.disabled = false;
-
-    button.textContent =
-      "📖 कहानी प्रकाशित करें";
-
-  }
-
-}
-
-let isDraggingCrop = false;
-
-let startX = 0;
-let startY = 0;
-
-let startLeft = 0;
-let startTop = 0;
-
-
-const cropSelection =
-  document.getElementById(
-    "cropSelection"
-  );
-
-
-if (cropSelection) {
-
-  cropSelection.addEventListener(
-    "pointerdown",
-    function(event) {
-
-      isDraggingCrop = true;
-
-      startX =
-        event.clientX;
-
-      startY =
-        event.clientY;
-
-      startLeft =
-        cropSelection.offsetLeft;
-
-      startTop =
-        cropSelection.offsetTop;
-
-      cropSelection.setPointerCapture(
-        event.pointerId
-      );
-
-    }
-  );
-
-
-  cropSelection.addEventListener(
-    "pointermove",
-    function(event) {
-
-      if (!isDraggingCrop)
-        return;
-
-
-      const dx =
-        event.clientX -
-        startX;
-
-
-      const dy =
-        event.clientY -
-        startY;
-
-
-      cropSelection.style.left =
-        (startLeft + dx) +
-        "px";
-
-
-      cropSelection.style.top =
-        (startTop + dy) +
-        "px";
-
-    }
-  );
-
-
-  cropSelection.addEventListener(
-    "pointerup",
-    function() {
-
-      isDraggingCrop = false;
-
-    }
-  );
-
-}
-
-function applyCrop() {
-
-  const cropImage =
-    document.getElementById(
-      "cropImage"
-    );
-
-
-  const cropSelection =
-    document.getElementById(
-      "cropSelection"
-    );
-
-
-  if (
-    !cropImage ||
-    !cropSelection ||
-    !selectedImage
-  ) {
 
     alert(
-      "जरूरी image element नहीं मिला।"
+      "Error: " +
+      error.message
     );
 
-    return;
-  }
+  } finally {
 
-
-  try {
-
-    const canvas =
-      document.createElement(
-        "canvas"
-      );
-
-
-    const ctx =
-      canvas.getContext("2d");
-
-
-    const scaleX =
-      cropImage.naturalWidth /
-      cropImage.clientWidth;
-
-
-    const scaleY =
-      cropImage.naturalHeight /
-      cropImage.clientHeight;
-
-
-    const x =
-      cropSelection.offsetLeft *
-      scaleX;
-
-
-    const y =
-      cropSelection.offsetTop *
-      scaleY;
-
-
-    const width =
-      cropSelection.offsetWidth *
-      scaleX;
-
-
-    const height =
-      cropSelection.offsetHeight *
-      scaleY;
-
-
-    canvas.width =
-      Math.round(width);
-
-
-    canvas.height =
-      Math.round(height);
-
-
-    ctx.drawImage(
-
-      cropImage,
-
-      x,
-      y,
-      width,
-      height,
-
-      0,
-      0,
-      width,
-      height
-
-    );
-
-
-    selectedImage.src =
-      canvas.toDataURL(
-        "image/png"
-      );
-
-
-    document.getElementById(
-      "cropModal"
-    ).style.display =
-      "none";
-
-
-  } catch (error) {
-
-    console.log(
-      "Crop error:",
-      error
-    );
-
-    alert(
-      "चित्र crop नहीं हो सका।"
-    );
+    button.disabled =
+      false;
 
   }
 
 }
 
-function closeCrop() {
 
-  const cropModal =
-    document.getElementById(
-      "cropModal"
-    );
+/* =========================
+   PAGE LOAD
+========================= */
 
+loadStoryForEdit();
 
-  if (cropModal) {
-
-    cropModal.style.display =
-      "none";
-
-  }
-
-}
-
-    </script>
+</script>
 
 </body>
-</html>
+  </html>
