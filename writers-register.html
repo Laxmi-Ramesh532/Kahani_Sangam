@@ -278,22 +278,6 @@ button:disabled{
   <option value="प्रेरणादायक कहानी">प्रेरणादायक कहानी</option>
   <option value="ऐतिहासिक कथा">ऐतिहासिक कथा</option>
 </select>
-
-    <label for="episode_title">Episode 1 का नाम</label>
-<input
-  id="episode_title"
-  type="text"
-  placeholder="उदाहरण: देवगढ़ की सुनयना"
->
-
-<label for="subtopics">Episode 1 के उप-विषय</label>
-<textarea
-  id="subtopics"
-  placeholder="उदाहरण:
-रहस्यमयी शुरुआत
-देवगढ़ का जीवन
-जंगल के पीछे की चमक"
-></textarea>
     
     
     <label for="content">अपनी कहानी</label>
@@ -818,22 +802,6 @@ async function submitStory() {
       document
         .getElementById("category")
         .value;
-
-
-    const episodeTitle =
-      document
-        .getElementById("episode_title")
-        .value
-        .trim();
-
-
-    const subtopics =
-      document
-        .getElementById("subtopics")
-        .value
-        .trim();
-
-
     const content =
       document
         .getElementById("content")
@@ -1015,20 +983,8 @@ async function submitStory() {
 
 
     document.getElementById(
-      "title"
-    ).value = "";
-
-
-    document.getElementById(
-      "episode_title"
-    ).value = "";
-
-
-    document.getElementById(
-      "subtopics"
-    ).value = "";
-
-
+      "title";
+    ).value = ""
     document.getElementById(
       "content"
     ).innerHTML = "";
