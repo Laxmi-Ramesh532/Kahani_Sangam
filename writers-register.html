@@ -351,7 +351,6 @@ button:disabled{
   </div>
 
   </div>
-```html
   <script>
 
 const SUPABASE_URL =
@@ -368,11 +367,6 @@ window.supabase.createClient(
 
 let selectedImage = null;
 let savedRange = null;
-
-
-/* =========================
-   EDITOR
-========================= */
 
 const editor =
   document.getElementById("content");
@@ -417,11 +411,6 @@ if (editor) {
   );
 
 }
-
-
-/* =========================
-   IMAGE UPLOAD
-========================= */
 
 const storyImage =
   document.getElementById("storyImage");
@@ -579,12 +568,6 @@ if (storyImage) {
   );
 
 }
-
-
-/* =========================
-   IMAGE SIZE
-========================= */
-
 function changeImageSize(size) {
 
   if (!selectedImage) {
@@ -618,11 +601,6 @@ function changeImageSize(size) {
   }
 
 }
-
-
-/* =========================
-   LOAD STORY FOR EDIT
-========================= */
 
 async function loadStoryForEdit() {
 
@@ -741,11 +719,6 @@ async function loadStoryForEdit() {
 
 loadStoryForEdit();
 
-
-/* =========================
-   PUBLISH / UPDATE STORY
-========================= */
-
 async function submitStory() {
 
   alert("submit");
@@ -854,11 +827,6 @@ async function submitStory() {
     let data = null;
     let error = null;
 
-
-    /* =====================
-       UPDATE
-    ===================== */
-
     if (editId) {
 
       const result =
@@ -888,11 +856,6 @@ async function submitStory() {
       error = result.error;
 
     }
-
-
-    /* =====================
-       NEW STORY
-    ===================== */
 
     else {
 
@@ -932,11 +895,6 @@ async function submitStory() {
 
     }
 
-
-    /* =====================
-       STORY ERROR
-    ===================== */
-
     if (error) {
 
       console.log(
@@ -956,13 +914,6 @@ async function submitStory() {
         editId
           ? "💾 कहानी अपडेट करें"
           : "📖 कहानी प्रकाशित करें";
-
-    }
-
-
-    /* =====================
-       SUCCESS
-    ===================== */
 
     if (editId) {
 
@@ -1026,11 +977,6 @@ async function submitStory() {
   }
 
 }
-
-
-/* =========================
-   CROP
-========================= */
 
 let isDraggingCrop = false;
 
@@ -1116,11 +1062,6 @@ if (cropSelection) {
   );
 
 }
-
-
-/* =========================
-   APPLY CROP
-========================= */
 
 function applyCrop() {
 
@@ -1243,11 +1184,6 @@ function applyCrop() {
   }
 
 }
-
-
-/* =========================
-   CLOSE CROP
-========================= */
 
 function closeCrop() {
 
