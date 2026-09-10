@@ -1213,13 +1213,8 @@ async function openEpisode(
 
 
   if(error){
-
     console.log(error);
-
-    alert(
-      "Episode लोड नहीं हो सका।"
-    );
-
+  alert("Episode error: " + error.message);
     return;
   }
 
