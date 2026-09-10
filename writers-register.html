@@ -989,61 +989,6 @@ async function submitStory() {
           ? "💾 कहानी अपडेट करें"
           : "📖 कहानी प्रकाशित करें";
 
-      return;
-    }
-
-
-    /* =====================
-       EPISODE 1
-       केवल नई कहानी के लिए
-    ===================== */
-
-    if (!editId) {
-
-      const episodeResult =
-        await supabaseClient
-          .from("Episodes")
-          .insert([{
-
-            story_id:
-              data.id,
-
-            episode_number: 1,
-
-            episode_title:
-              episodeTitle,
-
-            subtopics:
-              subtopics,
-
-            content:
-              content,
-
-            user_id:
-              session.user.id
-
-          }]);
-
-
-      if (episodeResult.error) {
-
-        console.log(
-          "Episode error:",
-          episodeResult.error
-        );
-
-        message.textContent =
-          "कहानी बन गई, लेकिन Episode 1 सेव नहीं हो सका।";
-
-
-        button.disabled = false;
-
-        button.textContent =
-          "📖 कहानी प्रकाशित करें";
-
-        return;
-      }
-
     }
 
 
