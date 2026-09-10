@@ -676,18 +676,16 @@ async function loadStory(){
       .select("*")
       .eq("id", storyId)
       .single();
-
-
   if(error){
 
-    console.log(error);
+  console.log(error);
 
-    document.getElementById(
-      "story-home"
-    ).innerHTML =
-      "<p>कहानी लोड नहीं हो सकी।</p>";
+  document.getElementById(
+    "story-home"
+  ).innerHTML =
+    "Story error: " + error.message;
 
-    return;
+  return;
   }
 
 
