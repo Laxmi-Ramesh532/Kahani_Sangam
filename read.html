@@ -1343,6 +1343,20 @@ async function submitReview(
     document.getElementById(
       "review-" + episodeId
     );
+    const readLanguage =
+    document.querySelector(
+      ".review-language"
+    ).value;
+
+  const writeLanguage =
+    document.querySelectorAll(
+      ".review-language"
+    )[1].value;
+
+  const role =
+    document.querySelector(
+      ".review-role"
+    ).value;
 
 
   const feedback =
@@ -1401,7 +1415,10 @@ alert("User ID = " + user.id);
     episode_id:episodeId,
     user_id:user.id,
     rating:rating,
-    feedback:feedback
+    feedback:feedback,
+    read_language:readLanguage,
+    write_language:writeLanguage,
+    role:role
   }
 );
 
