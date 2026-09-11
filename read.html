@@ -1344,18 +1344,14 @@ alert("User ID = " + user.id);
   } =
   await supabaseClient
     .from("Feedback")
-    .insert(
-      {
-        episode_id:episodeId,
-        user_id:user.id,
-        rating:rating,
-        feedback:feedback
-      },
-      {
-        onConflict:
-          "user_id,episode_id"
-      }
-    );
+  .insert(
+  {
+    episode_id:episodeId,
+    user_id:user.id,
+    rating:rating,
+    feedback:feedback
+  }
+);
 
 
   if(error){
