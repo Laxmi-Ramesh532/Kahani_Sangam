@@ -1170,6 +1170,58 @@ function createReviewBox(
     );
 
   }
+    const readLanguage =
+    document.createElement("select");
+
+  readLanguage.className =
+    "review-language";
+
+  readLanguage.innerHTML = `
+    <option value="">पढ़ने की भाषा चुनें</option>
+    <option value="Hindi">Hindi</option>
+    <option value="English">English</option>
+    <option value="अन्य">अन्य</option>
+  `;
+
+
+  const writeLanguage =
+    document.createElement("select");
+
+  writeLanguage.className =
+    "review-language";
+
+  writeLanguage.innerHTML = `
+    <option value="">समीक्षा लिखने की भाषा चुनें</option>
+    <option value="Hindi">Hindi</option>
+    <option value="English">English</option>
+    <option value="अन्य">अन्य</option>
+  `;
+
+
+  const role =
+    document.createElement("select");
+
+  role.className =
+    "review-role";
+
+  role.innerHTML = `
+    <option value="">अपनी भूमिका चुनें</option>
+    <option value="पाठक">पाठक</option>
+    <option value="लेखक">लेखक</option>
+  `;
+
+
+  box.appendChild(
+    readLanguage
+  );
+
+  box.appendChild(
+    writeLanguage
+  );
+
+  box.appendChild(
+    role
+  );
 
 
   const textarea =
