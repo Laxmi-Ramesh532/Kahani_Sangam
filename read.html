@@ -1344,7 +1344,7 @@ alert("User ID = " + user.id);
   } =
   await supabaseClient
     .from("Feedback")
-    .insert(
+    .upsert(
       {
         episode_id:episodeId,
         user_id:user.id,
