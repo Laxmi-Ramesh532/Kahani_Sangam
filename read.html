@@ -1404,23 +1404,67 @@ async function submitReview(
   alert("Episode ID = " + episodeId);
 alert("User ID = " + user.id);
 
-
   const {
+  data:existingReview,
+  error:findError
+} =
+await supabaseClient
+  .from("Feedback")
+  .select("id")
+  .eq("episode_id",episodeId)
+  .eq("user_id",user.id)
+  .maybeSingle();
+
+
+if(findError){
+
+  console.error(findError);
+
+  alert(
+    "Review खोजने में error: " +
+    findError.message
+  );
+
+  return;
+}
+
+
+let error;
+
+
+if(existingReview){
+
+  ({
     error
   } =
   await supabaseClient
     .from("Feedback")
-  .insert(
-  {
-    episode_id:episodeId,
-    user_id:user.id,
-    rating:rating,
-    feedback:feedback,
-    read_language:readLanguage,
-    write_language:writeLanguage,
-    role:role
-  }
-);
+    .update({
+      rating:rating,
+      feedback:feedback,
+      read_language:readLanguage,
+      write_language:writeLanguage,
+      role:role
+    })
+    .eq("id",existingReview.id));
+
+}else{
+
+  ({
+    error
+  } =
+  await supabaseClient
+    .from("Feedback")
+    .insert({
+      episode_id:episodeId,
+      user_id:user.id,
+      rating:rating,
+      feedback:feedback,
+      read_language:readLanguage,
+      write_language:writeLanguage,
+      role:role
+    }));
+}
 
 
   if(error){
