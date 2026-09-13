@@ -3,485 +3,1351 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> कहानी संसार CHECK</title>
+
+<title>साहित्यिक विश्वमंच</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
-  *{box-sizing:border-box}
-  body{
-    margin:0;
-    font-family:"Noto Sans Devanagari","Nirmala UI",Arial,sans-serif;
-    color:#2b211b;
-    background:#fbf7ef;
-    line-height:1.6;
-  }
-  a{text-decoration:none;color:inherit}
-  .container{width:min(1120px,92%);margin:auto}
-  header{
-    background:#fffaf2;
-    border-bottom:1px solid #eadfce;
-    position:sticky;top:0;z-index:10;
-  }
-  .nav{
-    min-height:76px;display:flex;align-items:center;gap:28px;
-  }
-  .brand{display:flex;align-items:center;gap:10px;margin-right:auto}
-  .logo{
-    width:42px;height:42px;border:2px solid #754016;border-radius:8px;
-    display:grid;place-items:center;font-size:24px;background:#f6ead7;
-  }
-  .brand h1{font-size:22px;margin:0;color:#5d2f0f}
-  .brand small{display:block;font-size:11px;color:#75675b}
-  nav{display:flex;gap:22px;font-size:15px}
-  nav a:hover{color:#7b4017}
-  .search{
-    border:1px solid #d9c8b2;border-radius:24px;padding:9px 15px;
-    background:white;min-width:170px;color:#8b7d70;
-  }
-  .btn{
-    display:inline-block;border-radius:9px;padding:11px 20px;
-    border:1px solid #7a3f13;font-weight:700;cursor:pointer;
-  }
-  .btn.primary{background:#71380e;color:white}
-  .btn.secondary{background:#fffaf2;color:#71380e}
-  .hero{
-    padding:70px 0 55px;
-    display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;
-  }
-  .hero h2{font-size:48px;line-height:1.2;margin:0 0 20px;color:#241b16}
-  .hero h2 span{color:#753b12}
-  .hero p{font-size:19px;max-width:590px;color:#51463d}
-  .tagline{
-    display:inline-block;margin:12px 0 25px;padding:10px 16px;
-    background:#f4e8d2;border:1px solid #ead7b9;border-radius:10px;
-    color:#5f3518;font-weight:700;
-  }
-  .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
-  .book-art{
-    min-height:330px;border-radius:18px;border:1px solid #dfcfba;
-    background:#f7eedf;display:flex;align-items:center;justify-content:center;
-    box-shadow:0 10px 25px rgba(91,57,25,.08);
-    font-size:130px;
-  }
-  .section{padding:55px 0}
-  .section h3{text-align:center;font-size:32px;margin:0 0 12px}
-  .section-intro{text-align:center;max-width:700px;margin:0 auto 30px;color:#64574d}
-  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-  .card{
-    background:#fffdf8;border:1px solid #e6d8c6;border-radius:14px;
-    padding:24px;min-height:170px;
-  }
-  .card .icon{font-size:30px;margin-bottom:8px}
-  .card h4{margin:0 0 8px;font-size:19px}
-  .card p{margin:0;color:#665a51;font-size:14px}
- .literature-card{
-  background:#fffdf8;
-  border:1px solid #e6d8c6;
-  border-radius:18px;
-  padding:28px;
-  max-width:700px;
-  margin:25px auto;
-  text-align:center;
-  cursor:pointer;
-  box-shadow:0 8px 20px rgba(91,57,25,.08);
-  transition:transform .2s, box-shadow .2s;
+
+*{
+  box-sizing:border-box;
 }
 
-.literature-card:hover{
-  transform:translateY(-3px);
-  box-shadow:0 12px 25px rgba(91,57,25,.12);
-}
-
-.literature-card .icon{
-  font-size:42px;
-  margin-bottom:8px;
-}
-
-.literature-card h4{
-  margin:0 0 8px;
-  font-size:24px;
-  color:#5d2f0f;
-}
-
-.literature-card p{
+body{
   margin:0;
-  color:#665a51;
+  background:#f7f1e7;
+  color:#4b3828;
+  font-family:Georgia,"Noto Serif Devanagari",serif;
+  padding-bottom:78px;
+}
+
+/* HEADER */
+
+header{
+  background:#fffdf8;
+  border-bottom:1px solid #d8c8b4;
+  padding:13px 16px;
+  position:sticky;
+  top:0;
+  z-index:50;
+}
+
+.header-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.profile-btn{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  border:1px solid #cdb99f;
+  background:#f3e8d8;
+  font-size:20px;
+  cursor:pointer;
+}
+
+.brand{
+  flex:1;
+  text-align:center;
+}
+
+.brand-title{
+  font-size:20px;
+  font-weight:bold;
+}
+
+.brand-subtitle{
+  font-size:11px;
+  color:#8b7258;
+  margin-top:2px;
+}
+
+.search-btn{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  border:1px solid #cdb99f;
+  background:#f7f1e7;
+  font-size:18px;
+  cursor:pointer;
+}
+
+/* MAIN */
+
+.container{
+  width:min(950px,94%);
+  margin:18px auto;
+}
+
+/* SEARCH */
+
+.search-box{
+  display:none;
+  margin-bottom:17px;
+}
+
+.search-box.show{
+  display:block;
+}
+
+.search-input{
+  width:100%;
+  padding:13px 15px;
+  border:1px solid #d2bea5;
+  border-radius:24px;
+  background:#fffdf8;
+  font-family:inherit;
+  font-size:15px;
+  outline:none;
+}
+
+/* WELCOME */
+
+.welcome{
+  background:#fffdf8;
+  border:1px solid #d8c8b4;
+  border-radius:18px;
+  padding:20px;
+  margin-bottom:20px;
+}
+
+.welcome h1{
+  margin:0 0 7px;
+  font-size:25px;
+}
+
+.welcome p{
+  margin:0;
+  color:#745d46;
+  line-height:1.7;
+}
+
+/* CATEGORIES */
+
+.section-title{
+  font-size:21px;
+  margin:22px 2px 12px;
 }
 
 .categories{
-  display:none;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-  max-width:700px;
-  margin:20px auto 30px;
+  display:flex;
+  gap:9px;
+  overflow-x:auto;
+  padding-bottom:5px;
 }
 
-.categories button{
-  border:1px solid #e6d8c6;
-  background:#fffdf8;
-  border-radius:12px;
-  padding:14px;
-  font-size:15px;
+.category{
+  flex-shrink:0;
+  border:1px solid #d2bda3;
+  background:#fffaf2;
+  border-radius:20px;
+  padding:8px 14px;
   cursor:pointer;
-  color:#5d2f0f;
+  color:#634a32;
 }
 
-@media(max-width:560px){
-  .categories{
-    grid-template-columns:1fr 1fr;
-  }
+/* FEATURED */
+
+.featured{
+  background:#fffdf8;
+  border:1px solid #d8c8b4;
+  border-radius:17px;
+  padding:16px;
 }
-  .flow{
-    display:grid;grid-template-columns:repeat(4,1fr);gap:15px;align-items:stretch;
-  }
-  .flow-item{
-    background:#fffdf8;border:1px solid #e4d6c3;border-radius:14px;
-    padding:22px;text-align:center;
-  }
-  .flow-item strong{display:block;font-size:18px;margin-bottom:7px}
-  .cta{
-    margin:20px 0 60px;padding:32px;border:1px solid #e1cfb4;
-    background:#f4e8d2;border-radius:16px;
-    display:flex;align-items:center;justify-content:space-between;gap:20px;
-  }
-  .cta h3{text-align:left;margin:0 0 6px;font-size:25px}
-  .cta p{margin:0;color:#5d5148}
-  footer{
-    border-top:1px solid #e4d8c8;padding:28px 0;color:#75685d;
-    background:#fffaf2;text-align:center;font-size:13px;
-  }
-  @media(max-width:900px){
-    nav{display:none}.search{display:none}
-    .hero{grid-template-columns:1fr;padding-top:45px}
-    .hero h2{font-size:38px}
-    .cards{grid-template-columns:repeat(2,1fr)}
-    .flow{grid-template-columns:repeat(2,1fr)}
-  }
-  @media(max-width:560px){
-    .brand h1{font-size:19px}
-    .brand small{font-size:9px}
-    .hero h2{font-size:32px}
-    .hero p{font-size:16px}
-    .book-art{min-height:220px;font-size:90px}
-    .cards,.flow{grid-template-columns:1fr}
-    .cta{flex-direction:column;align-items:flex-start}
-  }
- .age-boxes{
+
+.featured-title{
+  font-size:19px;
+  font-weight:bold;
+  margin-bottom:5px;
+}
+
+.featured-text{
+  color:#765f49;
+  font-size:14px;
+  line-height:1.6;
+}
+
+/* STORIES */
+
+.stories{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:13px;
+}
+
+.story-card{
+  background:#fffdf9;
+  border:1px solid #d9c9b7;
+  border-radius:15px;
+  overflow:hidden;
+  cursor:pointer;
+}
+
+.story-cover{
+  width:100%;
+  height:145px;
+  background:#eee3d3;
+  overflow:hidden;
+}
+
+.story-cover img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.no-image{
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#8a745d;
+  font-size:13px;
+}
+
+.story-card-info{
+  padding:11px;
+}
+
+.story-card-title{
+  font-size:17px;
+  font-weight:bold;
+  line-height:1.4;
+}
+
+.story-author{
+  color:#846b53;
+  font-size:13px;
+  margin-top:5px;
+}
+
+.story-stats{
+  font-size:12px;
+  color:#8b7763;
+  margin-top:7px;
+}
+
+/* EMPTY */
+
+.empty{
+  background:#fffaf2;
+  border:1px dashed #cdb99f;
+  border-radius:14px;
+  padding:24px;
+  text-align:center;
+  color:#816b54;
+}
+
+/* OTHER NAV PAGES */
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+/* LIBRARY */
+
+.library-box{
+  background:#fffdf8;
+  border:1px solid #d8c8b4;
+  border-radius:17px;
+  padding:20px;
+}
+
+.library-box h2,
+.write-box h2,
+.updates-box h2{
+  margin-top:0;
+}
+
+.info-text{
+  color:#765f49;
+  line-height:1.7;
+}
+
+/* WRITE */
+
+.write-options{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:20px;
-  max-width:700px;
-  margin:30px auto;
+  gap:13px;
 }
 
-.age-boxes button{
-  width:100%;
-  min-height:120px;
-  border:1px solid #e6d8c6;
+.write-option{
   background:#fffdf8;
-  border-radius:18px;
-  padding:25px 15px;
-  font-size:20px;
-  font-weight:700;
+  border:1px solid #d8c8b4;
+  border-radius:17px;
+  padding:23px 15px;
+  text-align:center;
   cursor:pointer;
-  color:#5d2f0f;
-  box-shadow:0 8px 20px rgba(91,57,25,.08);
 }
 
-.age-boxes button:hover{
-  transform:translateY(-3px);
+.write-option-icon{
+  font-size:32px;
+  margin-bottom:10px;
 }
 
-@media(max-width:560px){
-  .age-boxes{
-    grid-template-columns:1fr;
+.write-option-title{
+  font-size:18px;
+  font-weight:bold;
+}
+
+.write-option-text{
+  font-size:13px;
+  color:#806b55;
+  line-height:1.5;
+  margin-top:6px;
+}
+
+/* UPDATES */
+
+.updates-box{
+  background:#fffdf8;
+  border:1px solid #d8c8b4;
+  border-radius:17px;
+  padding:20px;
+}
+
+.update-item{
+  padding:13px 0;
+  border-bottom:1px solid #eadfce;
+}
+
+.update-item:last-child{
+  border-bottom:0;
+}
+
+.update-title{
+  font-weight:bold;
+}
+
+.update-text{
+  font-size:14px;
+  color:#806b55;
+  margin-top:4px;
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  height:68px;
+  background:#fffdf8;
+  border-top:1px solid #d8c8b4;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  z-index:100;
+}
+
+.nav-btn{
+  border:0;
+  background:none;
+  color:#806b55;
+  font-family:inherit;
+  cursor:pointer;
+  text-align:center;
+  min-width:65px;
+}
+
+.nav-icon{
+  font-size:21px;
+  display:block;
+}
+
+.nav-label{
+  font-size:11px;
+  margin-top:2px;
+}
+
+.nav-btn.active{
+  color:#694b31;
+  font-weight:bold;
+}
+
+/* PROFILE MENU */
+
+.profile-menu{
+  display:none;
+  position:fixed;
+  top:65px;
+  left:12px;
+  width:210px;
+  background:#fffdf8;
+  border:1px solid #d4c1aa;
+  border-radius:14px;
+  padding:8px;
+  box-shadow:0 5px 20px rgba(60,40,20,.15);
+  z-index:90;
+}
+
+.profile-menu.show{
+  display:block;
+}
+
+.profile-menu button{
+  width:100%;
+  text-align:left;
+  border:0;
+  background:none;
+  padding:11px;
+  border-radius:8px;
+  font-family:inherit;
+  color:#5c4530;
+  cursor:pointer;
+}
+
+.profile-menu button:hover{
+  background:#f4eadc;
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+  .stories{
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
   }
+
+  .story-cover{
+    height:125px;
+  }
+
+  .story-card-title{
+    font-size:15px;
+  }
+
+  .welcome h1{
+    font-size:22px;
+  }
+
 }
+
 </style>
- <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
+
 <body>
 
+<!-- HEADER -->
+
 <header>
-  <div class="container nav">
-    <a class="brand" href="#">
-      <div class="logo">📖</div>
-      <div>
-        <h1>कहानी संसार</h1>
-        <small>हर भाषा में साहित्य, हर दिल के लिए</small>
+
+  <div class="header-row">
+
+    <button
+      class="profile-btn"
+      onclick="toggleProfile()">
+      👤
+    </button>
+
+    <div class="brand">
+      <div class="brand-title">
+        साहित्यिक विश्वमंच
       </div>
-    </a>
-    <nav>
-      <a href="#home">होम</a>
-      <a href="#stories">कहानियाँ</a>
-      <a href="writers-register.html">लेखक बनें</a>
-      <a href="#translation">अनुवाद</a>
-      <a href="#learn">सीखें</a>
-    </nav>
-    <div class="search">कहानी खोजें…</div>
-   <a class="btn secondary" href="login.html">लॉगिन</a>
-    
+
+      <div class="brand-subtitle">
+        हर भाषा में साहित्य, हर दिल के लिए
+      </div>
+    </div>
+
+    <button
+      class="search-btn"
+      onclick="toggleSearch()">
+      🔍
+    </button>
+
   </div>
+
 </header>
 
-<main id="home">
-  <section class="container hero">
-    <div>
-      <h2>हर भाषा में <span>साहित्य</span><br>और ज्ञान तक पहुँच</h2>
+
+<!-- PROFILE MENU -->
+
+<div
+  id="profileMenu"
+  class="profile-menu">
+
+  <button onclick="openProfile()">
+    👤 मेरा Profile
+  </button>
+
+  <button onclick="openMyStories()">
+    ✍️ मेरी रचनाएँ
+  </button>
+
+  <button onclick="logout()">
+    🚪 Logout
+  </button>
+
+</div>
+
+
+<div class="container">
+
+
+  <!-- ================= HOME ================= -->
+
+  <section
+    id="homePage"
+    class="page active">
+
+    <div
+      id="searchBox"
+      class="search-box">
+
+      <input
+        id="searchInput"
+        class="search-input"
+        type="search"
+        placeholder="कहानी, कविता, लेखक खोजें..."
+        oninput="searchStories()">
+
+    </div>
+
+
+    <div class="welcome">
+
+      <h1>
+        साहित्य की अपनी दुनिया में आपका स्वागत है 📖
+      </h1>
+
       <p>
-        सुंदर कहानियाँ पढ़ें, अपनी पसंद की भाषा में साहित्य तक पहुँचें,
-        नए लेखकों को बेहतर लिखने का अवसर दें और भारतीय भाषाओं को एक-दूसरे से जोड़ें।
+        यहाँ कहानी, कविता, लोककथा, उपन्यास,
+        व्यंग्य और अनेक भाषाओं का साहित्य पढ़ें,
+        लिखें और साझा करें।
       </p>
-      <div class="tagline">Writer writes → Translator connects → Reader learns → Language grows.</div>
-      <div class="hero-actions">
-        <a class="btn primary" href="#stories">📖 कहानियाँ पढ़ें</a>
-        <a class="btn secondary" href="#writers">✍️ लेखक बनें</a>
+
+    </div>
+
+
+    <h2 class="section-title">
+      साहित्य की विधाएँ
+    </h2>
+
+
+    <div class="categories">
+
+      <button class="category"
+        onclick="filterCategory('सभी')">
+        सभी
+      </button>
+
+      <button class="category"
+        onclick="filterCategory('कहानी')">
+        📖 कहानी
+      </button>
+
+      <button class="category"
+        onclick="filterCategory('उपन्यास')">
+        📚 उपन्यास
+      </button>
+
+      <button class="category"
+        onclick="filterCategory('कविता')">
+        ✒️ कविता
+      </button>
+
+      <button class="category"
+        onclick="filterCategory('लोककथा')">
+        🌿 लोककथा
+      </button>
+
+      <button class="category"
+        onclick="filterCategory('रहस्यमयी कथा')">
+        🔮 रहस्य
+      </button>
+
+      <button class="category"
+        onclick="filterCategory('व्यंग्य')">
+        🖋️ व्यंग्य
+      </button>
+
+      <button class="category"
+        onclick="filterCategory('ऐतिहासिक कथा')">
+        🏛️ ऐतिहासिक
+      </button>
+
+    </div>
+
+
+    <h2 class="section-title">
+      ✨ विशेष रचनाएँ
+    </h2>
+
+
+    <div class="featured">
+
+      <div class="featured-title">
+        आपकी अगली पसंदीदा कहानी यहाँ हो सकती है
       </div>
+
+      <div class="featured-text">
+        नए लेखकों और नई रचनाओं को खोजें।
+        पढ़ें, Rating दें और अपने पसंदीदा लेखकों को प्रोत्साहित करें।
+      </div>
+
     </div>
-    <div class="book-art" aria-label="खुली किताब">📖</div>
+
+
+    <h2 class="section-title">
+      📚 नई रचनाएँ
+    </h2>
+
+
+    <div
+      id="stories"
+      class="stories">
+
+      <div class="empty">
+        रचनाएँ लोड हो रही हैं...
+      </div>
+
+    </div>
+
   </section>
 
-  <section class="container section" id="stories">
-    <h3>यहाँ क्या मिलेगा?</h3>
-    <p class="section-intro">
-      एक ऐसा मंच जहाँ कहानी केवल पढ़ी नहीं जाती—उसके साथ भाषा, विचार और लेखन भी आगे बढ़ते हैं।
-    </p>
-   <h3>कहानियाँ पढ़ें</h3>
-<p class="section-intro">
-  अपनी पसंद की कहानी चुनें और पढ़ने की एक सुंदर यात्रा शुरू करें।
-</p>
-   <div class="literature-card" onclick="showCategories()">
-  <div class="icon">📚</div>
-  <h4>साहित्य की दुनिया</h4>
-  <p>कहानियाँ, लोककथाएँ, लोकगीत और साहित्य के अनेक रंग…</p>
+
+
+  <!-- ================= LIBRARY ================= -->
+
+  <section
+    id="libraryPage"
+    class="page">
+
+    <div class="library-box">
+
+      <h2>
+        📚 मेरी Library
+      </h2>
+
+      <p class="info-text">
+        यहाँ आपकी पढ़ी हुई, सुरक्षित की गई और
+        पसंद की गई रचनाएँ दिखाई देंगी।
+      </p>
+
+      <div class="empty">
+        आपकी Library अभी खाली है।
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- ================= WRITE ================= -->
+
+  <section
+    id="writePage"
+    class="page">
+
+    <div class="write-box">
+
+      <h2>
+        ✍️ लिखें
+      </h2>
+
+      <p class="info-text">
+        अपनी रचना लिखें या किसी रचना का
+        दूसरी भाषा में अनुवाद करें।
+      </p>
+
+    </div>
+
+
+    <div class="write-options">
+
+      <div
+        class="write-option"
+        onclick="openTranslator()">
+
+        <div class="write-option-icon">
+          🌐
+        </div>
+
+        <div class="write-option-title">
+          अनुवाद करें
+        </div>
+
+        <div class="write-option-text">
+          साहित्य को एक भाषा से दूसरी भाषा
+          के पाठकों तक पहुँचाएँ।
+        </div>
+
+      </div>
+
+
+      <div
+        class="write-option"
+        onclick="openWriter()">
+
+        <div class="write-option-icon">
+          ✍️
+        </div>
+
+        <div class="write-option-title">
+          लेखक बनें
+        </div>
+
+        <div class="write-option-text">
+          अपनी कहानी, कविता या अन्य रचना
+          प्रकाशित करें।
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- ================= UPDATES ================= -->
+
+  <section
+    id="updatesPage"
+    class="page">
+
+    <div class="updates-box">
+
+      <h2>
+        🔔 Updates
+      </h2>
+
+      <div class="update-item">
+
+        <div class="update-title">
+          अभी कोई नया Update नहीं
+        </div>
+
+        <div class="update-text">
+          जब आपके पसंदीदा लेखक नई रचना या
+          Episode प्रकाशित करेंगे, Updates यहाँ दिखाई देंगे।
+        </div>
+
+      </div>
+
+      <div class="update-item">
+
+        <div class="update-title">
+          ❤️ लेखक गतिविधियाँ
+        </div>
+
+        <div class="update-text">
+          Follow, Rating और Reviews की सुविधा
+          धीरे-धीरे यहाँ जुड़ेगी।
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
 </div>
 
-<div id="categories" class="categories">
-  <button>📖 कहानी</button>
-  <button>🌿 लोककथा</button>
- <button onclick="showCategory('लोकगीत')">🎵 लोकगीत</button>
-  <button>🌙 रहस्यमयी कथा</button>
-  <button>🌱 प्रेरणादायक कहानी</button>
-  <button>🏺 ऐतिहासिक कथा</button>
-</div>
 
-   <div class="age-boxes">
 
-  <button onclick="showAgeStories('15')">
-    📚 15 वर्ष तक
+<!-- ================= BOTTOM NAV ================= -->
+
+<nav class="bottom-nav">
+
+  <button
+    id="navHome"
+    class="nav-btn active"
+    onclick="showPage('home')">
+
+    <span class="nav-icon">🏠</span>
+    <span class="nav-label">Home</span>
+
   </button>
 
-  <button onclick="showAgeStories('16+')">
-    📖 16 वर्ष और अधिक
+
+  <button
+    id="navLibrary"
+    class="nav-btn"
+    onclick="showPage('library')">
+
+    <span class="nav-icon">📚</span>
+    <span class="nav-label">Library</span>
+
   </button>
 
-</div>
 
-<div id="stories-15" style="display:none;"></div>
+  <button
+    id="navWrite"
+    class="nav-btn"
+    onclick="showPage('write')">
 
-<div id="stories-16" style="display:none;"></div>
-   
-   
-    <div class="cards">
-      <article class="card">
-        <div class="icon">📚</div>
-        <h4>सुंदर पढ़ने का अनुभव</h4>
-        <p>शांत background, स्पष्ट अक्षर और book-like reading page—ताकि पढ़ना सहज और आनंददायक हो।</p>
-      </article>
-      <article class="card" id="translation">
-        <div class="icon">🌐</div>
-        <h4>कई भाषाओं में पढ़ें</h4>
-        <p>आगे चलकर अपनी पसंद की भारतीय भाषा में कहानी और साहित्य पढ़ने का अवसर।</p>
-      </article>
-      <article class="card" id="writers">
-        <div class="icon">✍️</div>
-        <h4>नए लेखकों के लिए मंच</h4>
-        <p>लेखक अपनी मौलिक रचना प्रकाशित करें और भाषा-संरचना के सुझावों से बेहतर लिखना सीखें।</p>
-      </article>
-      <article class="card" id="learn">
-        <div class="icon">🌱</div>
-        <h4>पढ़ते हुए सीखें</h4>
-        <p>नई शब्दावली, विचार और भाषा से परिचित हों—हर कहानी से कुछ नया लेकर निकलें।</p>
-      </article>
-    </div>
-  </section>
+    <span class="nav-icon">✍️</span>
+    <span class="nav-label">लिखें</span>
 
-  <section class="container section">
-    <h3>हम कैसे काम करते हैं?</h3>
-    <p class="section-intro">एक कहानी की यात्रा चार कदमों में।</p>
-    <div class="flow">
-      <div class="flow-item"><strong>✍️ Writer writes</strong>लेखक अपनी मौलिक रचना साझा करता है।</div>
-      <div class="flow-item"><strong>🌐 Translator connects</strong>अनुवादक कहानी को दूसरी भाषा के पाठकों तक पहुँचाता है।</div>
-      <div class="flow-item"><strong>📖 Reader learns</strong>पाठक कहानी, शब्द और विचारों से सीखता है।</div>
-      <div class="flow-item"><strong>🌱 Language grows</strong>जितना साहित्य जुड़ेगा, भाषाएँ उतनी समृद्ध होंगी।</div>
-    </div>
-  </section>
-
-  <section class="container cta" id="join">
-    <div>
-      <h3>कहानियों और भाषाओं की इस यात्रा से जुड़ें</h3>
-      <p>यह शुरुआती संस्करण है। हमारा लक्ष्य पहले एक मजबूत और सुंदर reading experience बनाना है।</p>
-    </div>
-    <a class="btn primary" href="#">जल्द जुड़ें →</a>
-   <a class="btn primary" href="feedback.html">
-  💬 अपना Feedback दें
-   </a>
-  </section>
-</main>
-
-<footer>
-  कहानी संसार • एक प्रारंभिक MVP prototype • Writer writes → Translator connects → Reader learns → Language grows.
-</footer>
- <script>
-
-const SUPABASE_URL = "https://wnvkryudbeafebaluwgq.supabase.co";
-const SUPABASE_KEY = "sb_publishable_q1J83vS9b3Ngw-Py_QLuzg_ub6pdy3D";
+  </button>
 
 
-supabase = window.supabase.createClient(
+  <button
+    id="navUpdates"
+    class="nav-btn"
+    onclick="showPage('updates')">
+
+    <span class="nav-icon">🔔</span>
+    <span class="nav-label">Updates</span>
+
+  </button>
+
+</nav>
+
+
+
+<script>
+
+/* =========================
+   SUPABASE
+========================= */
+
+const SUPABASE_URL =
+"https://wnvkryudbeafebaluwgq.supabase.co";
+
+const SUPABASE_KEY =
+"YOUR_SUPABASE_PUBLISHABLE_KEY";
+
+const supabaseClient =
+window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
 
- 
-  async function loadStories(category) {
-   const { data: { user } } = await supabase.auth.getUser();
+
+/* =========================
+   VARIABLES
+========================= */
+
+let allStories = [];
+
+let currentCategory = "सभी";
 
 
-  const { data, error } = await supabase
-    .from("Story")
-    .select("*");
-   console.log("Selected category:", category);
-   document.getElementById("stories-15").innerHTML = "";
-document.getElementById("stories-16").innerHTML = "";
+/* =========================
+   START
+========================= */
 
-  if (error) {
-   console.error(error);
-    
-  } else {
-
-    
-   console.log(data);
-   data.forEach(story => {
-    if (category && story.age_category !== (category === "15" ? "15 तक" : "16+")) {
-  return;
-    }
-
-  let storyHTML = `
-
-    <article class="card">
-
-      <h4>${story.title}</h4>
-
-      <p>${story.content.substring(0, 120)}...</p>
-
-      <p>✍️ लेखक: ${story.author_name}</p>
-      <p>🏷️ श्रेणी: ${story.category || "सामान्य"}</p>
-
-      <a class="btn primary" href="read.html?id=${story.id}">
-        📖 कहानी पढ़ें
-      </a>
-      ${user && story.user_id === user.id ? `
-  <a class="btn secondary" href="writers-register.html?edit=${story.id}">
-    ✏️ कहानी संपादित करें
-  </a>
-
-  <button class="btn secondary" onclick="deleteStory('${story.id}')">
-    🗑️ कहानी हटाएँ
-  </button>
-` : ""}
-
-    </article>
-
-  `;
-
-  if (story.age_category === "15 तक") {
-    document.getElementById("stories-15").innerHTML += storyHTML;
-  }
-
-  if (story.age_category === "16+") {
-    document.getElementById("stories-16").innerHTML += storyHTML;
-  }
-
-});
-  }
-}
-  
-  function showCategories(){
-
-  const categories =
-    document.getElementById("categories");
-  
-  if(categories.style.display === "grid"){
-    categories.style.display = "none";
-  } else {
-    categories.style.display = "grid";
-  }
-
-  }
-  function showCategory(category){
-   loadStories(category);
-  }
-  function showAgeStories(age) {
-
-  
-
-  const stories15 = document.getElementById("stories-15");
-  const stories16 = document.getElementById("stories-16");
-
-  if (age === "15") {
-    stories15.style.display = "block";
-    stories16.style.display = "none";
-    loadStories("15");
-  }
-
-  if (age === "16+") {
-    stories15.style.display = "none";
-    stories16.style.display = "block";
-    loadStories("16+");
-  }
-  }
-  async function deleteStory(storyId) {
-
-  const confirmDelete = confirm("क्या आप यह कहानी हटाना चाहते हैं?");
-
-  if (!confirmDelete) {
-    return;
-  }
-
-  const { error } = await supabase
-    .from("Story")
-    .delete()
-    .eq("id", storyId);
-
-  if (error) {
-    alert("कहानी हटाई नहीं जा सकी: " + error.message);
-    return;
-  }
-
-  alert("कहानी सफलतापूर्वक हटा दी गई।");
-  loadStories();
-  }
-  // Login status check
-async function checkLogin() {
-
-  const { data: { session } } = await supabase.auth.getSession();
-
-  const loginButton = document.querySelector('a[href="login.html"]');
-
-  if (session && loginButton) {
-    loginButton.textContent = "Logout";
-    loginButton.removeAttribute("href");
-
-    loginButton.addEventListener("click", async function () {
-      await supabase.auth.signOut();
-      alert("Logout successful!");
-      window.location.reload();
-    });
-  }
-}
-
-checkLogin();
-  
 loadStories();
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function showPage(page){
+
+  document
+    .querySelectorAll(".page")
+    .forEach(
+      p => p.classList.remove("active")
+    );
+
+
+  document
+    .getElementById(
+      page + "Page"
+    )
+    .classList.add("active");
+
+
+  document
+    .querySelectorAll(".nav-btn")
+    .forEach(
+      b => b.classList.remove("active")
+    );
+
+
+  const nav =
+    document.getElementById(
+      "nav" +
+      page.charAt(0).toUpperCase() +
+      page.slice(1)
+    );
+
+
+  if(nav){
+    nav.classList.add("active");
+  }
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =========================
+   LOAD STORIES
+========================= */
+
+async function loadStories(){
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("Story")
+    .select("*")
+    .order(
+      "id",
+      {
+        ascending:false
+      }
+    );
+
+
+  if(error){
+
+    console.error(error);
+
+    document
+      .getElementById("stories")
+      .innerHTML =
+      `<div class="empty">
+        रचनाएँ load नहीं हो पाईं।
+      </div>`;
+
+    return;
+  }
+
+
+  allStories =
+    data || [];
+
+
+  displayStories(
+    allStories
+  );
+
+}
+
+
+/* =========================
+   DISPLAY STORIES
+========================= */
+
+function displayStories(
+  stories
+){
+
+  const container =
+    document.getElementById(
+      "stories"
+    );
+
+
+  if(
+    !stories ||
+    stories.length === 0
+  ){
+
+    container.innerHTML =
+      `<div class="empty">
+        अभी कोई रचना उपलब्ध नहीं है।
+      </div>`;
+
+    return;
+  }
+
+
+  container.innerHTML = "";
+
+
+  stories.forEach(
+    story => {
+
+      const card =
+        document.createElement(
+          "div"
+        );
+
+      card.className =
+        "story-card";
+
+
+      card.onclick =
+        function(){
+
+          openStory(
+            story.id
+          );
+
+        };
+
+
+      const cover =
+        document.createElement(
+          "div"
+        );
+
+      cover.className =
+        "story-cover";
+
+
+      const image =
+        story.cover_image ||
+        story.image_url;
+
+
+      if(image){
+
+        cover.innerHTML =
+          `<img
+             src="${image}"
+             alt="Cover">`;
+
+      }else{
+
+        cover.innerHTML =
+          `<div class="no-image">
+             📖<br>Cover उपलब्ध नहीं
+           </div>`;
+
+      }
+
+
+      const info =
+        document.createElement(
+          "div"
+        );
+
+      info.className =
+        "story-card-info";
+
+
+      info.innerHTML =
+        `
+        <div class="story-card-title">
+          ${escapeHtml(
+            story.title || "बिना Title"
+          )}
+        </div>
+
+        <div class="story-author">
+          ✍️ ${escapeHtml(
+            story.author_name || "अज्ञात लेखक"
+          )}
+        </div>
+
+        <div class="story-stats">
+          👁 ${story.read_count || 0}
+          &nbsp;&nbsp;
+          ⭐ ${story.rating_count || 0}
+        </div>
+        `;
+
+
+      card.appendChild(
+        cover
+      );
+
+      card.appendChild(
+        info
+      );
+
+      container.appendChild(
+        card
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================
+   OPEN STORY
+========================= */
+
+function openStory(
+  storyId
+){
+
+  window.location.href =
+    "read.html?id=" +
+    encodeURIComponent(
+      storyId
+    );
+
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+function toggleSearch(){
+
+  const box =
+    document.getElementById(
+      "searchBox"
+    );
+
+
+  box.classList.toggle(
+    "show"
+  );
+
+
+  if(
+    box.classList.contains("show")
+  ){
+
+    document
+      .getElementById(
+        "searchInput"
+      )
+      .focus();
+
+  }
+
+}
+
+
+function searchStories(){
+
+  const value =
+    document
+      .getElementById(
+        "searchInput"
+      )
+      .value
+      .trim()
+      .toLowerCase();
+
+
+  let result =
+    allStories;
+
+
+  if(value){
+
+    result =
+      allStories.filter(
+        story => {
+
+          const title =
+            (
+              story.title || ""
+            ).toLowerCase();
+
+          const author =
+            (
+              story.author_name || ""
+            ).toLowerCase();
+
+          const category =
+            (
+              story.category || ""
+            ).toLowerCase();
+
+
+          return(
+            title.includes(value) ||
+            author.includes(value) ||
+            category.includes(value)
+          );
+
+        }
+      );
+
+  }
+
+
+  displayStories(
+    result
+  );
+
+}
+
+
+/* =========================
+   CATEGORY
+========================= */
+
+function filterCategory(
+  category
+){
+
+  currentCategory =
+    category;
+
+
+  if(category === "सभी"){
+
+    displayStories(
+      allStories
+    );
+
+    return;
+
+  }
+
+
+  const result =
+    allStories.filter(
+      story => {
+
+        return (
+          story.category || ""
+        ).toLowerCase()
+        ===
+        category.toLowerCase();
+
+      }
+    );
+
+
+  displayStories(
+    result
+  );
+
+}
+
+
+/* =========================
+   PROFILE
+========================= */
+
+function toggleProfile(){
+
+  document
+    .getElementById(
+      "profileMenu"
+    )
+    .classList.toggle(
+      "show"
+    );
+
+}
+
+
+function openProfile(){
+
+  alert(
+    "Profile सुविधा अगले चरण में जुड़ेगी।"
+  );
+
+}
+
+
+function openMyStories(){
+
+  alert(
+    "मेरी रचनाएँ सुविधा अगले चरण में जुड़ेगी।"
+  );
+
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+async function logout(){
+
+  const {
+    error
+  } =
+  await supabaseClient.auth.signOut();
+
+
+  if(error){
+
+    alert(
+      "Logout error: " +
+      error.message
+    );
+
+    return;
+  }
+
+
+  window.location.href =
+    "login.html";
+
+}
+
+
+/* =========================
+   WRITE
+========================= */
+
+async function openWriter(){
+
+  const {
+    data:{
+      user
+    }
+  } =
+  await supabaseClient.auth.getUser();
+
+
+  if(!user){
+
+    alert(
+      "लेखक बनने के लिए पहले Login करें।"
+    );
+
+    window.location.href =
+      "login.html";
+
+    return;
+  }
+
+
+  window.location.href =
+    "writers-register.html";
+
+}
+
+
+function openTranslator(){
+
+  alert(
+    "अनुवाद सुविधा अगले चरण में जुड़ेगी।"
+  );
+
+}
+
+
+/* =========================
+   HTML SAFE
+========================= */
+
+function escapeHtml(
+  text
+){
+
+  return String(text)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
 </script>
+
 </body>
 </html>
