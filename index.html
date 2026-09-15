@@ -1373,6 +1373,35 @@ async function saveProfile(){
     .getElementById("profileBox")
     .classList.remove("show");
 }
+  async function loadProfileIcon(){
+
+  const {
+    data: { user }
+  } = await supabaseClient.auth.getUser();
+
+  if(!user) return;
+
+  const { data, error } =
+    await supabaseClient
+      .from("Profiles")
+      .select("name")
+      .eq("id", user.id)
+      .maybeSingle();
+
+  if(error){
+    console.log("Profile load error:", error);
+    return;
+  }
+
+  if(data && data.name){
+
+    const profileBtn =
+      document.querySelector(".profile-btn");
+
+    profileBtn.textContent =
+      data.name.charAt(0).toUpperCase();
+  }
+  }
 
 
 function openMyStories(){
