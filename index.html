@@ -1338,13 +1338,16 @@ function toggleProfile(){
   }
 
   }
-async function saveProfile(){
+  async function saveProfile(){
 
   const name =
     document.getElementById("profileName").value.trim();
 
   const bio =
     document.getElementById("profileBio").value.trim();
+
+  const photoInput =
+    document.getElementById("profilePhoto");
 
   if(!name){
     alert("कृपया अपना नाम लिखें।");
@@ -1360,17 +1363,77 @@ async function saveProfile(){
     return;
   }
 
+  let photoUrl = null;
+
+  /* PROFILE PHOTO */
+
+  if(photoInput.files.length > 0){
+
+    const file = photoInput.files[0];
+
+    const fileExt =
+      file.name.split(".").pop();
+
+    const fileName =
+      user.id + "." + fileExt;
+
+    const filePath =
+      user.id + "/" + fileName;
+
+    const { error: uploadError } =
+      await supabaseClient.storage
+        .from("profile-photos")
+        .upload(
+          filePath,
+          file,
+          {
+            upsert: true
+          }
+        );
+
+    if(uploadError){
+
+      alert(
+        "Photo upload नहीं हुआ: " +
+        uploadError.message
+      );
+
+      return;
+    }
+
+    const { data: publicData } =
+      supabaseClient.storage
+        .from("profile-photos")
+        .getPublicUrl(filePath);
+
+    photoUrl =
+      publicData.publicUrl;
+  }
+
+  /* PROFILE DATABASE */
+
+  const profileData = {
+    id: user.id,
+    name: name,
+    bio: bio
+  };
+
+  if(photoUrl){
+    profileData.profile_photo = photoUrl;
+  }
+
   const { error } =
     await supabaseClient
       .from("Profiles")
-      .upsert({
-        id: user.id,
-        name: name,
-        bio: bio
-      });
+      .upsert(profileData);
 
   if(error){
-    alert("Profile save नहीं हुआ: " + error.message);
+
+    alert(
+      "Profile save नहीं हुआ: " +
+      error.message
+    );
+
     return;
   }
 
@@ -1379,7 +1442,10 @@ async function saveProfile(){
   document
     .getElementById("profileBox")
     .classList.remove("show");
-}
+
+  loadProfileIcon();
+  }
+
   async function loadProfileIcon(){
 
   const {
