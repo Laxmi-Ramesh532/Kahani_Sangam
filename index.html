@@ -497,6 +497,17 @@ header{
   <button onclick="openMyStories()">
     ✍️ मेरी रचनाएँ
   </button>
+    <button onclick="openLibrary()">
+    📚 मेरी Library
+  </button>
+
+  <button onclick="openPolicy()">
+    📜 साहित्यिक नीति
+  </button>
+
+  <button onclick="openOriginalityPolicy()">
+    🛡️ मौलिकता / Anti-Copy नीति
+  </button>
 
   <button onclick="logout()">
     🚪 Logout
@@ -1357,6 +1368,15 @@ function escapeHtml(
     .replaceAll("'","&#039;");
 
 }
+  document.getElementById("menuBtn").addEventListener("click", function () {
+  const menu = document.getElementById("profileMenu");
+
+  if (menu.style.display === "block") {
+    menu.style.display = "none";
+  } else {
+    menu.style.display = "block";
+  }
+});
 
 </script>
 
