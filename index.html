@@ -385,6 +385,46 @@ header{
   color:#694b31;
   font-weight:bold;
 }
+  /* PROFILE BOX */
+
+.profile-box{
+  display:none;
+  background:#fffdf8;
+  border:1px solid #d8c8b4;
+  border-radius:14px;
+  padding:18px;
+  margin:12px 16px;
+  box-shadow:0 4px 12px rgba(75,56,40,0.12);
+}
+
+.profile-box.show{
+  display:block;
+}
+
+.profile-box h3{
+  margin-top:0;
+}
+
+.profile-box input,
+.profile-box textarea{
+  width:100%;
+  box-sizing:border-box;
+  padding:10px;
+  margin:7px 0;
+  border:1px solid #d8c8b4;
+  border-radius:8px;
+  background:#f7f1e7;
+  font-family:inherit;
+}
+
+.profile-box button{
+  padding:10px 16px;
+  border:0;
+  border-radius:8px;
+  background:#8b7258;
+  color:white;
+  cursor:pointer;
+}
 
 /* PROFILE MENU */
 
@@ -482,6 +522,25 @@ header{
   </div>
 
 </header>
+  <div id="profileBox" class="profile-box">
+
+  <h3>👤 मेरा Profile</h3>
+
+  <input
+    id="profileName"
+    type="text"
+    placeholder="अपना नाम लिखें"
+  >
+
+  <textarea
+    id="profileBio"
+    placeholder="अपने बारे में लिखें"></textarea>
+
+  <button onclick="saveProfile()">
+    Profile सुरक्षित करें
+  </button>
+
+  </div>
 
 
 <!-- PROFILE MENU -->
@@ -1262,14 +1321,17 @@ function toggleProfile(){
 
 }
 
+  function openProfile(){
 
-function openProfile(){
+  const profileBox =
+    document.getElementById("profileBox");
 
-  alert(
-    "Profile सुविधा अगले चरण में जुड़ेगी।"
-  );
+  if(profileBox){
+    profileBox.classList.toggle("show");
+  }
 
-}
+  }
+
 
 
 function openMyStories(){
