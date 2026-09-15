@@ -1331,7 +1331,48 @@ function toggleProfile(){
   }
 
   }
+async function saveProfile(){
 
+  const name =
+    document.getElementById("profileName").value.trim();
+
+  const bio =
+    document.getElementById("profileBio").value.trim();
+
+  if(!name){
+    alert("कृपया अपना नाम लिखें।");
+    return;
+  }
+
+  const {
+    data: { user }
+  } = await supabaseClient.auth.getUser();
+
+  if(!user){
+    alert("पहले Login करें।");
+    return;
+  }
+
+  const { error } =
+    await supabaseClient
+      .from("Profiles")
+      .upsert({
+        id: user.id,
+        name: name,
+        bio: bio
+      });
+
+  if(error){
+    alert("Profile save नहीं हुआ: " + error.message);
+    return;
+  }
+
+  alert("Profile सुरक्षित हो गया।");
+
+  document
+    .getElementById("profileBox")
+    .classList.remove("show");
+}
 
 
 function openMyStories(){
