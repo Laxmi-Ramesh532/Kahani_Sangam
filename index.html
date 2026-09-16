@@ -1457,7 +1457,7 @@ function toggleProfile(){
   const { data, error } =
     await supabaseClient
       .from("Profiles")
-      .select("name")
+      .select("name,profile_photo")
       .eq("id", user.id)
       .maybeSingle();
 
