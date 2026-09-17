@@ -1091,86 +1091,59 @@ function createEpisodeCard(episode){
    REVIEW BOX
 ========================= */
 
-function createReviewBox(
-  episodeId
-){
+function createReviewBox(episodeId){
 
-  const box =
-    document.createElement("div");
+  const box = document.createElement("div");
+  box.className = "review-box";
 
-  box.className =
-    "review-box";
+  /* छोटा review button */
+  const reviewToggle = document.createElement("button");
+  reviewToggle.className = "review-toggle";
+  reviewToggle.textContent = "✍️ समीक्षा लिखें · 0 समीक्षा";
 
+  /* बड़ा review form */
+  const form = document.createElement("div");
+  form.className = "review-form";
+  form.style.display = "none";
 
-  const title =
-    document.createElement("div");
+  const title = document.createElement("div");
+  title.className = "review-title";
+  title.textContent = "समीक्षा दें";
 
-  title.className =
-    "review-title";
-
-  title.textContent =
-    "समीक्षा दें";
-
-
-  const stars =
-    document.createElement("div");
-
-  stars.className =
-    "review-stars";
-
+  const stars = document.createElement("div");
+  stars.className = "review-stars";
 
   selectedReviewRatings[episodeId] = 0;
 
+  for(let i = 1; i <= 5; i++){
 
-  for(
-    let i=1;
-    i<=5;
-    i++
-  ){
+    const star = document.createElement("button");
 
-    const star =
-      document.createElement("button");
+    star.className = "review-star";
+    star.textContent = "★";
 
-    star.className =
-      "review-star";
+    star.onclick = function(){
 
-    star.textContent =
-      "★";
+      selectedReviewRatings[episodeId] = i;
 
+      stars
+        .querySelectorAll(".review-star")
+        .forEach((s,index) => {
 
-    star.onclick =
-      function(){
-
-        selectedReviewRatings[episodeId] =
-          i;
-
-
-        const allStars =
-          stars.querySelectorAll(
-            ".review-star"
+          s.classList.toggle(
+            "active",
+            index < i
           );
 
+        });
 
-        allStars.forEach(
-          (s,index) => {
+    };
 
-            s.classList.toggle(
-              "active",
-              index < i
-            );
-
-          }
-        );
-
-      };
-
-
-    stars.appendChild(
-      star
-    );
-
+    stars.appendChild(star);
   }
-    const readLanguage =
+
+
+  const readLanguage =
     document.createElement("select");
 
   readLanguage.className =
@@ -1201,8 +1174,7 @@ function createReviewBox(
   const role =
     document.createElement("select");
 
-  role.className =
-    "review-role";
+  role.className = "review-role";
 
   role.innerHTML = `
     <option value="">अपनी भूमिका चुनें</option>
@@ -1211,24 +1183,10 @@ function createReviewBox(
   `;
 
 
-  box.appendChild(
-    readLanguage
-  );
-
-  box.appendChild(
-    writeLanguage
-  );
-
-  box.appendChild(
-    role
-  );
-
-
   const textarea =
     document.createElement("textarea");
 
-  textarea.className =
-    "review-text";
+  textarea.className = "review-text";
 
   textarea.id =
     "review-" + episodeId;
@@ -1253,7 +1211,6 @@ function createReviewBox(
   encourage.textContent =
     "❤️ प्रोत्साहित करें";
 
-
   encourage.onclick =
     function(){
 
@@ -1271,46 +1228,71 @@ function createReviewBox(
   submit.textContent =
     "समीक्षा भेजें";
 
-
   submit.onclick =
-    function(){
+    async function(){
 
-      submitReview(
-        episodeId
-      );
+      const success =
+        await submitReview(
+          episodeId,
+          readLanguage.value,
+          writeLanguage.value,
+          role.value
+        );
+
+      if(success){
+
+        form.style.display = "none";
+
+        reviewToggle.style.display =
+          "block";
+
+        loadReviewCount(
+          episodeId,
+          reviewToggle
+        );
+
+      }
 
     };
 
 
-  actions.appendChild(
-    encourage
-  );
-
-  actions.appendChild(
-    submit
-  );
+  actions.appendChild(encourage);
+  actions.appendChild(submit);
 
 
-  box.appendChild(
-    title
-  );
+  form.appendChild(title);
+  form.appendChild(stars);
+  form.appendChild(readLanguage);
+  form.appendChild(writeLanguage);
+  form.appendChild(role);
+  form.appendChild(textarea);
+  form.appendChild(actions);
 
-  box.appendChild(
-    stars
-  );
 
-  box.appendChild(
-    textarea
-  );
+  reviewToggle.onclick =
+    function(){
 
-  box.appendChild(
-    actions
+      reviewToggle.style.display =
+        "none";
+
+      form.style.display =
+        "block";
+
+    };
+
+
+  box.appendChild(reviewToggle);
+  box.appendChild(form);
+
+
+  loadReviewCount(
+    episodeId,
+    reviewToggle
   );
 
 
   return box;
-
-}
+    }
 
 
 /* =========================
