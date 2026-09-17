@@ -1465,16 +1465,25 @@ function toggleProfile(){
     console.log("Profile load error:", error);
     return;
   }
+    if(data){
 
-  if(data && data.name){
+  const profileBtn =
+    document.querySelector(".profile-btn");
 
-    const profileBtn =
-      document.querySelector(".profile-btn");
+  if(data.profile_photo){
+
+    profileBtn.innerHTML =
+      `<img src="${data.profile_photo}" 
+       style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+  } else if(data.name){
 
     profileBtn.textContent =
       data.name.charAt(0).toUpperCase();
+
   }
-  }
+    }
+  
 
 
 function openMyStories(){
