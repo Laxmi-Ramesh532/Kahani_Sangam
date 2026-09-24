@@ -574,6 +574,9 @@ header{
   <button onclick="openOriginalityPolicy()">
     🛡️ मौलिकता / Anti-Copy नीति
   </button>
+  <button onclick="testSupabase()">
+  🔧 Test Supabase
+  </button>
 
   <button onclick="logout()">
     🚪 Logout
@@ -1494,6 +1497,26 @@ function openMyStories(){
   );
 
 }
+  async function testSupabase() {
+  try {
+    const { data, error } =
+      await supabaseClient.auth.getSession();
+
+    if (error) {
+      alert("Session error: " + error.message);
+      return;
+    }
+
+    alert(
+      data.session
+        ? "Supabase connection OK — Login session मौजूद है।"
+        : "Supabase connection OK — कोई session नहीं है।"
+    );
+
+  } catch (err) {
+    alert("Connection error: " + err.message);
+  }
+  }
 
 
 /* =========================
