@@ -1738,6 +1738,197 @@ async function submitStory() {
   }
 
   }
+  async function submitEpisode() {
+
+  const message =
+    document.getElementById(
+      "episodeMessage"
+    );
+
+  const button =
+    document.getElementById(
+      "submitEpisodeBtn"
+    );
+
+  message.innerText =
+    "कृपया प्रतीक्षा करें...";
+
+  button.disabled =
+    true;
+
+  try {
+
+    /* LOGIN CHECK */
+
+    const {
+      data: sessionData,
+      error: sessionError
+    } =
+      await supabaseClient
+        .auth
+        .getSession();
+
+    if (sessionError) {
+      throw sessionError;
+    }
+
+    const session =
+      sessionData.session;
+
+    if (!session) {
+
+      alert(
+        "Episode प्रकाशित करने के लिए पहले Login करें।"
+      );
+
+      return;
+    }
+
+
+    /* FORM VALUES */
+
+    const storyId =
+      document
+        .getElementById(
+          "episodeStory"
+        )
+        .value;
+
+    const episodeNumber =
+      document
+        .getElementById(
+          "episodeNumber"
+        )
+        .value;
+
+    const episodeTitle =
+      document
+        .getElementById(
+          "episodeTitle"
+        )
+        .value
+        .trim();
+
+    const content =
+      document
+        .getElementById(
+          "episodeContent"
+        )
+        .innerHTML
+        .trim();
+
+
+    /* VALIDATION */
+
+    if (
+      !storyId ||
+      !episodeNumber ||
+      !episodeTitle ||
+      !content
+    ) {
+
+      alert(
+        "कृपया कहानी, Episode Number, Episode का नाम और Episode लिखें।"
+      );
+
+      return;
+    }
+
+
+    /* SAVE EPISODE */
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("Episodes")
+        .insert({
+
+          story_id:
+            storyId,
+
+          episode_number:
+            Number(episodeNumber),
+
+          episode_title:
+            episodeTitle,
+
+          content:
+            content,
+
+          user_id:
+            session.user.id
+
+        })
+        .select()
+        .single();
+
+
+    if (error) {
+      throw error;
+    }
+
+
+    console.log(
+      "Episode created:",
+      data
+    );
+
+
+    message.innerText =
+      "🎉 Episode सफलतापूर्वक प्रकाशित हो गया!";
+
+
+    /* CLEAR EPISODE FORM */
+
+    document
+      .getElementById(
+        "episodeNumber"
+      )
+      .value = "";
+
+    document
+      .getElementById(
+        "episodeTitle"
+      )
+      .value = "";
+
+    document
+      .getElementById(
+        "episodeContent"
+      )
+      .innerHTML = "";
+
+
+    alert(
+      "🎉 Episode सफलतापूर्वक प्रकाशित हो गया!"
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "Episode submit error:",
+      error
+    );
+
+    message.innerText =
+      "❌ Episode प्रकाशित नहीं हो सका।";
+
+    alert(
+      "Error: " +
+      error.message
+    );
+
+  } finally {
+
+    button.disabled =
+      false;
+
+  }
+
+  }
 
 
 /* =========================
