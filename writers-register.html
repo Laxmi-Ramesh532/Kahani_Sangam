@@ -482,6 +482,94 @@
         id="message"
         class="message"
       ></div>
+      <!-- =========================
+     NEW EPISODE SECTION
+========================= -->
+
+<div class="top-box">
+
+  <h2>📖 नया Episode लिखें</h2>
+
+  <div class="field">
+
+    <label for="episodeStory">
+      कहानी चुनें
+    </label>
+
+    <select id="episodeStory">
+
+      <option value="">
+        अपनी कहानी चुनें
+      </option>
+
+    </select>
+
+  </div>
+
+
+  <div class="field">
+
+    <label for="episodeNumber">
+      Episode Number
+    </label>
+
+    <input
+      type="number"
+      id="episodeNumber"
+      min="1"
+      placeholder="जैसे: 1"
+    >
+
+  </div>
+
+
+  <div class="field">
+
+    <label for="episodeTitle">
+      Episode का नाम
+    </label>
+
+    <input
+      type="text"
+      id="episodeTitle"
+      placeholder="जैसे: देवगढ़ की सुनयना"
+    >
+
+  </div>
+
+
+  <div class="field">
+
+    <label for="episodeContent">
+      Episode लिखें
+    </label>
+
+    <div
+      id="episodeContent"
+      class="editor"
+      contenteditable="true"
+      spellcheck="true"
+    ></div>
+
+  </div>
+
+
+  <button
+    id="submitEpisodeBtn"
+    class="submit-btn"
+    type="button"
+    onclick="submitEpisode()"
+  >
+    📖 Episode प्रकाशित करें
+  </button>
+
+
+  <div
+    id="episodeMessage"
+    class="message"
+  ></div>
+
+</div>
 
     </div>
 
@@ -1547,6 +1635,109 @@ async function submitStory() {
   }
 
 }
+  async function loadMyStories() {
+
+  const select =
+    document.getElementById(
+      "episodeStory"
+    );
+
+  if (!select) return;
+
+  select.innerHTML =
+    `<option value="">
+      अपनी कहानी चुनें
+    </option>`;
+
+  try {
+
+    const {
+      data: sessionData,
+      error: sessionError
+    } =
+      await supabaseClient
+        .auth
+        .getSession();
+
+    if (sessionError) {
+      throw sessionError;
+    }
+
+    const session =
+      sessionData.session;
+
+    if (!session) {
+      return;
+    }
+
+    const {
+      data: stories,
+      error
+    } =
+      await supabaseClient
+        .from("Story")
+        .select("id, title")
+        .eq(
+          "user_id",
+          session.user.id
+        )
+        .order(
+          "created_at",
+          {
+            ascending: false
+          }
+        );
+
+    if (error) {
+      throw error;
+    }
+
+    if (!stories || stories.length === 0) {
+
+      select.innerHTML =
+        `<option value="">
+          अभी आपकी कोई कहानी नहीं है
+        </option>`;
+
+      return;
+    }
+
+    stories.forEach(
+      story => {
+
+        const option =
+          document.createElement(
+            "option"
+          );
+
+        option.value =
+          story.id;
+
+        option.textContent =
+          story.title;
+
+        select.appendChild(
+          option
+        );
+
+      }
+    );
+
+  } catch (error) {
+
+    console.error(
+      "My stories error:",
+      error
+    );
+
+    select.innerHTML =
+      `<option value="">
+        कहानियाँ लोड नहीं हो सकीं
+      </option>`;
+
+  }
+
+  }
 
 
 /* =========================
@@ -1554,6 +1745,7 @@ async function submitStory() {
 ========================= */
 
 loadStoryForEdit();
+  loadMyStories();
 
 </script>
 
